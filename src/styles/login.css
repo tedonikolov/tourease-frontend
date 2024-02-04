@@ -1,0 +1,32 @@
+.login-box{
+    background-color: #fff;
+    border: #00ff48 solid 5px;
+    padding: 20px;
+    box-shadow: 5px 10px 10px #5e00ff;
+}
+
+.login-button{
+    font-size: 20px;
+    color: #000000;
+    background-color: #00ff48;
+}
+
+.login-button:hover{
+    cursor: pointer;
+    color: #00ff48;
+    background-color: #5e00ff;
+    box-shadow: 1px 10px 10px #282c34;
+}
+
+.close-button{
+    font-size: 20px;
+    color: #000000;
+    background-color: #e31d1d;
+}
+
+.close-button:hover{
+    cursor: pointer;
+    color: #00ff48;
+    background-color: #5e00ff;
+    box-shadow: 1px 10px 10px #282c34;
+}
