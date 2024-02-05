@@ -1,7 +1,7 @@
 import "../styles/login.css"
 import {Form, Modal} from "react-bootstrap";
 import CommonInputText from "./CommonInputText";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
 
 export default function LoginForm({show, onHide}) {
@@ -15,6 +15,10 @@ export default function LoginForm({show, onHide}) {
         const status = await login(userInfo)
         status === 200 ? onHide() : setError(() => true)
     }
+
+    useEffect(() => {
+        setError(false);
+    }, [show]);
 
     return (
         <Modal show={show} onHide={onHide} centered>
