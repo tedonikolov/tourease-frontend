@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CustomToastContent from "../componets/CustomToastContent";
 
 const instance = Object.assign(
     axios.create({
@@ -26,7 +27,27 @@ instance.interceptors.response.use(
     (error) => {
         switch (error.response?.status) {
             case 400: {
-                toast.error(error.response.data.detail);
+                if (error.response?.data) {
+                    let errorResponse = error.response.data;
+                    if (errorResponse.type === 'VALIDATION' && errorResponse.validations.length > 0) {
+                        let errors = errorResponse.validations.map((value) => `${value.error}`);
+                        if (errors.length === 1) {
+                            toast.error(<CustomToastContent content={[...errors]}/>);
+                        } else {
+                            toast.error(
+                                <CustomToastContent content={[errorResponse.errorCode, ...errors]}/>
+                            );
+                        }
+                    } else {
+                        if (+errorResponse.errorCode === 0) break;
+                        else if (+errorResponse.errorCode > 0 && +errorResponse.errorCode < 9)
+                            toast.error(
+                                <CustomToastContent content={[errorResponse.errorCode]}/>,
+                            );
+                        else
+                            toast.error(<CustomToastContent content={['apiError']}/>);
+                    }
+                }
                 break;
             }
             case 403: {
