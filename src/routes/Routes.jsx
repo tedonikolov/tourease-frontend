@@ -3,6 +3,7 @@ import React from "react";
 import RegisterPage from "../pages/RegisterPage";
 import AccessibilityCheckRoute from "./AccessibilityCheckRoute";
 import LoginForm from "../componets/LoginForm";
+import LandingPage from "../pages/LandingPage";
 
 export const Router = () => {
     return (
@@ -11,7 +12,7 @@ export const Router = () => {
                 path='/'
                 element={<AccessibilityCheckRoute isOpen={true}/>}
             >
-                <Route path='/' element={<RegisterPage/>}/>
+                <Route path='/' element={<LandingPage/>}/>
                 <Route path='/register' element={<RegisterPage step={1}/>}/>
                 <Route path='/activateProfile' element={<RegisterPage activateProfile={true} step={3}/>}/>
             </Route>

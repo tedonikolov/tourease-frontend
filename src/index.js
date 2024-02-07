@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
-import Header from "./componets/Header";
 import reportWebVitals from './reportWebVitals';
 import {AuthProvider} from "./context/AuthContext";
 import {ToastContainer} from "react-toastify";
@@ -15,7 +14,6 @@ root.render(
     <React.StrictMode>
         <AuthProvider>
             <BrowserRouter>
-                <Header/>
                 <Router/>
                 <ToastContainer theme={"colored"}/>
             </BrowserRouter>
