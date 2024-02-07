@@ -3,10 +3,11 @@ import {Form, Modal} from "react-bootstrap";
 import CommonInputText from "./CommonInputText";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
+import {Navigate} from "react-router-dom";
 
 export default function LoginForm({show, onHide}) {
     const [userInfo, setUserInfo] = useState({username: "", password: ""})
-    const {login} = useContext(AuthContext);
+    const {login, mainPage, loggedUser} = useContext(AuthContext);
     const [error, setError] = useState(false);
 
     async function sendLogin(event) {
@@ -21,6 +22,7 @@ export default function LoginForm({show, onHide}) {
     }, [show]);
 
     return (
+        !loggedUser ?
         <Modal show={show} onHide={onHide} centered>
             <div className={"login-box"}>
                 <Modal.Header closeButton>
@@ -43,5 +45,7 @@ export default function LoginForm({show, onHide}) {
                 </Modal.Footer>
             </div>
         </Modal>
+        :
+        <Navigate to={mainPage} />
     )
 }

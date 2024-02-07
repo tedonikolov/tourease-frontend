@@ -14,6 +14,12 @@ export const AuthProvider = ({ children }) => {
         const user = await getLoggedUser(username);
         setLoggedUser(user);
         setPermission(user.userType);
+        switch (user.userType){
+            case 'REGULAR': setNavigatePage('/profile'); break;
+            case 'HOTEL': setNavigatePage('');break;
+            case 'TRANSPORT': setNavigatePage(''); break;
+            case 'ADMIN': setNavigatePage(''); break;
+        }
     };
 
     useEffect(() => {
@@ -21,7 +27,6 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (userInfo) => {
-
 
         const userResponse = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
             method: 'POST',
@@ -64,16 +69,22 @@ export const AuthProvider = ({ children }) => {
         setNavigatePage('');
     };
 
+    const hasPermission = (per) => {
+        return per.some((value) => permission===value);
+    };
+
     return (
         <AuthContext.Provider
             value={{
                 loggedUser,
+                setLoggedUser,
                 token,
                 login,
                 logout,
                 setToken,
                 permission,
                 setPermission,
+                hasPermission,
                 mainPage:navigatePage
             }}
         >

@@ -5,8 +5,7 @@ import "../styles/register.css"
 import Select from "react-select";
 import {createProfile} from "../hooks/User";
 
-export default function RegisterProfile() {
-    const [userInfo, setUserInfo] = useState({email: "", password: "", secondPassword: "", userType: "REGULAR"})
+export default function RegisterProfile({userInfo, setUserInfo}) {
     const [isLoading, setIsLoading] = useState(false);
 
     const types = [{value: 'REGULAR', label: 'Regular'},

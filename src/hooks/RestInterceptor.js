@@ -42,7 +42,7 @@ instance.interceptors.response.use(
                         if (+errorResponse.errorCode === 0) break;
                         else if (+errorResponse.errorCode > 0 && +errorResponse.errorCode < 9)
                             toast.error(
-                                <CustomToastContent content={[errorResponse.errorCode]}/>,
+                                <CustomToastContent content={[errorResponse.error]}/>,
                             );
                         else
                             toast.error(<CustomToastContent content={['apiError']}/>);
