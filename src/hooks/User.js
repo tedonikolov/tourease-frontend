@@ -22,3 +22,11 @@ export const createProfile = async (userInfo) => {
         },
     );
 };
+
+export const sendActivateEmail = async (email) => {
+    return interceptor.post('/user-service/user/sendActivateEmail/'+email);
+}
+
+export const sendActivateProfile = async (email) => {
+    return interceptor.post('/user-service/user/activateUser/'+email);
+}
