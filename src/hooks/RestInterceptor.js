@@ -50,8 +50,15 @@ instance.interceptors.response.use(
                 }
                 break;
             }
-            case 403: {
+            case 401: {
+                console.log('ERROR STATUS', error.response.status, 'REDIRECT TO LOGIN');
                 sessionStorage.removeItem('token');
+                sessionStorage.removeItem('username');
+                window.location.href = '/login';
+                break;
+            }
+            case 403: {
+                toast.error(<CustomToastContent content={['Server Access denied']}/>);
                 break;
             }
             case 404: {

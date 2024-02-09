@@ -13,6 +13,7 @@ export const Router = () => {
                 element={<AccessibilityCheckRoute isOpen={true}/>}
             >
                 <Route path='/' element={<LandingPage/>}/>
+                <Route path={'/login'} element={<LoginForm show={true} />}/>
                 <Route path='/register' element={<RegisterPage step={1}/>}/>
                 <Route path='/activateProfile' element={<RegisterPage activateProfile={true} step={3}/>}/>
             </Route>

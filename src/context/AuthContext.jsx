@@ -3,7 +3,7 @@ import {getLoggedUser} from "../hooks/User";
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({children}) => {
     const [token, setToken] = useState(sessionStorage.getItem('token'));
     const username = sessionStorage.getItem('username');
     const [permission, setPermission] = useState('');
@@ -14,11 +14,23 @@ export const AuthProvider = ({ children }) => {
         const user = await getLoggedUser(username);
         setLoggedUser(user);
         setPermission(user.userType);
-        switch (user.userType){
-            case 'REGULAR': setNavigatePage('/profile'); break;
-            case 'HOTEL': setNavigatePage('');break;
-            case 'TRANSPORT': setNavigatePage(''); break;
-            case 'ADMIN': setNavigatePage(''); break;
+        switch (user.userType) {
+            case 'REGULAR': {
+                setNavigatePage('/profile');
+                break;
+            }
+            case 'HOTEL': {
+                setNavigatePage('');
+                break;
+            }
+            case 'TRANSPORT': {
+                setNavigatePage('');
+                break;
+            }
+            case 'ADMIN': {
+                setNavigatePage('');
+                break;
+            }
         }
     };
 
@@ -49,7 +61,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const clearUserData = ()=> {
+    const clearUserData = () => {
         setToken('');
         setPermission(['']);
         setLoggedUser(null);
@@ -70,7 +82,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const hasPermission = (per) => {
-        return per.some((value) => permission===value);
+        return per.some((value) => permission === value);
     };
 
     return (
@@ -85,7 +97,7 @@ export const AuthProvider = ({ children }) => {
                 permission,
                 setPermission,
                 hasPermission,
-                mainPage:navigatePage
+                mainPage: navigatePage
             }}
         >
             {children}

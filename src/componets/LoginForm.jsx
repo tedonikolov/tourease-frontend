@@ -14,7 +14,7 @@ export default function LoginForm({show, onHide}) {
         setError(false);
         event.preventDefault();
         const status = await login(userInfo)
-        status === 200 ? onHide() : setError(() => true)
+        status === 200 ? onHide && onHide() : setError(() => true)
     }
 
     useEffect(() => {
