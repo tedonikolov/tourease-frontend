@@ -15,9 +15,7 @@ export default function RegisterProfile({userInfo, setUserInfo}) {
     async function register(event) {
         event.preventDefault();
         setIsLoading(()=>true);
-        let response = await createProfile(userInfo);
-        if(!response)
-            console.log("response")
+        await createProfile(userInfo);
         setIsLoading(()=>false);
     }
 

@@ -24,7 +24,7 @@ export default function CustomStepWizardNav({
                         } : () => {
                         }}
                     >
-                        {i + 1 < currentStep && <i className="bi bi-check-circle-fill text-success"/>}
+                        {hideNextSteps && i + 1 < currentStep && <i className="bi bi-check-circle-fill text-success"/>}
                         <h5>{step}</h5>
                     </div>
                 ))}
