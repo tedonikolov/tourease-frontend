@@ -8,3 +8,11 @@ export function sendRegularProfile (email, regular){
         }
     )
 }
+export function sendRegularPassport (email, passport){
+    return restInterceptor.post("/user-service/regular/passport/save",
+        {
+            email: email,
+            ...passport
+        }
+    )
+}

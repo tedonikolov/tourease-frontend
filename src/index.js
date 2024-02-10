@@ -8,16 +8,23 @@ import {AuthProvider} from "./context/AuthContext";
 import {ToastContainer} from "react-toastify";
 import {Router} from "./routes/Routes";
 import {BrowserRouter} from "react-router-dom";
+import {Suspense} from 'react';
+import {Spinner} from 'react-bootstrap';
+import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <AuthProvider>
-            <BrowserRouter>
-                <Router/>
-                <ToastContainer theme={"colored"}/>
-            </BrowserRouter>
-        </AuthProvider>
+        <QueryClientProvider client={new QueryClient()}>
+            <AuthProvider>
+                <BrowserRouter>
+                    <Suspense fallback={<Spinner animation='border'/>}>
+                        <Router/>
+                    </Suspense>
+                    <ToastContainer theme={"colored"}/>
+                </BrowserRouter>
+            </AuthProvider>
+        </QueryClientProvider>
     </React.StrictMode>
 );
 
