@@ -5,7 +5,7 @@ import "../styles/register.css"
 import Select from "react-select";
 import {createProfile} from "../hooks/User";
 
-export default function RegisterProfile({userInfo, setUserInfo}) {
+export default function RegisterProfile({userInfo, setUserInfo, nextStep}) {
     const [isLoading, setIsLoading] = useState(false);
 
     const types = [{value: 'REGULAR', label: 'Regular'},
@@ -15,7 +15,9 @@ export default function RegisterProfile({userInfo, setUserInfo}) {
     async function register(event) {
         event.preventDefault();
         setIsLoading(()=>true);
-        await createProfile(userInfo);
+        let response = await createProfile(userInfo);
+        if(!response)
+            nextStep();
         setIsLoading(()=>false);
     }
 
