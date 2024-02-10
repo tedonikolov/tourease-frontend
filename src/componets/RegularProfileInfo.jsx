@@ -5,6 +5,8 @@ import CustomSelect from "./CustomSelect";
 import CustomDatePicker from "./CustomDatePicker";
 import {Button, Form} from "react-bootstrap";
 import {sendRegularProfile} from "../hooks/Regular";
+import {toast} from "react-toastify";
+import CustomToastContent from "./CustomToastContent";
 
 export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
     const [regular, setRegular] = useState(userInfo.regular ? userInfo.regular : defaultRegular);
@@ -12,10 +14,14 @@ export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
     const gender = [{value: 'male', label: 'Male'},
         {value: 'female', label: 'Female'}]
 
-    async function saveRegular() {
+    const disabled=regular.birthDate==='Invalid Date' || regular.birthDate===null;
+
+    async function saveRegular(event) {
+        event.preventDefault();
         const response = await sendRegularProfile(userInfo.email, regular);
         if(!response){
-            setUserInfo({...userInfo, regular:regular})
+            setUserInfo({...userInfo, regular:regular});
+            toast.success(<CustomToastContent content={['Information successfully updated!']}/>);
         }
     }
 
@@ -32,8 +38,9 @@ export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
                 <CustomSelect options={countries} defaultValue={regular.country} setValue={setRegular} name={'country'}/>
                 <CustomSelect options={gender} defaultValue={regular.gender} setValue={setRegular} name={'gender'}/>
 
+                {disabled && <div className={"mt-4 text-danger"}>* Select valid passport date!</div>}
                 <div className={"d-flex justify-content-center mt-3 mb-3"}>
-                    <Button type={'submit'} className={'register-button'}>Update</Button>
+                    <Button type={'submit'} className={'register-button'} disabled={disabled}>Update</Button>
                 </div>
             </Form>
         </div>

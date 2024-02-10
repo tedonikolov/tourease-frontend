@@ -4,19 +4,20 @@ import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 
-export default function CustomDatePicker({selectedDate, setValue, name, label}) {
+export default function CustomDatePicker({selectedDate, setValue, name, label, minDate}) {
 
     return (
         <div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                     className={'mt-4'}
+                    minDate={minDate}
                     label={label}
-                    value={dayjs(selectedDate)}
+                    value={selectedDate && dayjs(selectedDate)}
                     onChange={(date) => {
                         setValue((prevValue) => ({
                                 ...prevValue,
-                                [name]: date.format('YYYY-MM-DD')
+                                [name]: date===null ? null : date.format('YYYY-MM-DD')
                             })
                         );
                     }}
