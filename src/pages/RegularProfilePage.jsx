@@ -6,6 +6,7 @@ import {AuthContext} from "../context/AuthContext";
 import {useQuery} from "@tanstack/react-query";
 import {getCountries} from "../hooks/config";
 import PassportRegularInfo from "../componets/PassportRegularInfo";
+import Header from "../componets/Header";
 
 export default function RegularProfilePage() {
     const {loggedUser, setLoggedUser} = useContext(AuthContext);
@@ -17,6 +18,7 @@ export default function RegularProfilePage() {
 
     return (
         !isLoading && <div>
+            <Header/>
             <StepWizard
                 className=''
                 nav={<CustomStepWizardNav steps={['Profile', 'Passport']}/>}
