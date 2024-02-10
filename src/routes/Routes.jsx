@@ -6,6 +6,7 @@ import LoginForm from "../componets/LoginForm";
 import LandingPage from "../pages/LandingPage";
 import RegularProfilePage from "../pages/RegularProfilePage";
 import {PrivateRoute} from "./PrivateRoute";
+import NotExist from "../pages/NotExistPage";
 
 export const Router = () => {
     return (
@@ -18,6 +19,7 @@ export const Router = () => {
                 <Route path={'/login'} element={<LoginForm show={true}/>}/>
                 <Route path='/register' element={<RegisterPage step={1}/>}/>
                 <Route path='/activateProfile' element={<RegisterPage activateProfile={true} step={3}/>}/>
+                <Route path='/:error' element={<NotExist/>}/>
             </Route>
             <Route path='/' element={<PrivateRoute/>}>
                 <Route
