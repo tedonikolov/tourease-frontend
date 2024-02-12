@@ -9,6 +9,7 @@ export const AuthProvider = ({children}) => {
     const [permission, setPermission] = useState('');
     const [loggedUser, setLoggedUser] = useState(null);
     const [navigatePage, setNavigatePage] = useState('');
+    const [location, setLocation] = useState();
 
     const getUserData = async (username) => {
         const user = await getLoggedUser(username);
@@ -97,7 +98,8 @@ export const AuthProvider = ({children}) => {
                 permission,
                 setPermission,
                 hasPermission,
-                mainPage: navigatePage
+                setLocation,
+                mainPage: location ? location.pathname + location.search : navigatePage
             }}
         >
             {children}
