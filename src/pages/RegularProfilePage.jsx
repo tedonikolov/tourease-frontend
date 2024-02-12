@@ -1,7 +1,7 @@
 import CustomStepWizardNav from "../componets/CustomStepWizardNav";
 import RegularProfileInfo from "../componets/RegularProfileInfo";
 import StepWizard from "react-step-wizard";
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
 import {useQuery} from "@tanstack/react-query";
 import {getCountries} from "../hooks/config";
@@ -15,11 +15,19 @@ export default function RegularProfilePage() {
             queryFn: getCountries
         }
     )
+    const [step, setStep] = useState();
+
+    useEffect(() => {
+        const url = new URL(window.location.href);
+        const expired = url.searchParams.get('passportExpired');
+        expired ? setStep(2) : setStep(1);
+    }, []);
 
     return (
         !isLoading && <div>
             <Header/>
             <StepWizard
+                initialStep={step}
                 className=''
                 nav={<CustomStepWizardNav steps={['Profile', 'Passport']}/>}
                 transitions={{
