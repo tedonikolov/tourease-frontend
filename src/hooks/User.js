@@ -6,12 +6,6 @@ export const getLoggedUser = async (email) => {
     );
 };
 
-export const sendLogout = async () => {
-    return interceptor.get(
-        '/logout',
-    );
-};
-
 export const createProfile = async (userInfo) => {
     return interceptor.post(
         '/user-service/user/registration',
@@ -29,4 +23,12 @@ export const sendActivateEmail = async (email) => {
 
 export const sendActivateProfile = async (email) => {
     return interceptor.post('/user-service/user/activateUser/'+email);
+}
+
+export const sendPasswordChangeEmail = async (email) => {
+    return interceptor.post('/user-service/user/sendPasswordChangeEmail/'+email);
+}
+
+export const sendChangePassword = async (userInfo) =>{
+    return interceptor.put('/user-service/user/changePassword',userInfo);
 }

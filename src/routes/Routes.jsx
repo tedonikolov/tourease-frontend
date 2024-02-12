@@ -7,6 +7,7 @@ import LandingPage from "../pages/LandingPage";
 import RegularProfilePage from "../pages/RegularProfilePage";
 import {PrivateRoute} from "./PrivateRoute";
 import NotExist from "../pages/NotExistPage";
+import PasswordChangePage from "../pages/PasswordChangePage";
 
 export const Router = () => {
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ export const Router = () => {
                 <Route path='/' element={<LandingPage/>}/>
                 <Route path={'/login'} element={<LoginForm show={true} onHide={()=>navigate(`/`)}/>}/>
                 <Route path='/register' element={<RegisterPage step={1}/>}/>
+                <Route path='/changePassword' element={<PasswordChangePage step={1}/>}/>
                 <Route path='/activateProfile' element={<RegisterPage activateProfile={true} step={3}/>}/>
                 <Route path='/:error' element={<NotExist/>}/>
             </Route>

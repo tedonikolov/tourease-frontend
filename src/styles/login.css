@@ -18,6 +18,18 @@
     box-shadow: 1px 10px 10px #282c34;
 }
 
+.password-button{
+    font-size: 20px;
+    color: #000000;
+}
+
+.password-button:hover{
+    cursor: pointer;
+    color: #00ff48;
+    background-color: #5e00ff;
+    box-shadow: 1px 10px 10px #282c34;
+}
+
 .close-button{
     font-size: 20px;
     color: #000000;

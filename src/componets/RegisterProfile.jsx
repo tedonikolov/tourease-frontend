@@ -21,9 +21,7 @@ export default function RegisterProfile({userInfo, setUserInfo, nextStep}) {
         setIsLoading(()=>false);
     }
 
-    function disable() {
-        return userInfo.password !== userInfo.secondPassword;
-    }
+    const disabled = userInfo.password !== userInfo.secondPassword;
 
     return (
         <div className={"register-box"}>
@@ -48,7 +46,8 @@ export default function RegisterProfile({userInfo, setUserInfo, nextStep}) {
                                  setObjectValue={setUserInfo} type={"password"}></CommonInputText>
                 <div className={"d-flex justify-content-end mx-5 mt-3"}>
                     {isLoading ? <Spinner animation={'border'}/> :
-                        <Button className={"register-button"} type={"submit"} disabled={disable()}>Register</Button>}              </div>
+                        <Button className={"register-button"} type={"submit"} disabled={disabled}>Register</Button>}
+                </div>
             </Form>
         </div>
     )
