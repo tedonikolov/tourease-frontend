@@ -14,7 +14,7 @@ export default function Header() {
             className='shadow d-flex flex-wrap justify-content-end align-items-center w-100 ps-4 pe-2 py-2 bg-white border-bottom '>
             <div className='d-flex align-items-center'>
                 <h5 className='mb-0 px-3 w-100 text-nowrap'>
-                    Welcome, {loggedUser.regular.firstName}!
+                    Welcome, {loggedUser.regular ? loggedUser.regular.firstName : ""}!
                 </h5>
 
                 <Button

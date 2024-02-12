@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import React from "react";
 import RegisterPage from "../pages/RegisterPage";
 import AccessibilityCheckRoute from "./AccessibilityCheckRoute";
@@ -9,6 +9,8 @@ import {PrivateRoute} from "./PrivateRoute";
 import NotExist from "../pages/NotExistPage";
 
 export const Router = () => {
+    const navigate = useNavigate();
+
     return (
         <Routes>
             <Route
@@ -16,7 +18,7 @@ export const Router = () => {
                 element={<AccessibilityCheckRoute isOpen={true}/>}
             >
                 <Route path='/' element={<LandingPage/>}/>
-                <Route path={'/login'} element={<LoginForm show={true}/>}/>
+                <Route path={'/login'} element={<LoginForm show={true} onHide={()=>navigate(`/`)}/>}/>
                 <Route path='/register' element={<RegisterPage step={1}/>}/>
                 <Route path='/activateProfile' element={<RegisterPage activateProfile={true} step={3}/>}/>
                 <Route path='/:error' element={<NotExist/>}/>
