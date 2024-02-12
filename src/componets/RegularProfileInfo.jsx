@@ -30,11 +30,11 @@ export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
             <Form id={'regular'} onSubmit={saveRegular}>
                 <CommonInputText disabled={true} type={'text'} value={userInfo.email} label={'Email:'}/>
                 <CommonInputText type={'text'} value={regular.firstName}
-                                 label={'First name:'} name={'firstName'} setValue={setRegular}/>
+                                 label={'First name:'} name={'firstName'} setObjectValue={setRegular}/>
                 <CommonInputText type={'text'} value={regular.lastName}
-                                 label={'Last name:'} name={'lastName'} setValue={setRegular}/>
+                                 label={'Last name:'} name={'lastName'} setObjectValue={setRegular}/>
                 <CustomDatePicker label={'Date of birth'} selectedDate={regular.birthDate} name={'birthDate'}
-                                  setValue={setRegular} isClearable={false}/>
+                                  setObjectValue={setRegular} isClearable={false}/>
                 <CustomSelect options={countries} defaultValue={regular.country} setValue={setRegular} name={'country'}/>
                 <CustomSelect options={gender} defaultValue={regular.gender} setValue={setRegular} name={'gender'}/>
 

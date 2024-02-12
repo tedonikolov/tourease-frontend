@@ -1,11 +1,23 @@
-
-export default function CommonInputText({label, name, disabled, type, readOnly, value, setValue, error, errorText}) {
+export default function CommonInputText({
+                                            label,
+                                            name,
+                                            disabled,
+                                            type,
+                                            readOnly,
+                                            value,
+                                            setObjectValue,
+                                            setValue,
+                                            error,
+                                            errorText
+                                        }) {
     function handleInputChange(event) {
         event.preventDefault();
-        setValue((prevValue) => ({
-            ...prevValue,
-            [name]:event.target.value
-        }));
+        setObjectValue ? setObjectValue((prevValue) => ({
+                ...prevValue,
+                [name]: event.target.value
+            }))
+            :
+            setValue(event.target.value);
     }
 
     return (

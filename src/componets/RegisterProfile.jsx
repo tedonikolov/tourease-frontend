@@ -40,12 +40,12 @@ export default function RegisterProfile({userInfo, setUserInfo, nextStep}) {
                     options={types}
                     isSearchable={false}
                 />
-                <CommonInputText name={"email"} label={"Email:"} value={userInfo.email} setValue={setUserInfo}
+                <CommonInputText name={"email"} label={"Email:"} setObjectValue={userInfo.email} setValue={setUserInfo}
                                  type={"email"}></CommonInputText>
                 <CommonInputText name={"password"} label={"Password:"} value={userInfo.password}
-                                 setValue={setUserInfo} type={"password"}></CommonInputText>
+                                 setObjectValue={setUserInfo} type={"password"}></CommonInputText>
                 <CommonInputText name={"secondPassword"} label={"Repeat password:"} value={userInfo.secondPassword}
-                                 setValue={setUserInfo} type={"password"}></CommonInputText>
+                                 setObjectValue={setUserInfo} type={"password"}></CommonInputText>
                 <div className={"d-flex justify-content-end mx-5 mt-3"}>
                     {isLoading ? <Spinner animation={'border'}/> :
                         <Button className={"register-button"} type={"submit"} disabled={disable()}>Register</Button>}              </div>

@@ -31,7 +31,7 @@ export default function PassportRegularInfo({userInfo, countries, setUserInfo}) 
                     <Form id={'passport'} onSubmit={savePassport}>
                         {passport.expired && <div className={"mt-4 text-danger"}>* Your passport has been expired! Please update it.</div>}
                         <CommonInputText type={'text'} value={passport.passportId}
-                                         label={'Passport number:'} name={'passportId'} setValue={setPassport}/>
+                                         label={'Passport number:'} name={'passportId'} setObjectValue={setPassport}/>
                         <CustomDatePicker label={'Creation date'} selectedDate={passport.creationDate}
                                           name={'creationDate'}
                                           setValue={setPassport}/>
