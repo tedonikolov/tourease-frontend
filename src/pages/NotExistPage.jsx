@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/error.css';
 import {Button} from "react-bootstrap";
 
-const NotExist = () => {
+export default function NotExist () {
   return (
     <div className='error-page '>
       <h1>404 - Тази страница не съществува!</h1>
@@ -10,5 +10,3 @@ const NotExist = () => {
     </div>
   );
 };
-
-export default NotExist;
