@@ -1,7 +1,7 @@
 import Select from "react-select";
 import React from "react";
 
-export default function CustomSelect({options, setValue, name, defaultValue}) {
+export default function CustomSelect({options, setValue, name, defaultValue, isClearable=false}) {
     const defaultOption = options.find(option => option.value === defaultValue);
 
     return (
@@ -9,9 +9,10 @@ export default function CustomSelect({options, setValue, name, defaultValue}) {
                 onChange={(newValue) => {
                     setValue((prevValue) => ({
                         ...prevValue,
-                        [name]: newValue.value
+                        [name]: newValue ? newValue.value : null
                     }));
                 }}
+                isClearable={isClearable}
                 placeholder={`Choose ${name}`}
                 defaultValue={defaultOption}
                 options={options}

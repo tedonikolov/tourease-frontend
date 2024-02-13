@@ -8,6 +8,7 @@ import RegularProfilePage from "../pages/RegularProfilePage";
 import {PrivateRoute} from "./PrivateRoute";
 import NotExist from "../pages/NotExistPage";
 import PasswordChangePage from "../pages/PasswordChangePage";
+import LogsPage from "../pages/LogsPage";
 
 export const Router = () => {
     const navigate = useNavigate();
@@ -32,6 +33,12 @@ export const Router = () => {
                 >
                     <Route path={'/'} element={<RegularProfilePage/>}/>
                     <Route path={'/profile'} element={<RegularProfilePage/>}/>
+                </Route>
+                <Route
+                    path={'/'}
+                    element={<AccessibilityCheckRoute allowedRoles={['ADMIN']}/>}
+                >
+                    <Route path={'/logs'} element={<LogsPage/>}/>
                 </Route>
             </Route>
         </Routes>

@@ -14,18 +14,16 @@ import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-        <QueryClientProvider client={new QueryClient()}>
-            <AuthProvider>
-                <BrowserRouter>
-                    <Suspense fallback={<Spinner animation='border'/>}>
-                        <Router/>
-                    </Suspense>
-                    <ToastContainer theme={"colored"}/>
-                </BrowserRouter>
-            </AuthProvider>
-        </QueryClientProvider>
-    </React.StrictMode>
+    <QueryClientProvider client={new QueryClient()}>
+        <AuthProvider>
+            <BrowserRouter>
+                <Suspense fallback={<Spinner animation='border'/>}>
+                    <Router/>
+                </Suspense>
+                <ToastContainer theme={"colored"}/>
+            </BrowserRouter>
+        </AuthProvider>
+    </QueryClientProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

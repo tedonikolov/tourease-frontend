@@ -29,7 +29,7 @@ export const AuthProvider = ({children}) => {
                 break;
             }
             case 'ADMIN': {
-                setNavigatePage('');
+                setNavigatePage('/logs');
                 break;
             }
         }
