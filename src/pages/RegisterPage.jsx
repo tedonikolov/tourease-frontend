@@ -5,7 +5,10 @@ import CustomStepWizardNav from "../componets/CustomStepWizardNav";
 import ActivateEmail from "../componets/ActivateEmail";
 import {sendActivateProfile} from "../hooks/User";
 import ActivateSuccessful from "../componets/ActivateSuccessful";
+import {useTranslation} from "react-i18next";
 export default function RegisterPage ({activateProfile, step}){
+    const {t}=useTranslation("translation",{keyPrefix:"common"})
+
     const [userInfo, setUserInfo] = useState({email: "", password: "", secondPassword: "", userType: "REGULAR"})
 
     useEffect(() => {
@@ -18,11 +21,11 @@ export default function RegisterPage ({activateProfile, step}){
 
     return(
         <div className={"mt-lg-5 w-100 register d-flex row justify-content-center text-center"}>
-            <h2>Register steps</h2>
+            <h2>{t("register")}</h2>
             <StepWizard
                 initialStep={step}
                 className=''
-                nav={<CustomStepWizardNav hideNextSteps={true} isDisabled={true} steps={['Create profile', 'Email activation', 'Activated']} />}
+                nav={<CustomStepWizardNav hideNextSteps={true} isDisabled={true} steps={[t('Create profile'), t('Email activation'), t('Activated')]} />}
                 transitions={{
                     enterRight: '',
                     enterLeft: '',

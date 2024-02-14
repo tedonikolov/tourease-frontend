@@ -23,7 +23,7 @@ export default function CommonInputText({
     return (
         <>
             <div className='d-flex mt-3'>
-                <label className={"w-100 text-start"}>{label}</label>
+                <label className={"w-100 text-start"}>{label}:</label>
                 <div className={"d-flex w-100 justify-content-end"}>
                     <input
                         className={"mx-5"}

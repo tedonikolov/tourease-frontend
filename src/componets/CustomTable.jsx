@@ -1,6 +1,8 @@
 import {Table} from "react-bootstrap";
+import {useTranslation} from "react-i18next";
 
 export default function CustomTable({columns}) {
+    const [t] =useTranslation("translation",{keyPrefix:'table'});
     return (
         <div>
             <Table className={"table table-striped table-bordered"}>
@@ -8,7 +10,7 @@ export default function CustomTable({columns}) {
                 <tr>
                     {columns.headings.map((column, index) => (
                         <th key={index}>
-                            {column}
+                            {t(column)}
                         </th>
                         )
                     )}

@@ -7,8 +7,12 @@ import {useQuery} from "@tanstack/react-query";
 import {getCountries} from "../hooks/config";
 import PassportRegularInfo from "../componets/PassportRegularInfo";
 import Header from "../componets/Header";
+import {useTranslation} from "react-i18next";
 
 export default function RegularProfilePage() {
+    const {t}=useTranslation("translation",{keyPrefix:"common"})
+    const {t:countries}=useTranslation("translation",{keyPrefix:"countries"})
+
     const {loggedUser, setLoggedUser} = useContext(AuthContext);
     const {data, isLoading} = useQuery({
             queryKey: ["get all countries"],
@@ -29,7 +33,7 @@ export default function RegularProfilePage() {
             <StepWizard
                 initialStep={step}
                 className=''
-                nav={<CustomStepWizardNav steps={['Profile', 'Passport']}/>}
+                nav={<CustomStepWizardNav steps={[t('profile'), t('passport')]}/>}
                 transitions={{
                     enterRight: '',
                     enterLeft: '',
@@ -39,11 +43,11 @@ export default function RegularProfilePage() {
             >
                 <RegularProfileInfo userInfo={loggedUser} setUserInfo={setLoggedUser}
                                     countries={data ? data.map((country) => {
-                                        return {value: country, label: country}
+                                        return {value: country, label: countries(country)}
                                     }) : []}/>
                 <PassportRegularInfo userInfo={loggedUser} setUserInfo={setLoggedUser}
                                      countries={data ? data.map((country) => {
-                                         return {value: country, label: country}
+                                         return {value: country, label: countries(country)}
                                      }) : []}/>
             </StepWizard>
         </div>

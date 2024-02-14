@@ -7,8 +7,12 @@ import dayjs from "dayjs";
 import CommonInputText from "../componets/CommonInputText";
 import CustomDatePicker from "../componets/CustomDatePicker";
 import CustomSelect from "../componets/CustomSelect";
+import {useTranslation} from "react-i18next";
 
 export default function LogsPage() {
+    const [t] =useTranslation("translation",{keyPrefix:'logs'});
+    const {t:common} =useTranslation("translation",{keyPrefix:'common'});
+
     const [chronologyFilter, setChronologyFilter] = useState({
         email: "",
         type: null,
@@ -26,7 +30,6 @@ export default function LogsPage() {
     })
 
     useEffect(() => {
-        console.log("asd")
         if (chronologyFilter.createdAfter !== 'Invalid Date' && chronologyFilter.createdBefore !== 'Invalid Date')
             refetch(chronologyFilter)
     }, [chronologyFilter, refetch]);
@@ -41,28 +44,28 @@ export default function LogsPage() {
             <Header/>
             <div>
                 <div className={"d-flex justify-content-between"}>
-                    <h2 className={"mt-4 mx-5"}>Chronology</h2>
+                    <h2 className={"mt-4 mx-5"}>{t("Chronology")}</h2>
                     <div className={"w-25 mt-3"}>
-                        <CustomSelect name={"type"} setValue={setChronologyFilter} isClearable={true}
+                        <CustomSelect name={t("type")} setValue={setChronologyFilter} isClearable={true}
                                       options={types ? types.map((type) => {
-                                          return {value: type, label: type}
+                                          return {value: type, label: t(type)}
                                       }) : []}/>
                     </div>
                     <div className={"d-flex justify-content-end m-2"}>
-                        <CustomDatePicker label={"From:"} setValue={setChronologyFilter} name={"createdAfter"}/>
-                        <CustomDatePicker label={"To:"} setValue={setChronologyFilter} name={"createdBefore"}
+                        <CustomDatePicker label={common("fromDate")} setValue={setChronologyFilter} name={"createdAfter"}/>
+                        <CustomDatePicker label={common("toDate")} setValue={setChronologyFilter} name={"createdBefore"}
                                           minDate={dayjs(chronologyFilter.createdAfter)}/>
                     </div>
                 </div>
-                <div className={"d-flex justify-content-end"}>
-                    <CommonInputText label={"User:"} name={"email"} setObjectValue={setChronologyFilter}/>
+                <div className={"d-flex w-100 mb-3 justify-content-end"}>
+                    <CommonInputText label={common("user")+":"} name={"email"} setObjectValue={setChronologyFilter}/>
                 </div>
             </div>
             {!isLoading &&
                 <div className={"w-75 mx-5"}>
                     <CustomTable columns={{
                         headings: ["User", "Message", "Date"],
-                        items: logs.map(({email, message, date}) => [email, message, convertDate(date)])
+                        items: logs.map(({email, message, date}) => [email, t(message), convertDate(date)])
                     }}/>
                 </div>}
         </div>

@@ -32,20 +32,20 @@ instance.interceptors.response.use(
                     if (errorResponse.type === 'VALIDATION' && errorResponse.validations.length > 0) {
                         let errors = errorResponse.validations.map((value) => `${value.error}`);
                         if (errors.length === 1) {
-                            toast.error(<CustomToastContent content={[...errors]}/>);
+                            toast.error(<CustomToastContent translated content={[...errors]}/>);
                         } else {
                             toast.error(
-                                <CustomToastContent content={[errorResponse.errorCode, ...errors]}/>
+                                <CustomToastContent translated content={[errorResponse.error, ...errors]}/>
                             );
                         }
                     } else {
                         if (+errorResponse.errorCode === 0) break;
                         else if (+errorResponse.errorCode > 0 && +errorResponse.errorCode < 9)
                             toast.error(
-                                <CustomToastContent content={[errorResponse.error]}/>,
+                                <CustomToastContent translated content={[errorResponse.error]}/>,
                             );
                         else
-                            toast.error(<CustomToastContent content={['apiError']}/>);
+                            toast.error(<CustomToastContent translated content={['apiError']}/>);
                     }
                 }
                 break;
@@ -58,15 +58,17 @@ instance.interceptors.response.use(
                 break;
             }
             case 403: {
-                toast.error(<CustomToastContent content={['Server Access denied']}/>);
+                toast.error(<CustomToastContent translated content={['forbidden']}/>);
                 break;
             }
             case 404: {
+                toast.error(<CustomToastContent translated content={['serviceNotFound']}/>);
                 console.log('Server Connection Error:', error.response?.data);
                 break;
             }
             //Dev only
             case 500 - 599: {
+                toast.error(<CustomToastContent translated content={['serviceNotFound']}/>);
                 console.log('Server Connection Error:', error.response?.data);
                 break;
             }

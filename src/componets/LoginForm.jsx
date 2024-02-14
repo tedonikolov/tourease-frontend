@@ -7,8 +7,11 @@ import {Navigate} from "react-router-dom";
 import {sendPasswordChangeEmail} from "../hooks/User";
 import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
+import {useTranslation} from "react-i18next";
 
 export default function LoginForm({show, onHide}) {
+    const {t}=useTranslation("translation",{keyPrefix:"common"})
+
     const [userInfo, setUserInfo] = useState({username: "", password: ""})
     const {login, mainPage, loggedUser} = useContext(AuthContext);
     const [error, setError] = useState(false);
@@ -30,7 +33,7 @@ export default function LoginForm({show, onHide}) {
         event.preventDefault();
         const status = await sendPasswordChangeEmail(email);
         setIsLoading(false);
-        status ==='' && toast.success(<CustomToastContent content={['Email send successfully!']}/>);
+        status ==='' && toast.success(<CustomToastContent content={[t("successEmailSend")]}/>);
         setDelay(() => 60);
     }
 
@@ -51,42 +54,42 @@ export default function LoginForm({show, onHide}) {
                 {!changePassword ? <div className={"login-box"}>
                         <Modal.Header closeButton>
                             <Modal.Title>
-                                <h3>Login into your account</h3>
+                                <h3>{t("Login into your account")}</h3>
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            {error && <div className={"text-danger text-center mb-2"}>Wrong credentials</div>}
+                            {error && <div className={"text-danger text-center mb-2"}>{t("wrongCredentials")}</div>}
                             <Form id={"login"} onSubmit={sendLogin}>
-                                <CommonInputText label={"Email:"} name={"username"} type={"text"} value={userInfo.username}
+                                <CommonInputText label={t("email")} name={"username"} type={"text"} value={userInfo.username}
                                                  setObjectValue={setUserInfo}/>
-                                <CommonInputText label={"Password:"} name={"password"} type={"password"}
+                                <CommonInputText label={t("password")} name={"password"} type={"password"}
                                                  value={userInfo.password} setObjectValue={setUserInfo}/>
                             </Form>
                         </Modal.Body>
                         <Modal.Footer className='d-flex justify-content-between'>
-                            <button form={"login"} className={"login-button"}>Login</button>
-                            <button className={"password-button"} onClick={() => setChangePassword(true)}>Forgot password</button>
-                            <button className={"close-button"} onClick={onHide}>Close</button>
+                            <button form={"login"} className={"login-button"}>{t("login")}</button>
+                            <button className={"password-button"} onClick={() => setChangePassword(true)}>{t("forgotPassword")}</button>
+                            <button className={"close-button"} onClick={onHide}>{t("close")}</button>
                         </Modal.Footer>
                     </div>
                     :
                     <div className={"login-box"}>
                         <Modal.Header closeButton>
                             <Modal.Title>
-                                <h3>Change password</h3>
+                                <h3>{t("forgotPassword")}</h3>
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <Form id={"changePassword"} onSubmit={sendChangePassword}>
-                                <CommonInputText label={"Email:"} type={"text"}
+                                <CommonInputText label={t("email")} type={"text"}
                                                  value={email}
                                                  setValue={setEmail}/>
                             </Form>
                         </Modal.Body>
                         <Modal.Footer className='d-flex justify-content-between'>
-                            {delay !== 0 ? <div> <h5>Can resend it again after:</h5> <h5 className={"text-danger"}> {delay} </h5> </div> : isLoading ? <Spinner animation={'border'}/> :
-                                <button form={"changePassword"} className={"login-button"}>Resent</button>}
-                            <button className={"close-button"} onClick={()=>setChangePassword(false)}>Close</button>
+                            {delay !== 0 ? <div> <h5>{t("Can resend it again after")}</h5> <h5 className={"text-danger"}> {delay} </h5> </div> : isLoading ? <Spinner animation={'border'}/> :
+                                <button form={"changePassword"} className={"login-button"}>{t("send")}</button>}
+                            <button className={"close-button"} onClick={()=>setChangePassword(false)}>{t("close")}</button>
                         </Modal.Footer>
                     </div>}
             </Modal>
