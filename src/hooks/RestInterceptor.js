@@ -2,6 +2,9 @@ import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CustomToastContent from "../componets/CustomToastContent";
+import {QueryClient} from "@tanstack/react-query";
+
+export const queryClient = new QueryClient();
 
 const instance = Object.assign(
     axios.create({

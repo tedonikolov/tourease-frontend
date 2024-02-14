@@ -10,11 +10,12 @@ import {Router} from "./routes/Routes";
 import {BrowserRouter} from "react-router-dom";
 import {Suspense} from 'react';
 import {Spinner} from 'react-bootstrap';
-import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
+import {QueryClientProvider} from "@tanstack/react-query";
+import {queryClient} from "./hooks/RestInterceptor";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={queryClient}>
         <AuthProvider>
             <BrowserRouter>
                 <Suspense fallback={<Spinner animation='border'/>}>
