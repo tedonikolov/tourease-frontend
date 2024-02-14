@@ -1,6 +1,6 @@
 import restInterceptor from "./RestInterceptor";
 
-export function sendRegularProfile (email, regular){
+export function sendRegularProfile ({email, regular}){
     return restInterceptor.post("/user-service/regular/save",
         {
             email: email,
@@ -8,7 +8,7 @@ export function sendRegularProfile (email, regular){
         }
     )
 }
-export function sendRegularPassport (email, passport){
+export function sendRegularPassport ({email, passport}){
     return restInterceptor.post("/user-service/regular/passport/save",
         {
             email: email,

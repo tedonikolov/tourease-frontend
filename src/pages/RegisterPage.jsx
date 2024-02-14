@@ -6,16 +6,21 @@ import ActivateEmail from "../componets/ActivateEmail";
 import {sendActivateProfile} from "../hooks/User";
 import ActivateSuccessful from "../componets/ActivateSuccessful";
 import {useTranslation} from "react-i18next";
+import {useMutation} from "@tanstack/react-query";
 export default function RegisterPage ({activateProfile, step}){
     const {t}=useTranslation("translation",{keyPrefix:"common"})
 
     const [userInfo, setUserInfo] = useState({email: "", password: "", secondPassword: "", userType: "REGULAR"})
 
+    const {mutate:activate}=useMutation({
+        mutationFn:sendActivateProfile
+    })
+
     useEffect(() => {
         if(activateProfile){
             const url = new URL(window.location.href);
             const email = url.searchParams.get('email');
-            sendActivateProfile(email);
+            activate(email);
         }
     }, []);
 

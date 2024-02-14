@@ -8,6 +8,7 @@ import {sendRegularProfile} from "../hooks/Regular";
 import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
 import {useTranslation} from "react-i18next";
+import {useMutation} from "@tanstack/react-query";
 
 export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
     const {t} = useTranslation("translation", {keyPrefix: "common"})
@@ -19,13 +20,17 @@ export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
 
     const disabled = regular.birthDate === 'Invalid Date' || regular.birthDate === null;
 
-    async function saveRegular(event) {
-        event.preventDefault();
-        const response = await sendRegularProfile(userInfo.email, regular);
-        if (!response) {
+    const {mutate} = useMutation({
+        mutationFn: sendRegularProfile,
+        onSuccess: () => {
             setUserInfo({...userInfo, regular: regular});
             toast.success(<CustomToastContent content={[t("successUpdate")]}/>);
         }
+    })
+
+    function saveRegular(event) {
+        event.preventDefault();
+        mutate({email:userInfo.email, regular:regular});
     }
 
     return (
@@ -37,7 +42,7 @@ export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
                 <CommonInputText type={'text'} value={regular.lastName}
                                  label={t('lastName')} name={'lastName'} setObjectValue={setRegular}/>
                 <CustomDatePicker label={t('Date of birth')} selectedDate={regular.birthDate} name={'birthDate'}
-                                  setObjectValue={setRegular} isClearable={false}/>
+                                  setValue={setRegular} isClearable={false}/>
                 <CustomSelect options={countries} defaultValue={regular.country} setValue={setRegular}
                               label={t('country')} name={'country'}/>
                 <CustomSelect options={gender} defaultValue={regular.gender} setValue={setRegular}

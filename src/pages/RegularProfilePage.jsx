@@ -10,13 +10,14 @@ import Header from "../componets/Header";
 import {useTranslation} from "react-i18next";
 
 export default function RegularProfilePage() {
-    const {t}=useTranslation("translation",{keyPrefix:"common"})
-    const {t:countries}=useTranslation("translation",{keyPrefix:"countries"})
+    const {t} = useTranslation("translation", {keyPrefix: "common"})
+    const {t: countries} = useTranslation("translation", {keyPrefix: "countries"})
 
     const {loggedUser, setLoggedUser} = useContext(AuthContext);
     const {data, isLoading} = useQuery({
             queryKey: ["get all countries"],
-            queryFn: getCountries
+            queryFn: getCountries,
+            staleTime: 5000
         }
     )
     const [step, setStep] = useState();

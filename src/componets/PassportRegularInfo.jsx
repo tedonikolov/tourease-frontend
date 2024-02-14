@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
 import {useTranslation} from "react-i18next";
+import {useMutation} from "@tanstack/react-query";
 
 export default function PassportRegularInfo({userInfo, countries, setUserInfo}) {
     const {t}=useTranslation("translation",{keyPrefix:"common"})
@@ -17,14 +18,18 @@ export default function PassportRegularInfo({userInfo, countries, setUserInfo}) 
 
     const disabled= passport.expirationDate==='Invalid Date' || passport.expirationDate===null || passport.creationDate==='Invalid Date' || passport.creationDate===null
 
-    async function savePassport(event) {
-        event.preventDefault()
-        const response = await sendRegularPassport(userInfo.email, passport);
-        if (!response) {
+    const {mutate} = useMutation({
+        mutationFn:sendRegularPassport,
+        onSuccess:()=>{
             passport.expired=false;
             setUserInfo({...userInfo, regular: {...userInfo.regular, passport: passport}});
             toast.success(<CustomToastContent content={[t("successUpdate")]}/>);
         }
+    })
+
+    function savePassport(event) {
+        event.preventDefault()
+        mutate({email:userInfo.email, passport:passport});
     }
 
     return (

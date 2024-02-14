@@ -22,7 +22,7 @@ export default function CommonInputText({
 
     return (
         <>
-            <div className='d-flex text-nowrap justify-content-center align-items-center text-center'>
+            <div className='d-flex text-nowrap justify-content-center align-items-center text-center mt-3'>
                 <label className={"w-100 text-start"}>{label}:</label>
                 <div className={"d-flex w-100 justify-content-end"}>
                     <input

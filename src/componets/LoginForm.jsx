@@ -8,38 +8,32 @@ import {sendPasswordChangeEmail} from "../hooks/User";
 import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
 import {useTranslation} from "react-i18next";
+import {useMutation} from "@tanstack/react-query";
 
 export default function LoginForm({show, onHide}) {
-    const {t}=useTranslation("translation",{keyPrefix:"common"})
+    const {t} = useTranslation("translation", {keyPrefix: "common"})
 
     const [userInfo, setUserInfo] = useState({username: "", password: ""})
     const {login, mainPage, loggedUser} = useContext(AuthContext);
-    const [error, setError] = useState(false);
 
     const [changePassword, setChangePassword] = useState(false);
     const [email, setEmail] = useState("");
     let [delay, setDelay] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
 
-    async function sendLogin(event) {
-        setError(false);
-        event.preventDefault();
-        const status = await login(userInfo)
-        status === 200 ? onHide && onHide() : setError(() => true)
-    }
+    const {mutate: sendLogin, isError} = useMutation({
+        mutationFn: login
+    });
 
-    async function sendChangePassword(event) {
-        setIsLoading(true);
+    const {mutate: sendPasswordLink, isPending} = useMutation({
+        mutationFn: sendPasswordChangeEmail,
+        onSuccess: () => toast.success(<CustomToastContent content={[t("successEmailSend")]}/>)
+    });
+
+    function sendChangePassword(event) {
         event.preventDefault();
-        const status = await sendPasswordChangeEmail(email);
-        setIsLoading(false);
-        status ==='' && toast.success(<CustomToastContent content={[t("successEmailSend")]}/>);
+        sendPasswordLink(email);
         setDelay(() => 60);
     }
-
-    useEffect(() => {
-        setError(false);
-    }, [show]);
 
     useEffect(() => {
         if (delay !== 0) {
@@ -58,9 +52,13 @@ export default function LoginForm({show, onHide}) {
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            {error && <div className={"text-danger text-center mb-2"}>{t("wrongCredentials")}</div>}
-                            <Form id={"login"} onSubmit={sendLogin}>
-                                <CommonInputText label={t("email")} name={"username"} type={"text"} value={userInfo.username}
+                            {isError && <div className={"text-danger text-center mb-2"}>{t("wrongCredentials")}</div>}
+                            <Form id={"login"} onSubmit={(event) => {
+                                event.preventDefault();
+                                sendLogin(userInfo);
+                            }}>
+                                <CommonInputText label={t("email")} name={"username"} type={"text"}
+                                                 value={userInfo.username}
                                                  setObjectValue={setUserInfo}/>
                                 <CommonInputText label={t("password")} name={"password"} type={"password"}
                                                  value={userInfo.password} setObjectValue={setUserInfo}/>
@@ -68,7 +66,8 @@ export default function LoginForm({show, onHide}) {
                         </Modal.Body>
                         <Modal.Footer className='d-flex justify-content-between'>
                             <button form={"login"} className={"login-button"}>{t("login")}</button>
-                            <button className={"password-button"} onClick={() => setChangePassword(true)}>{t("forgotPassword")}</button>
+                            <button className={"password-button"}
+                                    onClick={() => setChangePassword(true)}>{t("forgotPassword")}</button>
                             <button className={"close-button"} onClick={onHide}>{t("close")}</button>
                         </Modal.Footer>
                     </div>
@@ -87,9 +86,12 @@ export default function LoginForm({show, onHide}) {
                             </Form>
                         </Modal.Body>
                         <Modal.Footer className='d-flex justify-content-between'>
-                            {delay !== 0 ? <div> <h5>{t("Can resend it again after")}</h5> <h5 className={"text-danger"}> {delay} </h5> </div> : isLoading ? <Spinner animation={'border'}/> :
+                            {isPending ? <Spinner animation={'border'}/> : delay !== 0 ?
+                                <div><h5>{t("Can resend it again after")}</h5> <h5
+                                    className={"text-danger"}> {delay} </h5></div> :
                                 <button form={"changePassword"} className={"login-button"}>{t("send")}</button>}
-                            <button className={"close-button"} onClick={()=>setChangePassword(false)}>{t("close")}</button>
+                            <button className={"close-button"}
+                                    onClick={() => setChangePassword(false)}>{t("close")}</button>
                         </Modal.Footer>
                     </div>}
             </Modal>

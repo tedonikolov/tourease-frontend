@@ -2,19 +2,17 @@ import {Button, Spinner} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {sendActivateEmail} from "../hooks/User";
 import {useTranslation} from "react-i18next";
+import {useMutation} from "@tanstack/react-query";
 
 export default function ActivateEmail({userInfo}) {
-    const {t}=useTranslation("translation",{keyPrefix:"common"})
+    const {t} = useTranslation("translation", {keyPrefix: "common"})
 
     let [delay, setDelay] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
 
-    async function sendEmail() {
-        setIsLoading(() => true);
-        await sendActivateEmail(userInfo.email);
-        setIsLoading(() => false);
-        setDelay(() => 60);
-    }
+    const {mutate: sendEmail, isPending} = useMutation({
+        mutationFn: sendActivateEmail,
+        onSuccess: () => setDelay(() => 60)
+    })
 
     useEffect(() => {
         if (delay !== 0) {
@@ -30,8 +28,9 @@ export default function ActivateEmail({userInfo}) {
                 {t("Please click on sent link.")}<br/>
                 {t("If you didn't receive email, click on resend it.")}
             </h4>
-            {delay !== 0 ? <div> <h5>{t("Can resend it again after")}</h5> <h5 className={"text-danger"}> {delay} </h5> </div> : isLoading ? <Spinner animation={'border'}/> :
-                <Button onClick={sendEmail} className={"register-button m-3"}>{t("resend")}</Button>}
+            {isPending ? <Spinner animation={'border'}/> : delay !== 0 ?
+                <div><h5>{t("Can resend it again after")}</h5> <h5 className={"text-danger"}> {delay} </h5></div>
+                : <Button onClick={()=>sendEmail(userInfo.email)} className={"register-button m-3"}>{t("resend")}</Button>}
         </div>
     )
 }

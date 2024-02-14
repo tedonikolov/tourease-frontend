@@ -79,7 +79,7 @@ instance.interceptors.response.use(
                 console.log('Unmapped error', error.response?.data);
             }
         }
-        return error.response?.data;
+        throw error.response.error;
     }
 );
 

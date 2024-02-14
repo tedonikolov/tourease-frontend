@@ -55,10 +55,9 @@ export const AuthProvider = ({children}) => {
             sessionStorage.setItem('token', token);
             sessionStorage.setItem('username', userInfo.username);
             await getUserData(userInfo.username);
-            return userResponse.status;
         } else {
             clearUserData();
-            return userResponse.status;
+            throw userResponse.status;
         }
     };
 

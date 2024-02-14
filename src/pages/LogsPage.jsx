@@ -58,9 +58,9 @@ export default function LogsPage() {
                                           return {value: type, label: t(type)}
                                       }) : []}/>
                     </div>
-                    <div className={"d-flex justify-content-end m-2"}>
-                        <CustomDatePicker label={common("fromDate")} setValue={setChronologyFilter}
-                                          name={"createdAfter"}/>
+                    <div className={"d-flex m-2"}>
+                        <div className={"mx-4"}><CustomDatePicker label={common("fromDate")} setValue={setChronologyFilter}
+                                               name={"createdAfter"}/></div>
                         <CustomDatePicker label={common("toDate")} setValue={setChronologyFilter} name={"createdBefore"}
                                           minDate={dayjs(chronologyFilter.createdAfter)}/>
                     </div>
