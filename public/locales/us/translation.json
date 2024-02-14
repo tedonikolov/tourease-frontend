@@ -70,7 +70,9 @@
     "wrongCredentials": "Wrong username or password",
     "forgotPassword": "Forgot Password",
     "pageDontExist": "404 - This page does not exist!",
-    "homePage": "Home Page"
+    "homePage": "Home Page",
+    "choose page size": "items to show",
+    "noDataText": "No {{items}} available to show!"
   },
   "table": {
     "User": "User",
@@ -79,6 +81,7 @@
   },
   "logs": {
     "Chronology": "Chronology",
+    "noLogsToShow": "logs",
     "type": "Message Type",
     "LOGIN": "Login",
     "WRONG_PASSWORD": "Wrong Password",

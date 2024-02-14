@@ -70,7 +70,9 @@
     "wrongCredentials": "Грешно име или парола",
     "forgotPassword": "Забравена парола",
     "pageDontExist": "404 - Тази страница не съществува!",
-    "homePage": "Начална страница"
+    "homePage": "Начална страница",
+    "choose page size": "Брой на записите",
+    "noDataText": "Няма налични {{items}} за показване!"
   },
   "table": {
     "User": "Потребител",
@@ -79,6 +81,7 @@
   },
   "logs": {
     "Chronology": "Хронология",
+    "noLogsToShow": "логове",
     "type": "вид съобщение",
     "LOGIN": "Вход в системата",
     "WRONG_PASSWORD": "Грешна парола",
