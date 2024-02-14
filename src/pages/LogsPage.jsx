@@ -46,7 +46,7 @@ export default function LogsPage() {
                 <div className={"d-flex justify-content-between"}>
                     <h2 className={"mt-4 mx-5"}>{t("Chronology")}</h2>
                     <div className={"w-25 mt-3"}>
-                        <CustomSelect name={t("type")} setValue={setChronologyFilter} isClearable={true}
+                        <CustomSelect label={t("type")} name={"type"} setValue={setChronologyFilter} isClearable={true}
                                       options={types ? types.map((type) => {
                                           return {value: type, label: t(type)}
                                       }) : []}/>

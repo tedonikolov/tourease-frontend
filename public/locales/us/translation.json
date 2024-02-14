@@ -21,6 +21,8 @@
     "Regular": "Regular",
     "Hotel": "Hotel",
     "Transport": "Transport company",
+    "country": "Country",
+    "gender": "Gender",
     "email": "Email",
     "password": "Password",
     "repeatPassword": "Repeat Password",

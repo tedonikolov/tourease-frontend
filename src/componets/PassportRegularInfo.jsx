@@ -41,7 +41,7 @@ export default function PassportRegularInfo({userInfo, countries, setUserInfo}) 
                         <CustomDatePicker label={t('expirationDate')} selectedDate={passport.expirationDate}
                                           name={'expirationDate'} minDate={dayjs()}
                                           setValue={setPassport}/>
-                        <CustomSelect options={countries}
+                        <CustomSelect options={countries} label={t('country')}
                                       defaultValue={passport.country}
                                       setValue={setPassport} name={'country'}/>
                         {disabled && <div className={"mt-4 text-danger"}>* Select valid passport date!</div>}
