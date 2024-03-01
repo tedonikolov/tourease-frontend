@@ -1,0 +1,57 @@
+.page {
+    height: 100vh;
+    position: relative;
+
+    &.sidebar-active {
+        .sidebar {
+            width: 250px;
+            visibility: visible;
+        }
+
+        @media (min-width: 1024px) {
+            .content-page {
+                padding-left: 250px;
+            }
+        }
+    }
+}
+
+.sidebar-overlay {
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    z-index: 12;
+    background-color: rgba(0, 0, 0, 0.466);
+}
+
+.sidebar {
+    visibility: hidden;
+    width: 0px;
+    z-index: 6;
+}
+
+.color-main {
+    color: #00ff48;
+
+    &.link {
+        &:hover {
+            color: #5e00ff;
+        }
+    }
+}
+
+.color-second{
+    color: #5e00ff;
+}
+
+.menu-button{
+    font-size: 20px;
+    background-color: unset !important;
+}
+
+.menu-button:hover{
+    cursor: pointer;
+    color: #00ff48;
+    background-color: #5e00ff !important;
+    box-shadow: 1px 10px 10px #282c34;
+}

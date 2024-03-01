@@ -8,10 +8,14 @@ import {getCountries} from "../hooks/config";
 import PassportRegularInfo from "../componets/PassportRegularInfo";
 import Header from "../componets/Header";
 import {useTranslation} from "react-i18next";
+import SideBar from "../componets/SideBar";
+import Navigation from "../componets/Navigation";
+import {SideBarContext} from "../context/SideBarContext";
 
 export default function RegularProfilePage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"})
     const {t: countries} = useTranslation("translation", {keyPrefix: "countries"})
+    const { sideBarVisible } = useContext(SideBarContext);
 
     const {loggedUser, setLoggedUser} = useContext(AuthContext);
     const {data, isLoading} = useQuery({
@@ -29,28 +33,33 @@ export default function RegularProfilePage() {
     }, []);
 
     return (
-        !isLoading && <div>
-            <Header/>
-            <StepWizard
-                initialStep={step}
-                className=''
-                nav={<CustomStepWizardNav steps={[t('profile'), t('passport')]}/>}
-                transitions={{
-                    enterRight: '',
-                    enterLeft: '',
-                    exitRight: '',
-                    exitLeft: '',
-                }}
-            >
-                <RegularProfileInfo userInfo={loggedUser} setUserInfo={setLoggedUser}
-                                    countries={data ? data.map((country) => {
-                                        return {value: country, label: countries(country)}
-                                    }) : []}/>
-                <PassportRegularInfo userInfo={loggedUser} setUserInfo={setLoggedUser}
-                                     countries={data ? data.map((country) => {
-                                         return {value: country, label: countries(country)}
-                                     }) : []}/>
-            </StepWizard>
+        !isLoading && <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
+            <SideBar>
+                <Navigation/>
+            </SideBar>
+            <div className='content-page flex-column justify-content-start align-items-start w-100'>
+                <Header title={t("profile")}/>
+                <StepWizard
+                    initialStep={step}
+                    className=''
+                    nav={<CustomStepWizardNav steps={[t('profile'), t('passport')]}/>}
+                    transitions={{
+                        enterRight: '',
+                        enterLeft: '',
+                        exitRight: '',
+                        exitLeft: '',
+                    }}
+                >
+                    <RegularProfileInfo userInfo={loggedUser} setUserInfo={setLoggedUser}
+                                        countries={data ? data.map((country) => {
+                                            return {value: country, label: countries(country)}
+                                        }) : []}/>
+                    <PassportRegularInfo userInfo={loggedUser} setUserInfo={setLoggedUser}
+                                         countries={data ? data.map((country) => {
+                                             return {value: country, label: countries(country)}
+                                         }) : []}/>
+                </StepWizard>
+            </div>
         </div>
     )
 }

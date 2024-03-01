@@ -1,5 +1,6 @@
 import {createContext, useEffect, useState} from "react";
 import {getLoggedUser} from "../hooks/User";
+import {Admin, Hotel, Regular, Transport} from "../utils/Role";
 
 export const AuthContext = createContext();
 
@@ -16,19 +17,19 @@ export const AuthProvider = ({children}) => {
         setLoggedUser(user);
         setPermission(user.userType);
         switch (user.userType) {
-            case 'REGULAR': {
+            case Regular: {
                 setNavigatePage('/profile');
                 break;
             }
-            case 'HOTEL': {
+            case Hotel: {
                 setNavigatePage('');
                 break;
             }
-            case 'TRANSPORT': {
+            case Transport: {
                 setNavigatePage('');
                 break;
             }
-            case 'ADMIN': {
+            case Admin: {
                 setNavigatePage('/logs');
                 break;
             }

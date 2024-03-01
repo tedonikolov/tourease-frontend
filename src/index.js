@@ -12,17 +12,20 @@ import {Suspense} from 'react';
 import {Spinner} from 'react-bootstrap';
 import {QueryClientProvider} from "@tanstack/react-query";
 import {queryClient} from "./hooks/RestInterceptor";
+import SideBarProvider from "./context/SideBarContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <QueryClientProvider client={queryClient}>
         <AuthProvider>
-            <BrowserRouter>
-                <Suspense fallback={<Spinner animation='border'/>}>
-                    <Router/>
-                </Suspense>
-                <ToastContainer theme={"colored"}/>
-            </BrowserRouter>
+            <SideBarProvider>
+                <BrowserRouter>
+                    <Suspense fallback={<Spinner animation='border'/>}>
+                        <Router/>
+                    </Suspense>
+                    <ToastContainer theme={"colored"}/>
+                </BrowserRouter>
+            </SideBarProvider>
         </AuthProvider>
     </QueryClientProvider>
 );
