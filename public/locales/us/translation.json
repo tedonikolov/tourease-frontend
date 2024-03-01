@@ -72,7 +72,8 @@
     "pageDontExist": "404 - This page does not exist!",
     "homePage": "Home Page",
     "choose page size": "items to show",
-    "noDataText": "No {{items}} available to show!"
+    "noDataText": "No {{items}} available to show!",
+    "Swagger": "Swagger"
   },
   "table": {
     "User": "User",

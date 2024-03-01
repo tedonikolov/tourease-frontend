@@ -9,6 +9,7 @@ import {PrivateRoute} from "./PrivateRoute";
 import NotExist from "../pages/NotExistPage";
 import PasswordChangePage from "../pages/PasswordChangePage";
 import LogsPage from "../pages/LogsPage";
+import Swagger from "../pages/Swagger";
 
 export const Router = () => {
     const navigate = useNavigate();
@@ -39,6 +40,7 @@ export const Router = () => {
                     element={<AccessibilityCheckRoute allowedRoles={['ADMIN']}/>}
                 >
                     <Route path={'/logs'} element={<LogsPage/>}/>
+                    <Route path='/swagger' element={<Swagger/>}/>
                 </Route>
             </Route>
         </Routes>
