@@ -43,9 +43,9 @@ export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
                                  label={t('lastName')} name={'lastName'} setObjectValue={setRegular}/>
                 <CustomDatePicker label={t('Date of birth')} selectedDate={regular.birthDate} name={'birthDate'}
                                   setValue={setRegular} isClearable={false}/>
-                <CustomSelect options={countries} defaultValue={regular.country} setValue={setRegular}
+                <CustomSelect options={countries} defaultValue={regular.country} setObjectValue={setRegular}
                               label={t('country')} name={'country'}/>
-                <CustomSelect options={gender} defaultValue={regular.gender} setValue={setRegular}
+                <CustomSelect options={gender} defaultValue={regular.gender} setObjectValue={setRegular}
                               label={t('gender')} name={'gender'}/>
 
                 {disabled && <div className={"mt-4 text-danger"}>* Select valid passport date!</div>}
