@@ -1,19 +1,20 @@
 import {createContext, useEffect, useState} from "react";
 import {getLoggedUser} from "../hooks/User";
 import {Admin, Hotel, Regular, Transport} from "../utils/Role";
+import {useQuery} from "@tanstack/react-query";
+import {queryClient} from "../hooks/RestInterceptor";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
     const [token, setToken] = useState(sessionStorage.getItem('token'));
-    const username = sessionStorage.getItem('username');
+    const [username,setUsername] = useState(sessionStorage.getItem('username'));
     const [permission, setPermission] = useState('');
     const [loggedUser, setLoggedUser] = useState(null);
     const [navigatePage, setNavigatePage] = useState('');
     const [location, setLocation] = useState();
 
-    const getUserData = async (username) => {
-        const user = await getLoggedUser(username);
+    const getUserData = () => {
         setLoggedUser(user);
         setPermission(user.userType);
         switch (user.userType) {
@@ -36,9 +37,48 @@ export const AuthProvider = ({children}) => {
         }
     };
 
+    const clearUserData = () => {
+        setToken(()=>'');
+        setUsername(()=>'');
+        setPermission(['']);
+        setLoggedUser(null);
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('username');
+        queryClient.removeQueries({ queryKey: ["get logged user", username]})
+    }
+
+    const logout = () => {
+        fetch(`${process.env.REACT_APP_API_URL}/logout`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        clearUserData();
+        setNavigatePage('');
+    };
+
+    const {data:user, isError, isSuccess} = useQuery({
+            queryKey: ["get logged user", username],
+            queryFn: ()=>getLoggedUser(username),
+            enabled: username!==null && token!==null && username!=="" && token!=="",
+            retry:false,
+            staleTime: 5000
+        }
+    )
+
     useEffect(() => {
-        username && token && getUserData(username);
-    }, []);
+        if(isError){
+            logout();
+        }
+    }, [isError]);
+
+    useEffect(() => {
+        if(isSuccess){
+            getUserData();
+        }
+    }, [isSuccess]);
 
     const login = async (userInfo) => {
 
@@ -55,31 +95,12 @@ export const AuthProvider = ({children}) => {
             setToken(token);
             sessionStorage.setItem('token', token);
             sessionStorage.setItem('username', userInfo.username);
-            await getUserData(userInfo.username);
+            setToken(()=>token);
+            setUsername(()=>userInfo.username);
         } else {
             clearUserData();
             throw userResponse.status;
         }
-    };
-
-    const clearUserData = () => {
-        setToken('');
-        setPermission(['']);
-        setLoggedUser(null);
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('username');
-    }
-
-    const logout = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/logout`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        clearUserData();
-        setNavigatePage('');
     };
 
     const hasPermission = (per) => {

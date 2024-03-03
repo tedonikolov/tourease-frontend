@@ -42,7 +42,11 @@ instance.interceptors.response.use(
                             );
                         }
                     } else {
-                        if (+errorResponse.errorCode === 0) break;
+                        if (+errorResponse.errorCode === 0){
+                            toast.error(
+                                <CustomToastContent translated content={[errorResponse.error]}/>,
+                            );
+                        }
                         else if (+errorResponse.errorCode > 0 && +errorResponse.errorCode < 9)
                             toast.error(
                                 <CustomToastContent translated content={[errorResponse.error]}/>,
@@ -79,7 +83,7 @@ instance.interceptors.response.use(
                 console.log('Unmapped error', error.response?.data);
             }
         }
-        throw error.response.error;
+        throw error;
     }
 );
 
