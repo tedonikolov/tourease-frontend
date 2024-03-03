@@ -20,6 +20,7 @@
     "user": "Потребител",
     "Regular": "Потребител",
     "Hotel": "Място за настаняване",
+    "hotels": "Места за настаняване",
     "Transport": "Транспортна фирма",
     "country": "Държава",
     "gender": "Пол",
@@ -32,6 +33,12 @@
     "lastName": "Фамилия",
     "profile": "Профил",
     "passport": "Паспорт",
+    "fullName": "Три имена",
+    "companyName": "Име на компанията",
+    "city": "Град",
+    "companyAddress": "Фирмен адрес",
+    "phone": "Телефон",
+    "eik": "ЕЙК",
     "passportNumber": "Номер на паспорта",
     "Your passport has been expired! Please update it.": "Вашият паспорт е изтекъл, моля обновете го!",
     "Password has been changed! You can log in now.": "Паролата беше променена успешно. Може да влезете в профила си.",
@@ -127,7 +134,9 @@
     "Email already exists": "Емейлът е зает",
     "Email not valid": "Неправилен емейл",
     "User not found": "Профилът не е намерен",
-    "Couldn't change password!": "Неуспешна промяна на паролата"
+    "Couldn't change password!": "Неуспешна промяна на паролата",
+    "Phone number invalid": "Неправилен телефонен номер!",
+    "Owner not found": "Не е намерен профилът!"
   },
   "countries": {
     "Afghanistan": "Афганистан",

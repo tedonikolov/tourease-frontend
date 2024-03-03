@@ -10,6 +10,7 @@ import NotExist from "../pages/NotExistPage";
 import PasswordChangePage from "../pages/PasswordChangePage";
 import LogsPage from "../pages/LogsPage";
 import Swagger from "../pages/Swagger";
+import OwnerProfilePage from "../pages/OwnerProfilePage";
 
 export const Router = () => {
     const navigate = useNavigate();
@@ -33,14 +34,21 @@ export const Router = () => {
                     element={<AccessibilityCheckRoute allowedRoles={['REGULAR']}/>}
                 >
                     <Route path={'/'} element={<RegularProfilePage/>}/>
-                    <Route path={'/profile'} element={<RegularProfilePage/>}/>
+                    <Route path={'/profile/regular'} element={<RegularProfilePage/>}/>
+                </Route>
+                <Route
+                    path={'/'}
+                    element={<AccessibilityCheckRoute allowedRoles={['HOTEL']}/>}
+                >
+                    <Route path={'/'} element={<OwnerProfilePage/>}/>
+                    <Route path={'/profile/hotel'} element={<OwnerProfilePage/>}/>
                 </Route>
                 <Route
                     path={'/'}
                     element={<AccessibilityCheckRoute allowedRoles={['ADMIN']}/>}
                 >
                     <Route path={'/logs'} element={<LogsPage/>}/>
-                    <Route path='/swagger' element={<Swagger/>}/>
+                    <Route path={'/swagger'} element={<Swagger/>}/>
                 </Route>
             </Route>
         </Routes>

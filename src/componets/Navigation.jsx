@@ -19,12 +19,15 @@ export default function Navigation () {
             <NavLink
                 path={mainPage}
                 image={Logo}
-                label='Dashboard'
+                label='Main Page'
             />
             <div className='d-flex flex-column align-items-start'>
                 <h6 className='px-4 pt-3 text-uppercase color-second'>{t('menu')}</h6>
                 <RequiredPermissions requiredPermissions={[Regular]}>
-                    <NavLink path='/profile' label={t('profile')} icon={faHistory} />
+                    <NavLink path='/profile/regular' label={t('profile')} icon={faHistory} />
+                </RequiredPermissions>
+                <RequiredPermissions requiredPermissions={[Hotel]}>
+                    <NavLink path='/profile/hotel' label={t('profile')} icon={faHistory} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Admin]}>
                     <NavLink path='/logs' label={t('logs')} icon={faHistory} />

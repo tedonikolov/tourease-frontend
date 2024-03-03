@@ -74,9 +74,9 @@ instance.interceptors.response.use(
                 break;
             }
             //Dev only
-            case 500 - 599: {
+            case 500: {
                 toast.error(<CustomToastContent translated content={['serviceNotFound']}/>);
-                console.log('Server Connection Error:', error.response?.data);
+                console.log('Server Error:', error.response?.data);
                 break;
             }
             default: {

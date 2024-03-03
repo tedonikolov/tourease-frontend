@@ -19,11 +19,11 @@ export const AuthProvider = ({children}) => {
         setPermission(user.userType);
         switch (user.userType) {
             case Regular: {
-                setNavigatePage('/profile');
+                setNavigatePage('/profile/regular');
                 break;
             }
             case Hotel: {
-                setNavigatePage('');
+                setNavigatePage('/profile/hotel');
                 break;
             }
             case Transport: {

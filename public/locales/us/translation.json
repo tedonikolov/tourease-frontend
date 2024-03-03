@@ -20,6 +20,7 @@
     "user": "User",
     "Regular": "Regular",
     "Hotel": "Hotel",
+    "hotels": "Hotels",
     "Transport": "Transport company",
     "country": "Country",
     "gender": "Gender",
@@ -33,6 +34,12 @@
     "profile": "Profile",
     "passport": "Passport",
     "passportNumber": "Passport Number",
+    "fullName": "Full name",
+    "companyName": "Company name",
+    "city": "City",
+    "companyAddress": "Company address",
+    "phone": "Phone",
+    "eik": "EIK",
     "Your passport has been expired! Please update it.": "Your passport has expired! Please update it.",
     "Password has been changed! You can log in now.": "Password has been changed successfully. You can log in now.",
     "creationDate": "Creation Date",
@@ -127,7 +134,9 @@
     "Email already exists": "Email already exists",
     "Email not valid": "Invalid email",
     "User not found": "User not found",
-    "Couldn't change password!": "Password change unsuccessful"
+    "Couldn't change password!": "Password change unsuccessful",
+    "Phone number invalid": "Phone number invalid!",
+    "Owner not found":"Owner not found!"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
