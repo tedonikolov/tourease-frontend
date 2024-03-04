@@ -38,6 +38,7 @@
     "city": "Град",
     "companyAddress": "Фирмен адрес",
     "phone": "Телефон",
+    "phoneCode": "Код",
     "eik": "ЕЙК",
     "passportNumber": "Номер на паспорта",
     "Your passport has been expired! Please update it.": "Вашият паспорт е изтекъл, моля обновете го!",

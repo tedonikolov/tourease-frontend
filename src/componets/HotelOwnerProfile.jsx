@@ -29,7 +29,7 @@ export default function HotelOwnerProfile({owner,countries}){
     function splitPhone(){
         let countryCode;
         let phoneNumber;
-        phonecodes.forEach(country => {
+        owner.phone && phonecodes.forEach(country => {
             if (owner.phone.startsWith(country.label)) {
                 countryCode=country.label;
                 phoneNumber=owner.phone.slice(country.label.length);

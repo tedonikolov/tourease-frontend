@@ -17,7 +17,7 @@ export default function CustomSelect({
     function handleInputChange(newValue) {
         setObjectValue ? setObjectValue((prevValue) => ({
                 ...prevValue,
-                [name]: newValue.value
+                [name]: newValue ? newValue.value : null
             }))
             :
             setValue(newValue.value);

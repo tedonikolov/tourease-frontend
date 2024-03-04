@@ -39,6 +39,7 @@
     "city": "City",
     "companyAddress": "Company address",
     "phone": "Phone",
+    "phoneCode": "Code",
     "eik": "EIK",
     "Your passport has been expired! Please update it.": "Your passport has expired! Please update it.",
     "Password has been changed! You can log in now.": "Password has been changed successfully. You can log in now.",

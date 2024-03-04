@@ -5,6 +5,7 @@ export const defaultRegular = {
     birthDate: null,
     country: "",
     gender: "",
+    phone:"",
     passportId: null,
 }
 

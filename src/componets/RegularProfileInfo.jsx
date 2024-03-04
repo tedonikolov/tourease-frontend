@@ -9,6 +9,8 @@ import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
 import {useTranslation} from "react-i18next";
 import {useMutation} from "@tanstack/react-query";
+import CustomPhoneInput from "./CustomPhoneInput";
+import {phonecodes} from "../utils/phonecodes";
 
 export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
     const {t} = useTranslation("translation", {keyPrefix: "common"})
@@ -33,6 +35,18 @@ export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
         mutate({email:userInfo.email, regular:regular});
     }
 
+    function splitPhone(){
+        let countryCode;
+        let phoneNumber;
+        regular.phone && phonecodes.forEach(country => {
+            if (regular.phone.startsWith(country.label)) {
+                countryCode=country.label;
+                phoneNumber=regular.phone.slice(country.label.length);
+            }
+        });
+        return {countryCode,phoneNumber};
+    }
+
     return (
         <div className={'register-box'}>
             <Form id={'regular'} onSubmit={saveRegular}>
@@ -41,6 +55,8 @@ export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
                                  label={t('firstName')} name={'firstName'} setObjectValue={setRegular}/>
                 <CommonInputText type={'text'} value={regular.lastName}
                                  label={t('lastName')} name={'lastName'} setObjectValue={setRegular}/>
+                <CustomPhoneInput type={'text'} value={splitPhone()}
+                                  label={t('phone')} name={'phone'} setObjectValue={setRegular}/>
                 <CustomDatePicker label={t('Date of birth')} selectedDate={regular.birthDate} name={'birthDate'}
                                   setValue={setRegular} isClearable={false}/>
                 <CustomSelect options={countries} defaultValue={regular.country} setObjectValue={setRegular}
