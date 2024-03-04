@@ -14,6 +14,10 @@ export default function Header({title}) {
     const {t}=useTranslation("translation",{keyPrefix:"common"})
     const { sideBarVisible, setSideBarVisible } = useContext(SideBarContext);
 
+    function sliceUsername(username){
+        return username.length > 10 ? `${username.slice(0, 10)}..` : username
+    }
+
     return (
         <div
             className='shadow d-flex flex-wrap justify-content-between align-items-center w-100 ps-4 pe-2 py-2 bg-white border-bottom '>
@@ -36,7 +40,7 @@ export default function Header({title}) {
                 <ChangeLanguageComponent/>
 
                 <h5 className='mb-0 px-2 w-50 text-end'>
-                    {t("welcome")}, {loggedUser.regular ? loggedUser.regular.firstName : loggedUser.email}!
+                    {t("welcome")}, {sliceUsername(loggedUser.regular ? loggedUser.regular.firstName : loggedUser.email)}!
                 </h5>
 
                 <Button
