@@ -120,7 +120,11 @@
     "Tried to register already registered profile!": "Attempted to register an already registered profile!",
     "Activation link send!": "Activation link sent!",
     "Registration created!": "Registration created!",
-    "Passport country not match!": "Passport country does not match!"
+    "Passport country not match!": "Passport country does not match!",
+    "Updated owner information.": "Updated owner information!",
+    "Owner created.": "Owner of hotel created!",
+    "UPDATED_OWNER_INFORMATION": "Updated owner information",
+    "OWNER_CREATED": "Owner of hotel created"
   },
   "errors": {
     "serviceNotFound": "There was a problem with the server. The service is not available.",

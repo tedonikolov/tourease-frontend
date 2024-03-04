@@ -120,7 +120,11 @@
     "Tried to register already registered profile!": "Опит за регистриране на вече съществуващ профил!",
     "Activation link send!": "Изпратен емейл за активация!",
     "Registration created!": "Направена регистрация!",
-    "Passport country not match!": "Несъответствие на държавата на паспорта!"
+    "Passport country not match!": "Несъответствие на държавата на паспорта!",
+    "Updated owner information.": "Промени данни на собственик!",
+    "Owner created.": "Създаден собственик на място за настаняване!",
+    "UPDATED_OWNER_INFORMATION": "Промени данни на собственик",
+    "OWNER_CREATED": "Създаден собственик на място за настаняване"
   },
   "errors": {
     "serviceNotFound": "Възникна проблем със сървъра. Услугата не е достъпна.",
