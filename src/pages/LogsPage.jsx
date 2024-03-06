@@ -50,6 +50,11 @@ export default function LogsPage() {
         return newDate.format('DD-MM-YYYY🗓️ HH:mm:ss⏱️')
     }
 
+    function split(message){
+        const list = message.split(":");
+        return list.length>1 ? t(message.split(":")[0])+":"+message.split(":")[1] : t(message)
+    }
+
     return (
         <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
             <SideBar>
@@ -82,9 +87,11 @@ export default function LogsPage() {
                 </div>
                 {!isLoading && !isPending ? logs.items.length > 0 ?
                         <div className={"w-75 mx-5"}>
-                            <CustomTable columns={{
+                            <CustomTable
+                                tableData={logs.items}
+                                columns={{
                                 headings: ["User", "Message", "Date"],
-                                items: logs.items.map(({email, message, date}) => [email, t(message), convertDate(date)])
+                                items: logs.items.map(({email, message, date}) => [email, split(message), convertDate(date)])
                             }}/>
                             <div className={"d-flex justify-content-center"}>
                                 <CustomPagination recordsCount={logs.pager.totalCount} pagination={pagination}

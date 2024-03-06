@@ -138,7 +138,11 @@
     "Updated owner information.": "Updated owner information!",
     "Owner created.": "Owner of hotel created!",
     "UPDATED_OWNER_INFORMATION": "Updated owner information",
-    "OWNER_CREATED": "Owner of hotel created"
+    "OWNER_CREATED": "Owner of hotel created",
+    "HOTEL_CREATED": "Hotel created",
+    "HOTEL_UPDATED": "Hotel updated",
+    "Hotel updated with name": "Hotel updated with name",
+    "Hotel created with name": "Hotel created with name"
   },
   "errors": {
     "serviceNotFound": "There was a problem with the server. The service is not available.",
