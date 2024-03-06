@@ -9,7 +9,8 @@ export default function CustomSelect({
                                          label,
                                          name,
                                          defaultValue,
-                                         isClearable = false
+                                         isClearable = false,
+                                         isSearchable = true
                                      }) {
     const defaultOption = options.find(option => option.value === defaultValue);
     const {t} = useTranslation("translation", {keyPrefix: 'common'});
@@ -31,6 +32,7 @@ export default function CustomSelect({
                 defaultValue={defaultOption}
                 options={options}
                 required={true}
+                isSearchable={isSearchable}
         />
     )
 }

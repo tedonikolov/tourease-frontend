@@ -5,7 +5,7 @@ export const defaultRegular = {
     birthDate: null,
     country: "",
     gender: "",
-    phone:"",
+    phone: "",
     passportId: null,
 }
 
@@ -16,4 +16,18 @@ export const defaultPassport = {
     expirationDate: null,
     expired: false,
     country: "",
+}
+
+export const defaultHotel = {
+    id: 0,
+    name: "",
+    stars: "",
+    location: {
+        id: 0,
+        latitude: "",
+        longitude: "",
+        address: "",
+        city: "",
+        country: ""
+    }
 }

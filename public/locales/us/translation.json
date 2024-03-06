@@ -81,12 +81,25 @@
     "homePage": "Home Page",
     "choose page size": "items to show",
     "noDataText": "No {{items}} available to show!",
-    "Swagger": "Swagger"
+    "Swagger": "Swagger",
+    "noRating": "No rating",
+    "name": "Name",
+    "stars": "stars",
+    "rating": "Rating",
+    "totalRating": "Total rating",
+    "numberOfRates": "Number of rates",
+    "ratings": "ratings",
+    "address": "Address",
+    "Add hotel": "Add new hotel"
   },
   "table": {
     "User": "User",
     "Message": "Message",
-    "Date": "Date"
+    "Date": "Date",
+    "Name": "Name",
+    "Address": "Address",
+    "Stars": "Stars",
+    "Rating": "Rating"
   },
   "logs": {
     "Chronology": "Chronology",

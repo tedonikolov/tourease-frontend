@@ -16,3 +16,20 @@ export function saveOwnerInfo(owner){
         eik: owner.eik
     });
 }
+
+export function saveHotelInfo(hotel){
+    return restInterceptor.post("hotel-service/hotel/saveHotel", {
+        id: hotel.id,
+        name: hotel.name,
+        stars: hotel.stars,
+        location:{
+            id:hotel.location.id,
+            latitude:hotel.location.latitude,
+            longitude:hotel.location.longitude,
+            address:hotel.location.address,
+            city:hotel.location.city,
+            country:hotel.location.country
+        },
+        ownerId: hotel.owner.id,
+    });
+}

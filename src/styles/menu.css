@@ -55,3 +55,26 @@
     background-color: #5e00ff !important;
     box-shadow: 1px 10px 10px #282c34;
 }
+
+
+.hovered-row {
+    cursor: pointer;
+
+    &:hover {
+        color: #fff;
+        background-color: #626668;
+    }
+}
+
+.main-button{
+    font-size: 20px;
+    color: #000000 !important;
+    background-color: #00ff48 !important;
+}
+
+.main-button:hover{
+    cursor: pointer;
+    color: #00ff48 !important;
+    background-color: #5e00ff !important;
+    box-shadow: 1px 10px 10px #282c34;
+}
