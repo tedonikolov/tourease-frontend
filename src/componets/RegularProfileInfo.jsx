@@ -10,7 +10,7 @@ import CustomToastContent from "./CustomToastContent";
 import {useTranslation} from "react-i18next";
 import {useMutation} from "@tanstack/react-query";
 import CustomPhoneInput from "./CustomPhoneInput";
-import {phonecodes} from "../utils/phonecodes";
+import {phonecodes} from "../utils/options";
 
 export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
     const {t} = useTranslation("translation", {keyPrefix: "common"})

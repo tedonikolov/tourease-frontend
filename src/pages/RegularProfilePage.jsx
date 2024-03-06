@@ -3,27 +3,20 @@ import RegularProfileInfo from "../componets/RegularProfileInfo";
 import StepWizard from "react-step-wizard";
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
-import {useQuery} from "@tanstack/react-query";
-import {getCountries} from "../hooks/config";
 import PassportRegularInfo from "../componets/PassportRegularInfo";
 import Header from "../componets/Header";
 import {useTranslation} from "react-i18next";
 import SideBar from "../componets/SideBar";
 import Navigation from "../componets/Navigation";
 import {SideBarContext} from "../context/SideBarContext";
+import {countries} from "../utils/options";
 
 export default function RegularProfilePage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"})
-    const {t: countries} = useTranslation("translation", {keyPrefix: "countries"})
+    const {t: tcountries} = useTranslation("translation", {keyPrefix: "countries"})
     const { sideBarVisible } = useContext(SideBarContext);
 
     const {loggedUser, setLoggedUser} = useContext(AuthContext);
-    const {data, isLoading} = useQuery({
-            queryKey: ["get all countries"],
-            queryFn: getCountries,
-            staleTime: 5000
-        }
-    )
     const [step, setStep] = useState();
 
     useEffect(() => {
@@ -33,7 +26,7 @@ export default function RegularProfilePage() {
     }, []);
 
     return (
-        !isLoading && <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
+        <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
             <SideBar>
                 <Navigation/>
             </SideBar>
@@ -51,12 +44,12 @@ export default function RegularProfilePage() {
                     }}
                 >
                     <RegularProfileInfo userInfo={loggedUser} setUserInfo={setLoggedUser}
-                                        countries={data ? data.map((country) => {
-                                            return {value: country, label: countries(country)}
+                                        countries={countries ? countries.map((country) => {
+                                            return {value: country.value, label: tcountries(country.label)}
                                         }) : []}/>
                     <PassportRegularInfo userInfo={loggedUser} setUserInfo={setLoggedUser}
-                                         countries={data ? data.map((country) => {
-                                             return {value: country, label: countries(country)}
+                                         countries={countries ? countries.map((country) => {
+                                             return {value: country.value, label: tcountries(country.label)}
                                          }) : []}/>
                 </StepWizard>
             </div>

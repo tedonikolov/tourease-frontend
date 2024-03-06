@@ -8,7 +8,7 @@ import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
 import {saveOwnerInfo} from "../hooks/hotel";
 import CustomPhoneInput from "./CustomPhoneInput";
-import {phonecodes} from "../utils/phonecodes";
+import {phonecodes} from "../utils/options";
 
 export default function HotelOwnerProfile({owner,countries}){
     const {t}=useTranslation("translation",{keyPrefix:"common"})

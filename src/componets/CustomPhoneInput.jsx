@@ -1,6 +1,6 @@
 import Select from "react-select";
 import Flags from "country-flag-icons/react/3x2";
-import {phonecodes} from "../utils/phonecodes";
+import {phonecodes} from "../utils/options";
 import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 
