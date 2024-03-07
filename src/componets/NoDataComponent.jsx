@@ -7,6 +7,7 @@ export default function NoDataComponent ({
     noDataText,
     iconSize,
     border,
+    sentence
 }) {
     const { t } = useTranslation('translation', { keyPrefix: 'common' });
     return (
@@ -17,9 +18,12 @@ export default function NoDataComponent ({
         >
             <FontAwesomeIcon icon={faClipboard} size={`${iconSize || '2x'}`} className='mb-3'></FontAwesomeIcon>
             <h4 className='text-center'>
-                {t('noDataText', {
+                {noDataText && t('noDataText', {
                     items: `${noDataText.toLowerCase()}`,
                 })}
+                {
+                    sentence && t(sentence)
+                }
             </h4>
         </div>
     );

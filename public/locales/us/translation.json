@@ -90,7 +90,12 @@
     "numberOfRates": "Number of rates",
     "ratings": "ratings",
     "address": "Address",
-    "Add hotel": "Add new hotel"
+    "Add hotel": "Add new hotel",
+    "Images": "Images",
+    "Save first hotel info": "Save first hotel info!",
+    "Remove": "Remove",
+    "successImage": "Successful saved image",
+    "successDelete": "Successful deletion"
   },
   "table": {
     "User": "User",

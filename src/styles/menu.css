@@ -78,3 +78,53 @@
     background-color: #5e00ff !important;
     box-shadow: 1px 10px 10px #282c34;
 }
+
+.hotel-info-image {
+    height: 70vh;
+    left:0;
+    right: 0;
+    top:0;
+    bottom:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(12, 75, 75);
+    border: 10px solid;
+    object-fit:scale-down;
+    width: 100%;
+    padding-top: 4rem;
+}
+
+.caption{
+    background-color: rgb(12, 75, 75);
+    opacity: 0.8;
+    margin-bottom: 0;
+    bottom:10px;
+    padding-bottom:35px;
+}
+
+.custom-file-upload {
+    position: relative;
+    width: 240px;
+    padding: 10px;
+    text-align: center;
+    color: #00ff48;
+    background-color: rgb(12, 75, 75);
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+    border: 2px solid #5e00ff;
+    padding: 0.2em 0.4em;
+    border-radius: 0.2em;
+    color: #5e00ff;
+    background-color: #00ff48;
+    transition: 1s;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #5e00ff;
+    border: 2px solid #00ff48;
+    color: #00ff48;
+    cursor: pointer;
+}

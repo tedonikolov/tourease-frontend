@@ -1,10 +1,10 @@
 import restInterceptor from "./RestInterceptor";
 
-export function getOwnerByEmail(email){
-    return restInterceptor.get("hotel-service/owner/getOwnerByEmail/"+email);
+export function getOwnerByEmail(email) {
+    return restInterceptor.get("hotel-service/owner/getOwnerByEmail/" + email);
 }
 
-export function saveOwnerInfo(owner){
+export function saveOwnerInfo(owner) {
     return restInterceptor.post("hotel-service/owner/save", {
         id: owner.id,
         fullName: owner.fullName,
@@ -17,19 +17,38 @@ export function saveOwnerInfo(owner){
     });
 }
 
-export function saveHotelInfo(hotel){
+export function saveHotelInfo(hotel) {
     return restInterceptor.post("hotel-service/hotel/saveHotel", {
         id: hotel.id,
         name: hotel.name,
         stars: hotel.stars,
-        location:{
-            id:hotel.location.id,
-            latitude:hotel.location.latitude,
-            longitude:hotel.location.longitude,
-            address:hotel.location.address,
-            city:hotel.location.city,
-            country:hotel.location.country
+        location: {
+            id: hotel.location.id,
+            latitude: hotel.location.latitude,
+            longitude: hotel.location.longitude,
+            address: hotel.location.address,
+            city: hotel.location.city,
+            country: hotel.location.country
         },
         ownerId: hotel.owner.id,
     });
+}
+
+export function insertImage({image, hotelId}) {
+    return restInterceptor.post("hotel-service/hotel/image", {
+        image: image,
+        hotelId: hotelId
+    },{
+        headers: {
+            "Content-type": "multipart/form-data",
+        },
+    });
+}
+
+export function getImages(hotelId){
+    return restInterceptor.get("hotel-service/hotel/image/getForHotel/"+hotelId)
+}
+
+export function deleteImage(imageId){
+    return restInterceptor.delete("hotel-service/hotel/image/"+imageId)
 }
