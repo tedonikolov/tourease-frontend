@@ -6,9 +6,10 @@ export default function CustomStepWizardNav({
                                                 customContainerClass = '',
                                                 isDisabled = false,
                                                 hideNextSteps = false,
+                                                header= false
                                             }) {
     return (
-        <div className={`d-flex border-bottom justify-content-center mb-3 p-3 px-1 w-100 ${customContainerClass}`}>
+        <div className={`d-flex ${!header && "border-bottom mb-3"} justify-content-center p-3 px-1 w-100 ${customContainerClass}`}>
             <div className='d-flex w-100 justify-content-between'>
                 {steps.map((step, i) => (
                     <div
