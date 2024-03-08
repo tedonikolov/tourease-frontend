@@ -1,8 +1,8 @@
 import {Nav} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import RequiredPermissions from "./RequiredPermissions";
-import {Admin, Hotel, Regular, Transport} from "../utils/Role";
-import {faCogs, faHistory} from "@fortawesome/free-solid-svg-icons";
+import {Admin, Hotel, Regular} from "../utils/Role";
+import {faCogs, faHistory, faHotel, faUser} from "@fortawesome/free-solid-svg-icons";
 import NavLink from "./NavLink";
 import Logo from ".././assets/Logo.ico"
 import {AuthContext} from "../context/AuthContext";
@@ -24,10 +24,13 @@ export default function Navigation () {
             <div className='d-flex flex-column align-items-start'>
                 <h6 className='px-4 pt-3 text-uppercase color-second'>{t('menu')}</h6>
                 <RequiredPermissions requiredPermissions={[Regular]}>
-                    <NavLink path='/profile/regular' label={t('profile')} icon={faHistory} />
+                    <NavLink path='/regular/profile' label={t('profile')} icon={faUser} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Hotel]}>
-                    <NavLink path='/profile/hotel' label={t('profile')} icon={faHistory} />
+                    <NavLink path='/hotel/profile' label={t('profile')} icon={faUser} />
+                </RequiredPermissions>
+                <RequiredPermissions requiredPermissions={[Hotel]}>
+                    <NavLink path='/hotel/facilities' label={t('Facilities')} icon={faHotel} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Admin]}>
                     <NavLink path='/logs' label={t('logs')} icon={faHistory} />

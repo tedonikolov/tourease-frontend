@@ -1,7 +1,9 @@
-import {Table} from "react-bootstrap";
+import {Button, Table} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
 
-export default function CustomTable({tableData, columns, darkHeader = true, viewComponent, checkStars}) {
+export default function CustomTable({tableData, columns, darkHeader = true, viewComponent, checkStars, onDelete}) {
     const [t] = useTranslation("translation", {keyPrefix: 'table'});
 
     return (
@@ -22,18 +24,42 @@ export default function CustomTable({tableData, columns, darkHeader = true, view
                     columns.items.map((row, itemIndex) => (
                             <tr key={itemIndex} className={`${viewComponent ? 'hovered-row' : ''}`}>
                                 {row.map((column, index) => (
-                                    <td key={index}
-                                        onClick={() => {
-                                            const id = tableData[itemIndex].id ?? 0;
+                                    typeof column === 'boolean' ?
+                                        <td key={index}
+                                            onClick={() => {
+                                                const id = tableData[itemIndex].id ?? 0;
 
-                                            if (viewComponent) {
-                                                viewComponent(id);
-                                            }
-                                        }}
+                                                if (viewComponent) {
+                                                    viewComponent(id);
+                                                }
+                                            }}
                                         >
-                                        {checkStars ? checkStars(column) : column}
-                                    </td>
+                                            <input
+                                                type="checkbox"
+                                                id="checkbox"
+                                                defaultChecked={column}
+                                            />
+                                        </td>
+                                        :
+                                        <td key={index}
+                                            onClick={() => {
+                                                const id = tableData[itemIndex].id ?? 0;
+
+                                                if (viewComponent) {
+                                                    viewComponent(id);
+                                                }
+                                            }}
+                                        >
+                                            {checkStars ? checkStars(column) : column}
+                                        </td>
                                 ))}
+                                {
+                                    onDelete && <td>
+                                        <Button size={'sm'} className={"delete-button"} onClick={()=>onDelete(tableData[itemIndex].id)}>
+                                            <FontAwesomeIcon icon={faTrash} size={'sm'} />
+                                        </Button>
+                                    </td>
+                                }
                             </tr>
                         )
                     )

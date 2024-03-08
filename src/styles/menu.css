@@ -55,15 +55,11 @@
     background-color: #5e00ff !important;
     box-shadow: 1px 10px 10px #282c34;
 }
-
-
-.hovered-row {
+.ReactTable.-highlight .rt-tbody .rt-tr:not(.-padRow):hover {
+    background-color: rgba(247, 247, 247, 0.05) !important;
+}
+.hovered-row:hover {
     cursor: pointer;
-
-    &:hover {
-        color: #fff;
-        background-color: #626668;
-    }
 }
 
 .main-button{
@@ -76,6 +72,19 @@
     cursor: pointer;
     color: #00ff48 !important;
     background-color: #5e00ff !important;
+    box-shadow: 1px 10px 10px #282c34;
+}
+
+.delete-button{
+    font-size: 20px;
+    color: #000000 !important;
+    background-color: #e31d1d !important;
+}
+
+.delete-button:hover{
+    cursor: pointer;
+    color: #000000 !important;
+    background-color: #e31d1d !important;
     box-shadow: 1px 10px 10px #282c34;
 }
 
@@ -127,4 +136,10 @@ input[type="file"]::file-selector-button:hover {
     border: 2px solid #00ff48;
     color: #00ff48;
     cursor: pointer;
+}
+
+.box{
+    background-color: #fff;
+    border: #00ff48 solid 5px;
+    box-shadow: 5px 10px 10px #5e00ff;
 }

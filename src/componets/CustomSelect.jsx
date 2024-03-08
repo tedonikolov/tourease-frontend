@@ -1,5 +1,5 @@
 import Select from "react-select";
-import React from "react";
+import React, {useEffect} from "react";
 import {useTranslation} from "react-i18next";
 
 export default function CustomSelect({
@@ -9,6 +9,7 @@ export default function CustomSelect({
                                          label,
                                          name,
                                          defaultValue,
+                                         setDefaultValue,
                                          isClearable = false,
                                          isSearchable = true
                                      }) {
@@ -24,12 +25,16 @@ export default function CustomSelect({
             setValue(newValue.value);
     }
 
+    useEffect(() => {
+        setDefaultValue && setDefaultValue();
+    }, []);
+
     return (
         <Select className={'mt-4 mb-4'}
                 onChange={handleInputChange}
                 isClearable={isClearable}
-                placeholder={t('choose') + ' ' + label}
-                defaultValue={defaultOption}
+                placeholder={t('choose') + ' ' + label.toLowerCase()}
+                value={defaultOption}
                 options={options}
                 required={true}
                 isSearchable={isSearchable}

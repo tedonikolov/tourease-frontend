@@ -95,7 +95,28 @@
     "Save first hotel info": "Save first hotel info!",
     "Remove": "Remove",
     "successImage": "Successful saved image",
-    "successDelete": "Successful deletion"
+    "successDelete": "Successful deletion",
+    "Facilities": "Facilities",
+    "Facility": "Facility",
+    "price": "Price",
+    "paid": "Is paid",
+    "WIFI":"Wifi",
+    "PARKING":"Parking",
+    "SWIMMING_POOL":"Swimming pool",
+    "INSIDE_SWIMMING_POOL":"Inside swimming pool",
+    "GYM":"Gym",
+    "SPA":"Spa",
+    "ROOM_SERVICE":"Room service",
+    "AIR_CONDITIONING":"Air conditioner",
+    "MINIBAR":"Minibar",
+    "CONFERENCE_ROOM":"Conference room",
+    "CHILDREN_PLAYGROUND":"Children playground",
+    "PET_FRIENDLY":"Pet friendly",
+    "BEACH_ACCESS":"Beach access",
+    "SHUTTLE_SERVICE":"Shuttle service",
+    "LAUNDRY":"Laundry",
+    "ELEVATOR":"Elevator",
+    "HOUR_FRONT_DESK":"24 hour reception"
   },
   "table": {
     "User": "User",
@@ -104,7 +125,10 @@
     "Name": "Name",
     "Address": "Address",
     "Stars": "Stars",
-    "Rating": "Rating"
+    "Rating": "Rating",
+    "Paid": "Paid",
+    "Price": "Price",
+    "Delete": "Delete"
   },
   "logs": {
     "Chronology": "Chronology",
@@ -163,7 +187,8 @@
     "User not found": "User not found",
     "Couldn't change password!": "Password change unsuccessful",
     "Phone number invalid": "Phone number invalid!",
-    "Owner not found":"Owner not found!"
+    "Owner not found":"Owner not found!",
+    "Facility exist": "Facility already exist!"
   },
   "countries": {
     "Afghanistan": "Afghanistan",

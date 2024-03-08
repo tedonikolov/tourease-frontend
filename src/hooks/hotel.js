@@ -46,9 +46,23 @@ export function insertImage({image, hotelId}) {
 }
 
 export function getImages(hotelId){
-    return restInterceptor.get("hotel-service/hotel/image/getForHotel/"+hotelId)
+    return restInterceptor.get("hotel-service/hotel/image/getForHotel/"+hotelId);
 }
 
 export function deleteImage(imageId){
-    return restInterceptor.delete("hotel-service/hotel/image/"+imageId)
+    return restInterceptor.delete("hotel-service/hotel/image/"+imageId);
+}
+
+export function saveFacility(facility){
+    return restInterceptor.post("hotel-service/hotel/facility/save",{
+        id:facility.id,
+        name:facility.name,
+        paid:facility.paid,
+        price:facility.price,
+        hotelId:facility.hotelId
+    });
+}
+
+export function deleteFacilityById(id){
+    return restInterceptor.delete("hotel-service/hotel/facility/"+id);
 }

@@ -3,12 +3,13 @@ import {getLoggedUser} from "../hooks/User";
 import {Admin, Hotel, Regular, Transport} from "../utils/Role";
 import {useQuery} from "@tanstack/react-query";
 import {queryClient} from "../hooks/RestInterceptor";
+import {getOwnerByEmail} from "../hooks/hotel";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
     const [token, setToken] = useState(sessionStorage.getItem('token'));
-    const [username,setUsername] = useState(sessionStorage.getItem('username'));
+    const [username, setUsername] = useState(sessionStorage.getItem('username'));
     const [permission, setPermission] = useState('');
     const [loggedUser, setLoggedUser] = useState(null);
     const [navigatePage, setNavigatePage] = useState('');
@@ -19,11 +20,11 @@ export const AuthProvider = ({children}) => {
         setPermission(user.userType);
         switch (user.userType) {
             case Regular: {
-                setNavigatePage('/profile/regular');
+                setNavigatePage('/regular/profile');
                 break;
             }
             case Hotel: {
-                setNavigatePage('/profile/hotel');
+                setNavigatePage('/hotel/profile');
                 break;
             }
             case Transport: {
@@ -38,13 +39,13 @@ export const AuthProvider = ({children}) => {
     };
 
     const clearUserData = () => {
-        setToken(()=>'');
-        setUsername(()=>'');
+        setToken(() => '');
+        setUsername(() => '');
         setPermission(['']);
         setLoggedUser(null);
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('username');
-        queryClient.removeQueries({ queryKey: ["get logged user", username]})
+        queryClient.removeQueries({queryKey: ["get logged user", username]})
     }
 
     const logout = () => {
@@ -59,23 +60,32 @@ export const AuthProvider = ({children}) => {
         setNavigatePage('');
     };
 
-    const {data:user, isError, isSuccess} = useQuery({
+    const {data: user, isError, isSuccess} = useQuery({
             queryKey: ["get logged user", username],
-            queryFn: ()=>getLoggedUser(username),
-            enabled: username!==null && token!==null && username!=="" && token!=="",
-            retry:false,
+            queryFn: () => getLoggedUser(username),
+            enabled: username !== null && token !== null && username !== "" && token !== "",
+            retry: false,
+            staleTime: 5000
+        }
+    )
+
+    const {data: owner, isLoading: ownerLoading} = useQuery({
+            queryKey: ["get owner", user&&user.email],
+            queryFn: () => getOwnerByEmail(user.email),
+            enabled: user!==undefined && user.userType===Hotel,
+            retry: false,
             staleTime: 5000
         }
     )
 
     useEffect(() => {
-        if(isError){
+        if (isError) {
             logout();
         }
     }, [isError]);
 
     useEffect(() => {
-        if(isSuccess){
+        if (isSuccess) {
             getUserData();
         }
     }, [isSuccess]);
@@ -95,8 +105,8 @@ export const AuthProvider = ({children}) => {
             setToken(token);
             sessionStorage.setItem('token', token);
             sessionStorage.setItem('username', userInfo.username);
-            setToken(()=>token);
-            setUsername(()=>userInfo.username);
+            setToken(() => token);
+            setUsername(() => userInfo.username);
         } else {
             clearUserData();
             throw userResponse.status;
@@ -111,6 +121,8 @@ export const AuthProvider = ({children}) => {
         <AuthContext.Provider
             value={{
                 loggedUser,
+                owner,
+                ownerLoading,
                 setLoggedUser,
                 token,
                 login,

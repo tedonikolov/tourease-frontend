@@ -31,3 +31,10 @@ export const defaultHotel = {
         country: ""
     }
 }
+
+export const defaultFacility = {
+    id: 0,
+    name: "",
+    paid: false,
+    price: ""
+}

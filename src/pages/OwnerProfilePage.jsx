@@ -7,9 +7,7 @@ import {SideBarContext} from "../context/SideBarContext";
 import StepWizard from "react-step-wizard";
 import CustomStepWizardNav from "../componets/CustomStepWizardNav";
 import HotelOwnerProfile from "../componets/HotelOwnerProfile";
-import {useQuery} from "@tanstack/react-query";
 import {AuthContext} from "../context/AuthContext";
-import {getOwnerByEmail} from "../hooks/hotel";
 import OwnerHotels from "../componets/OwnerHotels";
 import {countries} from "../utils/options";
 
@@ -17,19 +15,12 @@ export default function OwnerProfilePage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {t: tcountries} = useTranslation("translation", {keyPrefix: "countries"})
     const {sideBarVisible} = useContext(SideBarContext);
-    const {loggedUser} = useContext(AuthContext);
+    const {owner,ownerLoading} = useContext(AuthContext);
 
-    const [step,setStep]=useState(1)
-
-    const {data: owner, isLoading} = useQuery({
-            queryKey: ["get owner", loggedUser.email],
-            queryFn: () => getOwnerByEmail(loggedUser.email),
-            staleTime: 5000
-        }
-    )
+    const [step, setStep] = useState(1)
 
     return (
-        !isLoading && <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
+        !ownerLoading && <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
             <SideBar>
                 <Navigation/>
             </SideBar>
@@ -49,9 +40,10 @@ export default function OwnerProfilePage() {
                         return {value: country.value, label: tcountries(country.label)}
                     }) : []}
                     />
-                    <OwnerHotels setStep={setStep} hotels={owner.hotels} owner={owner} countries={countries ? countries.map((country) => {
-                        return {value: country.value, label: tcountries(country.label)}
-                    }) : []}
+                    <OwnerHotels setStep={setStep} hotels={owner.hotels} owner={owner}
+                                 countries={countries ? countries.map((country) => {
+                                     return {value: country.value, label: tcountries(country.label)}
+                                 }) : []}
                     />
                 </StepWizard>
             </div>

@@ -95,7 +95,28 @@
     "Save first hotel info": "Добавете първо място за настаняване!",
     "Remove": "Премахни",
     "successImage": "Успешно добавена снимка",
-    "successDelete": "Успешно изтриване"
+    "successDelete": "Успешно изтриване",
+    "Facilities": "Удобства",
+    "Facility": "Удобство",
+    "price": "Цена",
+    "paid": "Платено",
+    "WIFI":"Интернет",
+    "PARKING":"Паркинг",
+    "SWIMMING_POOL":"Басейн",
+    "INSIDE_SWIMMING_POOL":"Вътрешен басейн",
+    "GYM":"Фитнес",
+    "SPA":"Спа",
+    "ROOM_SERVICE":"Румсървис",
+    "AIR_CONDITIONING":"Климатик",
+    "MINIBAR":"Минибар",
+    "CONFERENCE_ROOM":"Конферентна зала",
+    "CHILDREN_PLAYGROUND":"Детски кът",
+    "PET_FRIENDLY":"Домашни любимци",
+    "BEACH_ACCESS":"Достъп до плаж",
+    "SHUTTLE_SERVICE":"Транспортни услуги",
+    "LAUNDRY":"Прани",
+    "ELEVATOR":"Асансьор",
+    "HOUR_FRONT_DESK":"24 часа рецепция"
   },
   "table": {
     "User": "Потребител",
@@ -104,7 +125,10 @@
     "Name": "Име",
     "Address": "Адрес",
     "Stars": "Звезди",
-    "Rating": "Ретинг"
+    "Rating": "Ретинг",
+    "Paid": "Платено",
+    "Price": "Цена",
+    "Delete": "Изтриване"
   },
   "logs": {
     "Chronology": "Хронология",
@@ -163,7 +187,8 @@
     "User not found": "Профилът не е намерен",
     "Couldn't change password!": "Неуспешна промяна на паролата",
     "Phone number invalid": "Неправилен телефонен номер!",
-    "Owner not found": "Не е намерен профилът!"
+    "Owner not found": "Не е намерен профилът!",
+    "Facility exist": "Вече са въведени данни за това удобство!"
   },
   "countries": {
     "Afghanistan": "Афганистан",
