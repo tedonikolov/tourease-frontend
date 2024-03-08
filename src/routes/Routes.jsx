@@ -12,6 +12,7 @@ import LogsPage from "../pages/LogsPage";
 import Swagger from "../pages/Swagger";
 import OwnerProfilePage from "../pages/OwnerProfilePage";
 import FacilitiesPage from "../pages/FacilitiesPage";
+import BedsPage from "../pages/BedsPage";
 
 export const Router = () => {
     const navigate = useNavigate();
@@ -44,6 +45,7 @@ export const Router = () => {
                     <Route path={'/'} element={<OwnerProfilePage/>}/>
                     <Route path={'/hotel/profile'} element={<OwnerProfilePage/>}/>
                     <Route path={'/hotel/facilities'} element={<FacilitiesPage/>}/>
+                    <Route path={'/hotel/beds'} element={<BedsPage/>}/>
                 </Route>
                 <Route
                     path={'/'}

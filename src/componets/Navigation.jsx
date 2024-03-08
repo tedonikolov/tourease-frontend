@@ -2,7 +2,7 @@ import {Nav} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import RequiredPermissions from "./RequiredPermissions";
 import {Admin, Hotel, Regular} from "../utils/Role";
-import {faCogs, faHistory, faHotel, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faBed, faCogs, faHistory, faHotel, faUser} from "@fortawesome/free-solid-svg-icons";
 import NavLink from "./NavLink";
 import Logo from ".././assets/Logo.ico"
 import {AuthContext} from "../context/AuthContext";
@@ -31,6 +31,9 @@ export default function Navigation () {
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Hotel]}>
                     <NavLink path='/hotel/facilities' label={t('Facilities')} icon={faHotel} />
+                </RequiredPermissions>
+                <RequiredPermissions requiredPermissions={[Hotel]}>
+                    <NavLink path='/hotel/beds' label={t('Beds')} icon={faBed} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Admin]}>
                     <NavLink path='/logs' label={t('logs')} icon={faHistory} />

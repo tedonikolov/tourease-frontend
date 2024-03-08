@@ -66,3 +66,17 @@ export function saveFacility(facility){
 export function deleteFacilityById(id){
     return restInterceptor.delete("hotel-service/hotel/facility/"+id);
 }
+
+export function saveBed(bed){
+    return restInterceptor.post("hotel-service/hotel/bed/save",{
+        id:bed.id,
+        name:bed.name,
+        people:bed.people,
+        price:bed.price,
+        hotelId:bed.hotelId
+    });
+}
+
+export function deleteBedById(id){
+    return restInterceptor.delete("hotel-service/hotel/bed/"+id);
+}

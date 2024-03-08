@@ -116,7 +116,10 @@
     "SHUTTLE_SERVICE":"Shuttle service",
     "LAUNDRY":"Laundry",
     "ELEVATOR":"Elevator",
-    "HOUR_FRONT_DESK":"24 hour reception"
+    "HOUR_FRONT_DESK":"24 hour reception",
+    "people": "People",
+    "clear": "Clear",
+    "Beds": "Beds"
   },
   "table": {
     "User": "User",
@@ -128,7 +131,8 @@
     "Rating": "Rating",
     "Paid": "Paid",
     "Price": "Price",
-    "Delete": "Delete"
+    "Delete": "Delete",
+    "People": "People"
   },
   "logs": {
     "Chronology": "Chronology",

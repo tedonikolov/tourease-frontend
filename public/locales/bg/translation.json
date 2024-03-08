@@ -116,7 +116,10 @@
     "SHUTTLE_SERVICE":"Транспортни услуги",
     "LAUNDRY":"Прани",
     "ELEVATOR":"Асансьор",
-    "HOUR_FRONT_DESK":"24 часа рецепция"
+    "HOUR_FRONT_DESK":"24 часа рецепция",
+    "people": "Брой хора",
+    "clear": "Изчисти",
+    "Beds": "Легла"
   },
   "table": {
     "User": "Потребител",
@@ -128,7 +131,8 @@
     "Rating": "Ретинг",
     "Paid": "Платено",
     "Price": "Цена",
-    "Delete": "Изтриване"
+    "Delete": "Изтриване",
+    "People": "Брой хора"
   },
   "logs": {
     "Chronology": "Хронология",

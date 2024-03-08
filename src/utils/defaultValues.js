@@ -38,3 +38,10 @@ export const defaultFacility = {
     paid: false,
     price: ""
 }
+
+export const defaultBed = {
+    id: 0,
+    name: "",
+    people: "",
+    price: ""
+}
