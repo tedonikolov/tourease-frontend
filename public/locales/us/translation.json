@@ -117,6 +117,12 @@
     "LAUNDRY":"Laundry",
     "ELEVATOR":"Elevator",
     "HOUR_FRONT_DESK":"24 hour reception",
+    "BREAKFAST": "Breakfast",
+    "CHILD_BREAKFAST": "Child breakfast",
+    "LUNCH": "Lunch",
+    "CHILD_LUNCH": "Child lunch",
+    "DINNER": "Dinner",
+    "CHILD_DINNER": "Child dinner",
     "people": "People",
     "clear": "Clear",
     "Beds": "Beds"

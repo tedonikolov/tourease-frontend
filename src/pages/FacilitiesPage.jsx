@@ -17,6 +17,7 @@ import {deleteFacilityById, saveFacility} from "../hooks/hotel";
 import {toast} from "react-toastify";
 import CustomToastContent from "../componets/CustomToastContent";
 import {queryClient} from "../hooks/RestInterceptor";
+import NoDataComponent from "../componets/NoDataComponent";
 
 export default function FacilitiesPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
@@ -25,8 +26,8 @@ export default function FacilitiesPage() {
     const [hotelId, setHotelId] = useState();
     const [hotel, setHotel] = useState();
     const [facility, setFacility] = useState(defaultFacility);
-    const [facilityId, setFacilityId] = useState(defaultFacility);
-console.log(facility)
+    const [facilityId, setFacilityId] = useState();
+
     useEffect(() => {
         if (hotelId) {
             setHotel(() => owner.hotels.find((hotel) => hotel.id === hotelId))
@@ -42,13 +43,16 @@ console.log(facility)
     }, [owner]);
 
     useEffect(() => {
-        facilityId && hotel && setFacility(()=>hotel.facilities.find((facility)=>facility.id===facilityId))
+        if(facilityId && hotel){
+            const facility = hotel.facilities.find((facility)=>facility.id===facilityId);
+            setFacility(() => ({...facility,hotelId:hotelId}));
+        }
     }, [facilityId]);
 
     useEffect(() => {
         if(facility.name===null){
             setFacilityId(null)
-            setFacility(()=>defaultFacility)
+            setFacility(()=>({...defaultFacility,hotelId:hotelId}))
         }
     }, [facility.name]);
 
@@ -80,7 +84,7 @@ console.log(facility)
             </SideBar>
             <div className='content-page flex-column justify-content-start align-items-start w-100'>
                 <Header title={t("Facilities")}/>
-                {owner.hotels &&
+                {owner.hotels ?
                     <div className={"px-2"}>
                         <div className={"w-25"}><CustomSelect
                             options={owner.hotels.map(({name, id}) => ({label: name, value: id}))}
@@ -118,7 +122,9 @@ console.log(facility)
                                     />}
                             </div>
                         </div>}
-                    </div>}
+                    </div>
+                    : <NoDataComponent sentence={t("first add hotel")}/>
+                }
             </div>
         </div>
     )
