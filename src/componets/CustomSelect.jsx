@@ -34,7 +34,7 @@ export default function CustomSelect({
                 onChange={handleInputChange}
                 isClearable={isClearable}
                 placeholder={t('choose') + ' ' + label.toLowerCase()}
-                value={defaultOption}
+                value={defaultOption || ""}
                 options={options}
                 required={true}
                 isSearchable={isSearchable}

@@ -37,7 +37,8 @@ export default function CustomTable({tableData, columns, darkHeader = true, view
                                             <input
                                                 type="checkbox"
                                                 id="checkbox"
-                                                defaultChecked={column}
+                                                checked={column}
+                                                readOnly={true}
                                             />
                                         </td>
                                         :
