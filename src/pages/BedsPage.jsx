@@ -16,7 +16,7 @@ import {Button, Form} from "react-bootstrap";
 import CommonInputText from "../componets/CommonInputText";
 import CustomTable from "../componets/CustomTable";
 import NoDataComponent from "../componets/NoDataComponent";
-import {currency} from "../utils/enums";
+import {currencyOptions} from "../utils/options";
 
 export default function BedsPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
@@ -91,8 +91,8 @@ export default function BedsPage() {
                                                      type={"number"} value={bed.people}/>
                                     <CommonInputText name={"price"} label={t("price")} setObjectValue={setBed}
                                                      type={"number"} value={bed.price}/>
-                                    <div className={"w-75"}><CustomSelect
-                                        options={currency.map((currency) => ({label: t(currency), value: currency}))}
+                                    <div className={"w-40"}><CustomSelect
+                                        options={currencyOptions.map((currency) => ({label: t(currency.label), value: currency.value, image:currency.image}))}
                                         label={t("Currency")} name={"currency"} setObjectValue={setBed}
                                         defaultValue={bed.currency} isClearable={true}/></div>
                                     <div className={"d-flex justify-content-between"}>

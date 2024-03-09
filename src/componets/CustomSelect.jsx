@@ -1,11 +1,13 @@
 import Select from "react-select";
 import React, {useEffect} from "react";
 import {useTranslation} from "react-i18next";
+import Flags from "country-flag-icons/react/3x2";
 
 export default function CustomSelect({
                                          options,
                                          setObjectValue,
                                          setValue,
+                                         handleSelect,
                                          label,
                                          name,
                                          defaultValue,
@@ -29,15 +31,25 @@ export default function CustomSelect({
         setDefaultValue && setDefaultValue();
     }, []);
 
+    const Flag = ({countryCode}) => {
+        const FlagComponent = Flags[countryCode.toUpperCase()];
+        return <FlagComponent className={"w-25"}/>;
+    };
+
     return (
         <Select className={'mt-4 mb-4'}
-                onChange={handleInputChange}
+                onChange={handleSelect ? handleSelect : handleInputChange}
                 isClearable={isClearable}
-                placeholder={t('choose') + ' ' + label.toLowerCase()}
+                placeholder={label && (t('choose') + ' ' + label.toLowerCase())}
                 value={defaultOption || ""}
                 options={options}
                 required={true}
                 isSearchable={isSearchable}
-        />
+                formatOptionLabel={option => (
+                    <div>
+                        <span>{option.label} </span>
+                        {option.image && <Flag countryCode={option.image}/>}
+                    </div>
+                )}        />
     )
 }

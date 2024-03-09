@@ -50,7 +50,6 @@ export const phonecodes = [
 ];
 
 export const countries = [
-
     {value: "Albania", label: "Albania"},
     {value: "Andorra", label: "Andorra"},
     {value: "Austria", label: "Austria"},
@@ -101,3 +100,12 @@ export const countries = [
     {value: "Vatican City", label: "Vatican City"}
 ]
 
+export const currencyOptions = [
+    {value:"BGN",label:"BGN",image:"BG"},
+    {value:"EUR",label:"EUR",image:"EU"},
+    {value:"RUB",label:"RUB",image:"RU"},
+    {value:"USD",label:"USD",image:"US"},
+    {value:"GBP",label:"GBP",image:"GB"},
+    {value:"RON",label:"RON",image:"RO"},
+    {value:"TRY",label:"TRY",image:"TR"},
+]

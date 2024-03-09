@@ -143,3 +143,15 @@ input[type="file"]::file-selector-button:hover {
     border: #00ff48 solid 5px;
     box-shadow: 5px 10px 10px #5e00ff;
 }
+
+.w-10{
+ width: 10%;
+}
+
+.w-30{
+    width: 30%;
+}
+
+.w-40{
+    width: 40%;
+}

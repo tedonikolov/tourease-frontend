@@ -20,8 +20,8 @@ export default function Header({title}) {
 
     return (
         <div
-            className='shadow d-flex flex-wrap justify-content-between align-items-center w-100 ps-4 pe-2 py-2 bg-white border-bottom '>
-            <div className='d-flex'>
+            className='shadow d-flex   align-items-center w-100 ps-4 pe-2 py-2 bg-white border-bottom '>
+            <div className='d-flex w-100'>
                 {!sideBarVisible && (
                     <Button
                         onClick={() => {
@@ -36,10 +36,10 @@ export default function Header({title}) {
 
                 <h2 className='ps-2 mb-0'>{title}</h2>
             </div>
-            <div className='d-flex align-items-center w-25'>
+            <div className='d-flex w-50 align-items-center'>
                 <ChangeLanguageComponent/>
 
-                <h5 className='mb-0 px-2 w-50 text-end'>
+                <h5 className='mb-0 px-2 w-100 text-end'>
                     {t("welcome")}, {sliceUsername(loggedUser.regular ? loggedUser.regular.firstName : loggedUser.email)}!
                 </h5>
 

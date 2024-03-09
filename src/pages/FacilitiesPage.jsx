@@ -7,7 +7,7 @@ import {AuthContext} from "../context/AuthContext";
 import Header from "../componets/Header";
 import CustomTable from "../componets/CustomTable";
 import CustomSelect from "../componets/CustomSelect";
-import {currency, facilitiesNames} from "../utils/enums";
+import {facilitiesNames} from "../utils/enums";
 import {Button, Form} from "react-bootstrap";
 import {defaultFacility} from "../utils/defaultValues";
 import CommonInputText from "../componets/CommonInputText";
@@ -18,6 +18,7 @@ import {toast} from "react-toastify";
 import CustomToastContent from "../componets/CustomToastContent";
 import {queryClient} from "../hooks/RestInterceptor";
 import NoDataComponent from "../componets/NoDataComponent";
+import {currencyOptions} from "../utils/options";
 
 export default function FacilitiesPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
@@ -106,8 +107,8 @@ export default function FacilitiesPage() {
                                                     type={"checkbox"} value={facility.paid}/>
                                     <CommonInputText name={"price"} label={t("price")} setObjectValue={setFacility}
                                                      type={"number"} value={facility.price}/>
-                                    <div className={"w-75"}><CustomSelect
-                                        options={currency.map((currency) => ({label: t(currency), value: currency}))}
+                                    <div className={"w-40"}><CustomSelect
+                                        options={currencyOptions.map((currency) => ({label: t(currency.label), value: currency.value, image:currency.image}))}
                                         label={t("Currency")} name={"currency"} setObjectValue={setFacility}
                                         defaultValue={facility.currency} isClearable={true}/></div>
                                     <div className={"d-flex justify-content-end"}><Button className={"main-button mt-4"}

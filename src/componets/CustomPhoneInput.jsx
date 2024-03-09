@@ -1,8 +1,7 @@
-import Select from "react-select";
-import Flags from "country-flag-icons/react/3x2";
 import {phonecodes} from "../utils/options";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
+import CustomSelect from "./CustomSelect";
 
 export default function CustomPhoneInput({
                                              label,
@@ -18,8 +17,7 @@ export default function CustomPhoneInput({
                                          }) {
     const [t]=useTranslation("translation",{keyPrefix:"common"})
     const [countryNumber, setCountryNumber] = useState(value && value.countryCode);
-    const defaultOption = phonecodes.find(option => option.label === countryNumber);
-    const [countryFlag, setCountryFlag] = useState(defaultOption && defaultOption.value);
+    const [defaultOption, setDefaultOption ]= useState(phonecodes.find(option => option.label === countryNumber));
     const [number, setNumber] = useState(value && value.phoneNumber);
 
     function handleInputChange(event) {
@@ -28,7 +26,6 @@ export default function CustomPhoneInput({
     }
 
     const handleSelect = (e) => {
-        setCountryFlag(() => e.value);
         setCountryNumber(() => e.label);
     };
 
@@ -39,31 +36,20 @@ export default function CustomPhoneInput({
             }))
             :
             setValue(countryNumber + number);
+        setDefaultOption(()=> phonecodes.find(option => option.label === countryNumber));
     }, [countryNumber, number]);
-
-    const Flag = ({countryCode}) => {
-        const FlagComponent = Flags[countryCode.toUpperCase()];
-        return <FlagComponent className={"w-25"}/>;
-    };
 
     return (
         <>
-            <div className='d-flex text-nowrap justify-content-center align-items-center text-center mt-3'>
-                <label className={"w-75 text-start"}>{label}:</label>
-                <div className='d-flex justify-content-between align-items-center text-center w-100 mx-5'>
-                    {countryFlag && <Flag countryCode={countryFlag}/>}
-                    <Select
-                        required={true}
-                        className="w-75 react-select-container"
-                        hideSelectedOptions={true}
-                        isSearchable={false}
-                        options={phonecodes}
-                        placeholder={t("phoneCode")}
-                        onChange={(e) => handleSelect(e)}
-                        defaultValue={defaultOption}
-                    />
+            <div className='d-flex text-nowrap justify-content-center align-items-center mt-3'>
+                <label className={"w-100 text-start"}>{label}:</label>
+                <div className='d-flex justify-content-between align-items-center mx-5'>
+                    <div className={"w-100"}><CustomSelect
+                        options={phonecodes.map((phone) => ({label: phone.label, value: phone.value, image:phone.value}))}
+                        label={t("phoneCode")} name={"currency"} handleSelect={handleSelect}
+                        defaultValue={defaultOption.value} /></div>
                     <input
-                        className={"w-75"}
+                        className={"w-100"}
                         type={type}
                         readOnly={readOnly}
                         value={number}
