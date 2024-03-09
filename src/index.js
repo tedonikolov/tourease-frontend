@@ -8,8 +8,6 @@ import {AuthProvider} from "./context/AuthContext";
 import {ToastContainer} from "react-toastify";
 import {Router} from "./routes/Routes";
 import {BrowserRouter} from "react-router-dom";
-import {Suspense} from 'react';
-import {Spinner} from 'react-bootstrap';
 import {QueryClientProvider} from "@tanstack/react-query";
 import {queryClient} from "./hooks/RestInterceptor";
 import SideBarProvider from "./context/SideBarContext";
@@ -20,9 +18,7 @@ root.render(
         <AuthProvider>
             <SideBarProvider>
                 <BrowserRouter>
-                    <Suspense fallback={<Spinner animation='border'/>}>
-                        <Router/>
-                    </Suspense>
+                    <Router/>
                     <ToastContainer theme={"colored"}/>
                 </BrowserRouter>
             </SideBarProvider>

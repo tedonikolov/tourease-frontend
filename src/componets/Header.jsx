@@ -48,7 +48,7 @@ export default function Header({title}) {
                     size='sm'
                     onClick={() => {
                         logout();
-                        navigate('/login', {replace: true});
+                        navigate('/', {replace: true});
                     }}
                 >
                     <FontAwesomeIcon icon={faSignOutAlt} className='fa-fw' rotation={180}/>
