@@ -42,14 +42,14 @@ export default function CustomPhoneInput({
     return (
         <>
             <div className='d-flex text-nowrap justify-content-center align-items-center mt-3'>
-                <label className={"w-100 text-start"}>{label}:</label>
+                <label className={"w-90 text-start"}>{label}:</label>
                 <div className='d-flex justify-content-between align-items-center mx-5'>
-                    <div className={"w-100"}><CustomSelect
+                    <div className={"w-70"}><CustomSelect
                         options={phonecodes.map((phone) => ({label: phone.label, value: phone.value, image:phone.value}))}
-                        label={t("phoneCode")} name={"currency"} handleSelect={handleSelect}
+                        label={t("phoneCode")} name={"currency"} handleSelect={handleSelect} hideIndicator={true} isSearchable={false}
                         defaultValue={defaultOption.value} /></div>
                     <input
-                        className={"w-100"}
+                        className={"w-90"}
                         type={type}
                         readOnly={readOnly}
                         value={number}

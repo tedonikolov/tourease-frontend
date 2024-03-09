@@ -90,7 +90,7 @@ export default function LoginForm({show, onHide}) {
                                 <div><h5>{t("Can resend it again after")}</h5> <h5
                                     className={"text-danger"}> {delay} </h5></div> :
                                 <button form={"changePassword"} className={"login-button"}>{t("send")}</button>}
-                            <button className={"close-button"}
+                                <button className={"close-button"}
                                     onClick={() => setChangePassword(false)}>{t("close")}</button>
                         </Modal.Footer>
                     </div>}

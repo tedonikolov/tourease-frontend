@@ -91,7 +91,7 @@ export default function BedsPage() {
                                                      type={"number"} value={bed.people}/>
                                     <CommonInputText name={"price"} label={t("price")} setObjectValue={setBed}
                                                      type={"number"} value={bed.price}/>
-                                    <div className={"w-40"}><CustomSelect
+                                    <div className={"w-45"}><CustomSelect
                                         options={currencyOptions.map((currency) => ({label: t(currency.label), value: currency.value, image:currency.image}))}
                                         label={t("Currency")} name={"currency"} setObjectValue={setBed}
                                         defaultValue={bed.currency} isClearable={true}/></div>

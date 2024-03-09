@@ -107,7 +107,7 @@ export default function FacilitiesPage() {
                                                     type={"checkbox"} value={facility.paid}/>
                                     <CommonInputText name={"price"} label={t("price")} setObjectValue={setFacility}
                                                      type={"number"} value={facility.price}/>
-                                    <div className={"w-40"}><CustomSelect
+                                    <div className={"w-45"}><CustomSelect
                                         options={currencyOptions.map((currency) => ({label: t(currency.label), value: currency.value, image:currency.image}))}
                                         label={t("Currency")} name={"currency"} setObjectValue={setFacility}
                                         defaultValue={facility.currency} isClearable={true}/></div>

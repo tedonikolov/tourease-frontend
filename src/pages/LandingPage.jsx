@@ -20,7 +20,7 @@ export default function LandingPage() {
                 :
                 <div className={'overlay'}>
                     <div className={'login-box text-center'}>
-                        <div className={"d-flex justify-content-end"}><ChangeLanguageComponent/></div>
+                        <div className={"d-flex justify-content-end text-end"}><ChangeLanguageComponent/></div>
                         <h2>{t("Welcome to TourEase")}</h2>
                         <h3>{t("In order to use the platform, you need to have profile")}</h3>
                         <Button className={'login-button m-2'} onClick={() => setToggleLogin(true)}>{t("login")}</Button>

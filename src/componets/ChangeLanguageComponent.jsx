@@ -11,12 +11,13 @@ export default function ChangeLanguageComponent() {
     };
 
     return (
-        <div className={"px-5"}>
+        <div className={"w-40"}>
             <CustomSelect
                 isSearchable={false}
                 options={languages}
                 handleSelect={handleSelect}
-                defaultValue={i18n.language}/>
+                defaultValue={i18n.language}
+                hideIndicator={true}/>
         </div>
     );
 };

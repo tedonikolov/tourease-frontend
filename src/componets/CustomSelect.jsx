@@ -12,6 +12,7 @@ export default function CustomSelect({
                                          name,
                                          defaultValue,
                                          setDefaultValue,
+                                         hideIndicator = false,
                                          isClearable = false,
                                          isSearchable = true
                                      }) {
@@ -33,11 +34,12 @@ export default function CustomSelect({
 
     const Flag = ({countryCode}) => {
         const FlagComponent = Flags[countryCode.toUpperCase()];
-        return <FlagComponent className={"w-25"}/>;
+        return <FlagComponent className={"w-30 border-black border-2 border"}/>;
     };
 
     return (
         <Select className={'mt-4 mb-4'}
+                components={hideIndicator && { DropdownIndicator:() => null, IndicatorSeparator:() => null }}
                 onChange={handleSelect ? handleSelect : handleInputChange}
                 isClearable={isClearable}
                 placeholder={label && (t('choose') + ' ' + label.toLowerCase())}
@@ -45,6 +47,8 @@ export default function CustomSelect({
                 options={options}
                 required={true}
                 isSearchable={isSearchable}
+                maxMenuHeight={200}
+                menuPlacement={"auto"}
                 formatOptionLabel={option => (
                     <div>
                         <span>{option.label} </span>

@@ -155,3 +155,23 @@ input[type="file"]::file-selector-button:hover {
 .w-40{
     width: 40%;
 }
+
+.w-45{
+    width: 45%;
+}
+
+.w-60{
+    width: 60%;
+}
+
+.w-70{
+    width: 70%;
+}
+
+.w-80{
+    width: 80%;
+}
+
+.w-90{
+    width: 90%;
+}

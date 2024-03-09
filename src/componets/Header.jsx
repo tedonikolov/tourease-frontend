@@ -36,10 +36,10 @@ export default function Header({title}) {
 
                 <h2 className='ps-2 mb-0'>{title}</h2>
             </div>
-            <div className='d-flex w-50 align-items-center'>
+            <div className='d-flex w-40 align-items-center'>
                 <ChangeLanguageComponent/>
 
-                <h5 className='mb-0 px-2 w-100 text-end'>
+                <h5 className='mb-0 px-2 w-50 text-end'>
                     {t("welcome")}, {sliceUsername(loggedUser.regular ? loggedUser.regular.firstName : loggedUser.email)}!
                 </h5>
 
