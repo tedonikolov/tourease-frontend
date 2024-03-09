@@ -125,7 +125,15 @@
     "CHILD_DINNER": "Child dinner",
     "people": "People",
     "clear": "Clear",
-    "Beds": "Beds"
+    "Beds": "Beds",
+    "Currency": "Currency",
+    "BGN": "BGN",
+    "EUR": "EURO",
+    "RUB": "RUB",
+    "USD": "USD",
+    "GBP": "GBP",
+    "RON": "RON",
+    "TRY": "TRY"
   },
   "table": {
     "User": "User",
@@ -198,7 +206,8 @@
     "Couldn't change password!": "Password change unsuccessful",
     "Phone number invalid": "Phone number invalid!",
     "Owner not found":"Owner not found!",
-    "Facility exist": "Facility already exist!"
+    "Facility exist": "Facility already exist!",
+    "Can't change facility": "Can't change facility!"
   },
   "countries": {
     "Afghanistan": "Afghanistan",

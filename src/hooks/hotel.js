@@ -38,45 +38,47 @@ export function insertImage({image, hotelId}) {
     return restInterceptor.post("hotel-service/hotel/image", {
         image: image,
         hotelId: hotelId
-    },{
+    }, {
         headers: {
             "Content-type": "multipart/form-data",
         },
     });
 }
 
-export function getImages(hotelId){
-    return restInterceptor.get("hotel-service/hotel/image/getForHotel/"+hotelId);
+export function getImages(hotelId) {
+    return restInterceptor.get("hotel-service/hotel/image/getForHotel/" + hotelId);
 }
 
-export function deleteImage(imageId){
-    return restInterceptor.delete("hotel-service/hotel/image/"+imageId);
+export function deleteImage(imageId) {
+    return restInterceptor.delete("hotel-service/hotel/image/" + imageId);
 }
 
-export function saveFacility(facility){
-    return restInterceptor.post("hotel-service/hotel/facility/save",{
-        id:facility.id,
-        name:facility.name,
-        paid:facility.paid,
-        price:facility.price,
-        hotelId:facility.hotelId
+export function saveFacility(facility) {
+    return restInterceptor.post("hotel-service/hotel/facility/save", {
+        id: facility.id,
+        name: facility.name,
+        paid: facility.paid,
+        price: facility.price,
+        currency: facility.currency,
+        hotelId: facility.hotelId
     });
 }
 
-export function deleteFacilityById(id){
-    return restInterceptor.delete("hotel-service/hotel/facility/"+id);
+export function deleteFacilityById(id) {
+    return restInterceptor.delete("hotel-service/hotel/facility/" + id);
 }
 
-export function saveBed(bed){
-    return restInterceptor.post("hotel-service/hotel/bed/save",{
-        id:bed.id,
-        name:bed.name,
-        people:bed.people,
-        price:bed.price,
-        hotelId:bed.hotelId
+export function saveBed(bed) {
+    return restInterceptor.post("hotel-service/hotel/bed/save", {
+        id: bed.id,
+        name: bed.name,
+        people: bed.people,
+        price: bed.price,
+        currency: bed.currency,
+        hotelId: bed.hotelId
     });
 }
 
-export function deleteBedById(id){
-    return restInterceptor.delete("hotel-service/hotel/bed/"+id);
+export function deleteBedById(id) {
+    return restInterceptor.delete("hotel-service/hotel/bed/" + id);
 }

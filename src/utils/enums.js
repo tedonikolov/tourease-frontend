@@ -23,3 +23,13 @@ export const facilitiesNames=[
     "DINNER",
     "CHILD_DINNER"
 ]
+
+export const currency = [
+    "BGN",
+    "EUR",
+    "RUB",
+    "USD",
+    "GBP",
+    "RON",
+    "TRY"
+]

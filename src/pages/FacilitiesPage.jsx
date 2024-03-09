@@ -7,7 +7,7 @@ import {AuthContext} from "../context/AuthContext";
 import Header from "../componets/Header";
 import CustomTable from "../componets/CustomTable";
 import CustomSelect from "../componets/CustomSelect";
-import {facilitiesNames} from "../utils/enums";
+import {currency, facilitiesNames} from "../utils/enums";
 import {Button, Form} from "react-bootstrap";
 import {defaultFacility} from "../utils/defaultValues";
 import CommonInputText from "../componets/CommonInputText";
@@ -27,52 +27,57 @@ export default function FacilitiesPage() {
     const [hotel, setHotel] = useState();
     const [facility, setFacility] = useState(defaultFacility);
     const [facilityId, setFacilityId] = useState();
+    const [facilityOptions, setFacilityOptions] = useState(facilitiesNames);
 
     useEffect(() => {
-        if (hotelId) {
-            setHotel(() => owner.hotels.find((hotel) => hotel.id === hotelId))
-            setFacility((prev)=>({...prev,hotelId:hotelId}))
-        }
-    }, [hotelId]);
-
-    useEffect(() => {
-        if(owner) {
-            setHotel(() => owner.hotels.find((hotel) => hotel.id === hotelId))
+        if (owner && hotelId) {
+            let hotel = owner.hotels.find((hotel) => hotel.id === hotelId);
+            setHotel(() => hotel)
             setFacility((prev) => ({...prev, hotelId: hotelId}))
+            hotel.facilities.length > 0 && setFacilityOptions(() => facilitiesNames.filter((facility) => !hotel.facilities.find((savedFacility) => savedFacility.name === facility)).map((name) => ({
+                label: t(name),
+                value: name
+            })))
+            hotel.facilities.sort((a, b) => a.id - b.id)
         }
-    }, [owner]);
+    }, [owner, hotelId]);
 
     useEffect(() => {
-        if(facilityId && hotel){
-            const facility = hotel.facilities.find((facility)=>facility.id===facilityId);
-            setFacility(() => ({...facility,hotelId:hotelId}));
+        if (facilityId && hotel) {
+            const facility = hotel.facilities.find((facility) => facility.id === facilityId);
+            facilityOptions.push({label: t(facility.name), value: facility.name})
+            setFacility(() => ({...facility, hotelId: hotelId}));
         }
     }, [facilityId]);
 
     useEffect(() => {
-        if(facility.name===null){
+        if (facility.name === null) {
             setFacilityId(null)
-            setFacility(()=>({...defaultFacility,hotelId:hotelId}))
+            setFacility(() => ({...defaultFacility, hotelId: hotelId}))
+            hotel.facilities.length > 0 && setFacilityOptions(() => facilitiesNames.filter((facility) => !hotel.facilities.find((savedFacility) => savedFacility.name === facility)).map((name) => ({
+                label: t(name),
+                value: name
+            })))
         }
     }, [facility.name]);
 
-    const {mutate}=useMutation({
-        mutationFn:saveFacility,
-        onSuccess:()=>{
+    const {mutate} = useMutation({
+        mutationFn: saveFacility,
+        onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successUpdate")]}/>);
             queryClient.resetQueries({queryKey: ["get owner", hotel.owner.email]});
         }
     });
 
-    const {mutate:deleteFacility}=useMutation({
-        mutationFn:deleteFacilityById,
-        onSuccess:()=>{
+    const {mutate: deleteFacility} = useMutation({
+        mutationFn: deleteFacilityById,
+        onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successDelete")]}/>);
             queryClient.resetQueries({queryKey: ["get owner", hotel.owner.email]});
         }
     });
 
-    function save(event){
+    function save(event) {
         event.preventDefault();
         mutate(facility)
     }
@@ -94,14 +99,20 @@ export default function FacilitiesPage() {
                             <div className={"mx-4 w-50 box h-100 px-2 pb-2"}>
                                 <Form onSubmit={save}>
                                     <div className={"w-75"}><CustomSelect
-                                        options={facilitiesNames.map((name) => ({label: t(name), value: name}))}
+                                        options={facilityOptions}
                                         label={t("Facility")} name={"name"} setObjectValue={setFacility}
                                         defaultValue={facility.name} isClearable={true}/></div>
                                     <CustomCheckBox name={"paid"} label={t("paid")} setObjectValue={setFacility}
-                                                     type={"checkbox"} value={facility.paid}/>
+                                                    type={"checkbox"} value={facility.paid}/>
                                     <CommonInputText name={"price"} label={t("price")} setObjectValue={setFacility}
                                                      type={"number"} value={facility.price}/>
-                                    <div className={"d-flex justify-content-end"}><Button className={"main-button mt-4"} type={"submit"}>{t("save")}</Button></div>
+                                    <div className={"w-75"}><CustomSelect
+                                        options={currency.map((currency) => ({label: t(currency), value: currency}))}
+                                        label={t("Currency")} name={"currency"} setObjectValue={setFacility}
+                                        defaultValue={facility.currency} isClearable={true}/></div>
+                                    <div className={"d-flex justify-content-end"}><Button className={"main-button mt-4"}
+                                                                                          type={"submit"}>{t("save")}</Button>
+                                    </div>
                                 </Form>
                             </div>
                             <div className={"w-100"}>
@@ -115,8 +126,9 @@ export default function FacilitiesPage() {
                                             items: hotel.facilities.map(({
                                                                              name,
                                                                              paid,
-                                                                             price
-                                                                         }) => [t(name), paid, price])
+                                                                             price,
+                                                                             currency
+                                                                         }) => [t(name), paid, price + " " + currency])
                                         }}
                                         onDelete={deleteFacility}
                                     />}

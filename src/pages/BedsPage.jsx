@@ -16,6 +16,7 @@ import {Button, Form} from "react-bootstrap";
 import CommonInputText from "../componets/CommonInputText";
 import CustomTable from "../componets/CustomTable";
 import NoDataComponent from "../componets/NoDataComponent";
+import {currency} from "../utils/enums";
 
 export default function BedsPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
@@ -27,29 +28,24 @@ export default function BedsPage() {
     const [bedId, setBedId] = useState();
 
     useEffect(() => {
-        if (hotelId) {
-            setHotel(() => owner.hotels.find((hotel) => hotel.id === hotelId));
+        if (owner && hotelId) {
+            let hotel = owner.hotels.find((hotel) => hotel.id === hotelId)
+            setHotel(() => hotel);
             setBed((prev) => ({...prev, hotelId: hotelId}));
+            hotel.beds.sort((a, b) => a.id - b.id)
         }
-    }, [hotelId]);
+    }, [hotelId, owner]);
 
     useEffect(() => {
-        if (owner) {
-            setHotel(() => owner.hotels.find((hotel) => hotel.id === hotelId));
-            setBed((prev) => ({...prev, hotelId: hotelId}));
-        }
-    }, [owner]);
-
-    useEffect(() => {
-        if(bedId && hotel){
+        if (bedId && hotel) {
             const bed = hotel.beds.find((bed) => bed.id === bedId);
-            setBed(() => ({...bed,hotelId:hotelId}));
+            setBed(() => ({...bed, hotelId: hotelId}));
         }
     }, [bedId]);
 
     function clear() {
         setBedId(null)
-        setBed(() => ({...defaultBed,hotelId:hotelId}))
+        setBed(() => ({...defaultBed, hotelId: hotelId}))
     }
 
     const {mutate} = useMutation({
@@ -95,6 +91,10 @@ export default function BedsPage() {
                                                      type={"number"} value={bed.people}/>
                                     <CommonInputText name={"price"} label={t("price")} setObjectValue={setBed}
                                                      type={"number"} value={bed.price}/>
+                                    <div className={"w-75"}><CustomSelect
+                                        options={currency.map((currency) => ({label: t(currency), value: currency}))}
+                                        label={t("Currency")} name={"currency"} setObjectValue={setBed}
+                                        defaultValue={bed.currency} isClearable={true}/></div>
                                     <div className={"d-flex justify-content-between"}>
                                         <Button className={"main-button mt-4"} type={"submit"}>{t("save")}</Button>
                                         <Button className={"close-button mt-4"} onClick={clear}>{t("clear")}</Button>
@@ -112,8 +112,9 @@ export default function BedsPage() {
                                             items: hotel.beds.map(({
                                                                        name,
                                                                        people,
-                                                                       price
-                                                                   }) => [name, people, price])
+                                                                       price,
+                                                                       currency
+                                                                   }) => [name, people, price + " " + currency])
                                         }}
                                         onDelete={deleteBed}
                                     />}
