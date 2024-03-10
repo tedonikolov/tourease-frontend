@@ -10,6 +10,7 @@ export default function HotelInfo({hotel, setHotel, checkStars, countries}) {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const [location, setLocation] = useState(hotel.location);
     const [zoom, setZoom] = useState(5);
+    const apiKey = process.env["GOOGLE_KEY"]
 
     const stars = [
         {value: "ONE", label: checkStars("ONE")},
@@ -24,7 +25,7 @@ export default function HotelInfo({hotel, setHotel, checkStars, countries}) {
     }, [location]);
 
     function findLocation() {
-        setKey("AIzaSyAbcJS6U1QqXWAfi-_IptxZylvqtJfoPKA")
+        setKey(apiKey)
         geocode(RequestType.ADDRESS, location.country + " " + location.city + " " + location.address)
             .then(({results}) => {
                 const {lat, lng} = results[0].geometry.location;
@@ -94,7 +95,7 @@ export default function HotelInfo({hotel, setHotel, checkStars, countries}) {
                     </div>
                 </div>
                 <div className={"login-box mt-3"} style={{height: '70vh', width: '100%'}}>
-                    <GoogleMapReact bootstrapURLKeys={{key: 'AIzaSyAbcJS6U1QqXWAfi-_IptxZylvqtJfoPKA'}}
+                    <GoogleMapReact bootstrapURLKeys={{key: apiKey}}
                                     zoom={zoom} center={{
                         lat: location.latitude ? location.latitude : 46.350,
                         lng: location.longitude ? location.longitude : 13.616
