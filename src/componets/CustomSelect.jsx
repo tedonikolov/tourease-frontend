@@ -14,9 +14,15 @@ export default function CustomSelect({
                                          setDefaultValue,
                                          hideIndicator = false,
                                          isClearable = false,
-                                         isSearchable = true
+                                         isSearchable = true,
+                                         isMulti = false,
+                                         required = true
                                      }) {
-    const defaultOption = options.find(option => option.value === defaultValue);
+    const defaultOption = defaultValue && (isMulti ? options.filter(option => {
+        return defaultValue.some(value => {
+            return value === option.value
+        })
+    }) : options.find(option => option.value === defaultValue));
     const {t} = useTranslation("translation", {keyPrefix: 'common'});
 
     function handleInputChange(newValue) {
@@ -39,13 +45,14 @@ export default function CustomSelect({
 
     return (
         <Select className={'mt-4 mb-4'}
-                components={hideIndicator && { DropdownIndicator:() => null, IndicatorSeparator:() => null }}
+                components={hideIndicator && {DropdownIndicator: () => null, IndicatorSeparator: () => null}}
                 onChange={handleSelect ? handleSelect : handleInputChange}
+                isMulti={isMulti}
                 isClearable={isClearable}
                 placeholder={label && (t('choose') + ' ' + label.toLowerCase())}
                 value={defaultOption || ""}
                 options={options}
-                required={true}
+                required={required}
                 isSearchable={isSearchable}
                 maxMenuHeight={200}
                 menuPlacement={"auto"}
@@ -54,6 +61,6 @@ export default function CustomSelect({
                         <span>{option.label} </span>
                         {option.image && <Flag countryCode={option.image}/>}
                     </div>
-                )}        />
+                )}/>
     )
 }
