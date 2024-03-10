@@ -61,7 +61,7 @@ instance.interceptors.response.use(
                 console.log('ERROR STATUS', error.response.status, 'REDIRECT TO LOGIN');
                 sessionStorage.removeItem('token');
                 sessionStorage.removeItem('username');
-                window.location.href = '/login';
+                window.location.href = '/';
                 break;
             }
             case 403: {

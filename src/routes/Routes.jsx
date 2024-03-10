@@ -12,6 +12,7 @@ import Swagger from "../pages/Swagger";
 import OwnerProfilePage from "../pages/OwnerProfilePage";
 import FacilitiesPage from "../pages/FacilitiesPage";
 import BedsPage from "../pages/BedsPage";
+import TypesPage from "../pages/TypesPage";
 
 export const Router = () => {
     return (
@@ -42,6 +43,7 @@ export const Router = () => {
                     <Route path={'/hotel/profile'} element={<OwnerProfilePage/>}/>
                     <Route path={'/hotel/facilities'} element={<FacilitiesPage/>}/>
                     <Route path={'/hotel/beds'} element={<BedsPage/>}/>
+                    <Route path={'/hotel/types'} element={<TypesPage/>}/>
                 </Route>
                 <Route
                     path={'/'}

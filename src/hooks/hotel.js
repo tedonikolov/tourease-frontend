@@ -82,3 +82,18 @@ export function saveBed(bed) {
 export function deleteBedById(id) {
     return restInterceptor.delete("hotel-service/hotel/bed/" + id);
 }
+
+export function saveType(type) {
+    return restInterceptor.post("hotel-service/hotel/type/save", {
+        id: type.id,
+        name: type.name,
+        price: type.price,
+        currency: type.currency,
+        beds: type.beds.map(bed=>bed),
+        hotelId: type.hotelId
+    });
+}
+
+export function deleteTypeById(id) {
+    return restInterceptor.delete("hotel-service/hotel/type/" + id);
+}

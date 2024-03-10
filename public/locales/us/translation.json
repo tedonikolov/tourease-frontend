@@ -134,7 +134,8 @@
     "USD": "USD",
     "GBP": "GBP",
     "RON": "RON",
-    "TRY": "TRY"
+    "TRY": "TRY",
+    "Types": "Room types"
   },
   "table": {
     "User": "User",
@@ -147,7 +148,8 @@
     "Paid": "Paid",
     "Price": "Price",
     "Delete": "Delete",
-    "People": "People"
+    "People": "People",
+    "Beds": "Beds"
   },
   "logs": {
     "Chronology": "Chronology",
