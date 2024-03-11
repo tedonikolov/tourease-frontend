@@ -135,7 +135,10 @@
     "GBP": "GBP",
     "RON": "RON",
     "TRY": "TRY",
-    "Types": "Room types"
+    "Types": "Room types",
+    "Type": "Room type",
+    "number": "Room number",
+    "Rooms": "Rooms"
   },
   "table": {
     "User": "User",
@@ -149,7 +152,8 @@
     "Price": "Price",
     "Delete": "Delete",
     "People": "People",
-    "Beds": "Beds"
+    "Beds": "Beds",
+    "Number": "Room number"
   },
   "logs": {
     "Chronology": "Chronology",
@@ -210,7 +214,8 @@
     "Phone number invalid": "Phone number invalid!",
     "Owner not found":"Owner not found!",
     "Facility exist": "Facility already exist!",
-    "Can't change facility": "Can't change facility!"
+    "Can't change facility": "Can't change facility!",
+    "Room exist": "Room number exist!"
   },
   "countries": {
     "Afghanistan": "Afghanistan",

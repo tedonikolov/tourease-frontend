@@ -55,3 +55,9 @@ export const defaultType = {
     currency: "",
     beds: []
 }
+
+export const defaultRoom = {
+    id: 0,
+    name: "",
+    types: [],
+}

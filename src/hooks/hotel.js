@@ -97,3 +97,16 @@ export function saveType(type) {
 export function deleteTypeById(id) {
     return restInterceptor.delete("hotel-service/hotel/type/" + id);
 }
+
+export function saveRoom(room) {
+    return restInterceptor.post("hotel-service/hotel/room/save", {
+        id: room.id,
+        name: room.name,
+        types: room.types,
+        hotelId: room.hotelId
+    });
+}
+
+export function deleteRoomById(id) {
+    return restInterceptor.delete("hotel-service/hotel/room/" + id);
+}
