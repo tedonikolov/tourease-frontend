@@ -20,7 +20,7 @@ export default function Header({title}) {
 
     return (
         <div
-            className='shadow d-flex   align-items-center w-100 ps-4 pe-2 py-2 bg-white border-bottom '>
+            className='shadow d-flex align-items-center w-100 ps-4 pe-2 py-2 bg-white border-bottom '>
             <div className='d-flex w-100'>
                 {!sideBarVisible && (
                     <Button

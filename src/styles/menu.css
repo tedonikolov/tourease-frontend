@@ -8,7 +8,7 @@
             visibility: visible;
         }
 
-        @media (min-width: 1024px) {
+        @media (min-width: 1400px) {
             .content-page {
                 padding-left: 250px;
             }
@@ -21,7 +21,7 @@
     width: 250px;
     height: 100%;
     z-index: 12;
-    background-color: rgba(0, 0, 0, 0.466);
+    background-color: rgb(59, 91, 57);
 }
 
 .sidebar {

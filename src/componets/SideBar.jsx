@@ -6,10 +6,9 @@ import {SideBarContext} from "../context/SideBarContext";
 
 export default function SideBar ({ children }) {
     const { sideBarVisible,setSideBarVisible } = useContext(SideBarContext);
-    const screenWidth = window.innerWidth;
 
     return (
-        <div className={`${screenWidth > 1024 && sideBarVisible && 'sidebar-overlay'}`}>
+        <div className={`${sideBarVisible && 'sidebar-overlay'}`}>
             <div className={`position-fixed sidebar flex-column vh-100 background-dark`}>
                 <div className='d-flex justify-content-end'>
                     <Button

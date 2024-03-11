@@ -14,7 +14,7 @@ export default function NavLink ({ path, label, image, icon }){
             to={path}
             data-toggle='pill'
             onClick={() => {
-                if (screenWidth < 1024) {
+                if (screenWidth < 1400) {
                     setSideBarVisible(false);
                 }
             }}
