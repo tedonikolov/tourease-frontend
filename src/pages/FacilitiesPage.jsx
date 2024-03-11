@@ -66,7 +66,7 @@ export default function FacilitiesPage() {
         mutationFn: saveFacility,
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successUpdate")]}/>);
-            queryClient.resetQueries({queryKey: ["get owner", hotel.owner.email]});
+            queryClient.resetQueries({queryKey: ["get owner", owner.email]});
         }
     });
 
@@ -74,7 +74,7 @@ export default function FacilitiesPage() {
         mutationFn: deleteFacilityById,
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successDelete")]}/>);
-            queryClient.resetQueries({queryKey: ["get owner", hotel.owner.email]});
+            queryClient.resetQueries({queryKey: ["get owner", owner.email]});
         }
     });
 

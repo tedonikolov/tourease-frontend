@@ -65,7 +65,7 @@ export default function TypesPage() {
         mutationFn: saveType,
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successUpdate")]}/>);
-            queryClient.resetQueries({queryKey: ["get owner", hotel.owner.email]});
+            queryClient.resetQueries({queryKey: ["get owner", owner.email]});
         }
     });
 
@@ -73,7 +73,7 @@ export default function TypesPage() {
         mutationFn: deleteTypeById,
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successDelete")]}/>);
-            queryClient.resetQueries({queryKey: ["get owner", hotel.owner.email]});
+            queryClient.resetQueries({queryKey: ["get owner", owner.email]});
         }
     });
 

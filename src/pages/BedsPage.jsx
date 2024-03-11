@@ -29,7 +29,8 @@ export default function BedsPage() {
 
     useEffect(() => {
         if (owner && hotelId) {
-            let hotel = owner.hotels.find((hotel) => hotel.id === hotelId)
+            let hotel = owner.hotels.find((hotel) => hotel.id === hotelId);
+
             setHotel(() => hotel);
             setBed((prev) => ({...prev, hotelId: hotelId}));
             hotel.beds.sort((a, b) => a.id - b.id)
@@ -52,7 +53,7 @@ export default function BedsPage() {
         mutationFn: saveBed,
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successUpdate")]}/>);
-            queryClient.resetQueries({queryKey: ["get owner", hotel.owner.email]});
+            queryClient.resetQueries({queryKey: ["get owner", owner.email]});
         }
     });
 
@@ -60,7 +61,7 @@ export default function BedsPage() {
         mutationFn: deleteBedById,
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successDelete")]}/>);
-            queryClient.resetQueries({queryKey: ["get owner", hotel.owner.email]});
+            queryClient.resetQueries({queryKey: ["get owner", owner.email]});
         }
     });
 

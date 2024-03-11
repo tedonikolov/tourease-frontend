@@ -70,9 +70,9 @@ export const AuthProvider = ({children}) => {
     )
 
     const {data: owner, isLoading: ownerLoading} = useQuery({
-            queryKey: ["get owner", user&&user.email],
+            queryKey: ["get owner", username],
             queryFn: () => getOwnerByEmail(user.email),
-            enabled: user!==undefined && user.userType===Hotel,
+            enabled: isSuccess && user.userType===Hotel,
             retry: false,
             staleTime: 5000
         }
