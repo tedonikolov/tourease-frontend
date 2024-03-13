@@ -138,7 +138,14 @@
     "Types": "Room types",
     "Type": "Room type",
     "number": "Room number",
-    "Rooms": "Rooms"
+    "Rooms": "Rooms",
+    "Configurations": "Configurations",
+    "emailInfo": "Email configurations",
+    "emailFrom": "Email for sending mails",
+    "emailPassword": "Email google app password",
+    "activateProfileURL": "URL for navigation to activate profile",
+    "passportExpiredURL": "URL for navigation to expired passport",
+    "changePasswordURL": "URL for navigation to password change"
   },
   "table": {
     "User": "User",

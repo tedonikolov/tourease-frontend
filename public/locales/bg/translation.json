@@ -138,7 +138,14 @@
     "Types": "Видове стаи",
     "Type": "Вид стая",
     "number": "Номер на стая",
-    "Rooms": "Стаи"
+    "Rooms": "Стаи",
+    "Configurations": "Настройки",
+    "emailInfo": "Емейл конфигурации",
+    "emailFrom": "Емейл за изпращане на съобщения",
+    "emailPassword": "Емейл google app парола",
+    "activateProfileURL": "URL за навигиране към активиране на профил",
+    "passportExpiredURL": "URL за навигиране към изтекъл паспорт",
+    "changePasswordURL": "URL за навигиране към промяна на паролата"
   },
   "table": {
     "User": "Потребител",
