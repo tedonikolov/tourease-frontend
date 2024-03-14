@@ -74,7 +74,7 @@ export default function LogsPage() {
                         </div>
                         <div className={"w-50 mt-3 mx-5"}>
                             <CustomSelect label={t("type")} name={"type"} setObjectValue={setChronologyFilter}
-                                          isClearable={true}
+                                          isClearable={true} defaultValue={chronologyFilter.type}
                                           options={types ? types.map((type) => {
                                               return {value: type, label: t(type)}
                                           }) : []}/>

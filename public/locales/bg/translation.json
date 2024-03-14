@@ -203,7 +203,11 @@
     "HOTEL_CREATED": "Създадено място за настаняване",
     "HOTEL_UPDATED": "Променени данни на място за настаняване",
     "Hotel updated with name": "Обновен хотел с име",
-    "Hotel created with name": "Създаден хотел с име"
+    "Hotel created with name": "Създаден хотел с име",
+    "CONFIG_UPDATED": "Обновени конфигурации",
+    "Configurations updated!": "Обновени конфикурации!",
+    "PASSWORD_CHANGED": "Променена парола",
+    "Password Changed!": "Променена парола!"
   },
   "errors": {
     "serviceNotFound": "Възникна проблем със сървъра. Услугата не е достъпна.",

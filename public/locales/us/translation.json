@@ -203,7 +203,11 @@
     "HOTEL_CREATED": "Hotel created",
     "HOTEL_UPDATED": "Hotel updated",
     "Hotel updated with name": "Hotel updated with name",
-    "Hotel created with name": "Hotel created with name"
+    "Hotel created with name": "Hotel created with name",
+    "CONFIG_UPDATED": "Configs updated",
+    "Configurations updated!": "Configs updated!",
+    "PASSWORD_CHANGED": "Password changed",
+    "Password Changed!": "Password changed!"
   },
   "errors": {
     "serviceNotFound": "There was a problem with the server. The service is not available.",
