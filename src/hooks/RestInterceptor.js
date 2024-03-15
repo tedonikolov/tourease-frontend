@@ -13,8 +13,6 @@ const instance = Object.assign(
     {}
 );
 
-//instance.defaults.headers.post['Content-Type'] = 'aplication/json';
-
 instance.interceptors.request.use((config) => {
     const token = sessionStorage.getItem('token');
     if (token && config.headers) {
@@ -61,7 +59,7 @@ instance.interceptors.response.use(
                 console.log('ERROR STATUS', error.response.status, 'REDIRECT TO LOGIN');
                 sessionStorage.removeItem('token');
                 sessionStorage.removeItem('username');
-                window.location.href = '/';
+                window.location.href = '';
                 break;
             }
             case 403: {

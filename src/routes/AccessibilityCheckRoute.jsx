@@ -1,15 +1,16 @@
-import {useContext} from "react";
+import React, {useContext} from "react";
 import { AuthContext } from '../context/AuthContext';
-import { Outlet } from 'react-router-dom';
+import {Navigate, Outlet} from 'react-router-dom';
 
 export default function AccessibilityCheckRoute ({ allowedRoles, isOpen }) {
-    const { hasPermission } = useContext(AuthContext);
+    const { hasPermission, mainPage } = useContext(AuthContext);
+
     if (isOpen) return <><Outlet/></>;
     return hasPermission(allowedRoles) ? (
         <>
             <Outlet />
         </>
     ) : (
-        <></>
+        mainPage && <Navigate to={mainPage}/>
     );
 };

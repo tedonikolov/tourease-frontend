@@ -13,7 +13,6 @@ export const AuthProvider = ({children}) => {
     const [permission, setPermission] = useState('');
     const [loggedUser, setLoggedUser] = useState(null);
     const [navigatePage, setNavigatePage] = useState('');
-    const [location, setLocation] = useState();
 
     const getUserData = () => {
         setLoggedUser(user);
@@ -131,8 +130,7 @@ export const AuthProvider = ({children}) => {
                 permission,
                 setPermission,
                 hasPermission,
-                setLocation,
-                mainPage: location ? location.pathname + location.search : navigatePage
+                mainPage: navigatePage
             }}
         >
             {children}

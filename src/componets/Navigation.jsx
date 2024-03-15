@@ -52,6 +52,9 @@ export default function Navigation () {
                     <NavLink path='/logs' label={t('logs')} icon={faHistory} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Admin]}>
+                    <NavLink path='/configurations' label={t('Configurations')} icon={faCogs}/>
+                </RequiredPermissions>
+                <RequiredPermissions requiredPermissions={[Admin]}>
                     <NavLink path='/swagger' label={t('Swagger')} icon={faCogs}/>
                 </RequiredPermissions>
             </div>
