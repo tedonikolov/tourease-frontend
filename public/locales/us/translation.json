@@ -94,9 +94,11 @@
     "Add hotel": "Add new hotel",
     "Images": "Images",
     "Save first hotel info": "Save first hotel info!",
+    "first add hotel": "Добавете първо място за настаняване!",
     "Remove": "Remove",
     "successImage": "Successful saved image",
     "successDelete": "Successful deletion",
+    "successReassign": "Успешно назначен отново",
     "Facilities": "Facilities",
     "Facility": "Facility",
     "price": "Price",
@@ -145,7 +147,12 @@
     "emailPassword": "Email google app password",
     "activateProfileURL": "URL for navigation to activate profile",
     "passportExpiredURL": "URL for navigation to expired passport",
-    "changePasswordURL": "URL for navigation to password change"
+    "changePasswordURL": "URL for navigation to password change",
+    "workers": "Workers",
+    "workerType": "Role",
+    "MANAGER": "Manager",
+    "RECEPTIONIST": "Receptionist",
+    "Add worker": "Add worker"
   },
   "table": {
     "User": "User",
@@ -160,7 +167,13 @@
     "Delete": "Delete",
     "People": "People",
     "Beds": "Beds",
-    "Number": "Room number"
+    "Number": "Room number",
+    "Email": "Email",
+    "Phone": "PHone number",
+    "WorkType": "Role",
+    "registrationDate": "Date of registration",
+    "firedDate": "Date of fire",
+    "Action": "Action"
   },
   "logs": {
     "Chronology": "Chronology",

@@ -33,3 +33,8 @@ export const currency = [
     "RON",
     "TRY"
 ]
+
+export const workType = [
+    "MANAGER",
+    "RECEPTIONIST"
+]

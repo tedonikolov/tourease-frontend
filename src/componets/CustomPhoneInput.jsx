@@ -15,9 +15,9 @@ export default function CustomPhoneInput({
                                              error,
                                              errorText,
                                          }) {
-    const [t]=useTranslation("translation",{keyPrefix:"common"})
+    const [t] = useTranslation("translation", {keyPrefix: "common"})
     const [countryNumber, setCountryNumber] = useState(value && value.countryCode);
-    const [defaultOption, setDefaultOption ]= useState(phonecodes.find(option => option.label === countryNumber));
+    const [defaultOption, setDefaultOption] = useState(phonecodes.find(option => option.label === countryNumber));
     const [number, setNumber] = useState(value && value.phoneNumber);
 
     function handleInputChange(event) {
@@ -36,8 +36,14 @@ export default function CustomPhoneInput({
             }))
             :
             setValue(countryNumber + number);
-        setDefaultOption(()=> phonecodes.find(option => option.label === countryNumber));
+        setDefaultOption(() => phonecodes.find(option => option.label === countryNumber));
     }, [countryNumber, number]);
+
+    useEffect(() => {
+        setNumber(() => value && value.phoneNumber);
+        setCountryNumber(() => value && value.countryCode);
+        setDefaultOption(() => phonecodes.find(option => option.label === countryNumber));
+    }, [value]);
 
     return (
         <>
@@ -45,9 +51,14 @@ export default function CustomPhoneInput({
                 <label className={"w-90 text-start"}>{label}:</label>
                 <div className='d-flex justify-content-between align-items-center mx-5'>
                     <div className={"w-70"}><CustomSelect
-                        options={phonecodes.map((phone) => ({label: phone.label, value: phone.value, image:phone.value}))}
-                        label={t("phoneCode")} name={"currency"} handleSelect={handleSelect} hideIndicator={true} isSearchable={false}
-                        defaultValue={defaultOption.value} /></div>
+                        options={phonecodes.map((phone) => ({
+                            label: phone.label,
+                            value: phone.value,
+                            image: phone.value
+                        }))}
+                        label={t("phoneCode")} name={"currency"} handleSelect={handleSelect} hideIndicator={true}
+                        isSearchable={false}
+                        defaultValue={defaultOption.value}/></div>
                     <input
                         className={"w-90"}
                         type={type}

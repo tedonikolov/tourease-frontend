@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 
-export default function CustomTable({tableData, columns, darkHeader = true, viewComponent, checkStars, onDelete}) {
+export default function CustomTable({tableData, columns, darkHeader = true, viewComponent, checkStars, onDelete, onAction, actionIcon, disabled}) {
     const [t] = useTranslation("translation", {keyPrefix: 'table'});
 
     return (
@@ -22,14 +22,14 @@ export default function CustomTable({tableData, columns, darkHeader = true, view
                 <tbody>
                 {
                     columns.items.map((row, itemIndex) => (
-                            <tr key={itemIndex} className={`${viewComponent ? 'hovered-row' : ''}`}>
+                            <tr key={itemIndex} className={`${disabled && !disabled(tableData[itemIndex]) && viewComponent ? 'hovered-row' : ''}`}>
                                 {row.map((column, index) => (
                                     typeof column === 'boolean' ?
                                         <td key={index}
                                             onClick={() => {
                                                 const id = tableData[itemIndex].id ?? 0;
 
-                                                if (viewComponent) {
+                                                if (disabled && !disabled(tableData[itemIndex]) && viewComponent) {
                                                     viewComponent(id);
                                                 }
                                             }}
@@ -46,7 +46,7 @@ export default function CustomTable({tableData, columns, darkHeader = true, view
                                             onClick={() => {
                                                 const id = tableData[itemIndex].id ?? 0;
 
-                                                if (viewComponent) {
+                                                if (disabled && !disabled(tableData[itemIndex]) && viewComponent) {
                                                     viewComponent(id);
                                                 }
                                             }}
@@ -60,6 +60,13 @@ export default function CustomTable({tableData, columns, darkHeader = true, view
                                             <FontAwesomeIcon icon={faTrash} size={'sm'} />
                                         </Button>
                                     </td>
+
+                                }
+                                {
+                                    onAction && <td>
+                                            <FontAwesomeIcon className={"icon-button"} icon={actionIcon(tableData[itemIndex])} onClick={()=>onAction(tableData[itemIndex])}/>
+                                    </td>
+
                                 }
                             </tr>
                         )

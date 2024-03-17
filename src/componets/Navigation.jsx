@@ -8,7 +8,7 @@ import {
     faHistory,
     faHotel, faHouseUser,
     faKey,
-    faUser
+    faUser, faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import NavLink from "./NavLink";
 import Logo from ".././assets/Logo.ico"
@@ -35,26 +35,15 @@ export default function Navigation () {
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Hotel]}>
                     <NavLink path='/hotel/profile' label={t('profile')} icon={faUser} />
-                </RequiredPermissions>
-                <RequiredPermissions requiredPermissions={[Hotel]}>
                     <NavLink path='/hotel/facilities' label={t('Facilities')} icon={faHotel} />
-                </RequiredPermissions>
-                <RequiredPermissions requiredPermissions={[Hotel]}>
                     <NavLink path='/hotel/beds' label={t('Beds')} icon={faBed} />
-                </RequiredPermissions>
-                <RequiredPermissions requiredPermissions={[Hotel]}>
                     <NavLink path='/hotel/types' label={t('Types')} icon={faKey} />
-                </RequiredPermissions>
-                <RequiredPermissions requiredPermissions={[Hotel]}>
                     <NavLink path='/hotel/rooms' label={t('Rooms')} icon={faHouseUser} />
+                    <NavLink path='/hotel/workers' label={t('workers')} icon={faUsers} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Admin]}>
                     <NavLink path='/logs' label={t('logs')} icon={faHistory} />
-                </RequiredPermissions>
-                <RequiredPermissions requiredPermissions={[Admin]}>
                     <NavLink path='/configurations' label={t('Configurations')} icon={faCogs}/>
-                </RequiredPermissions>
-                <RequiredPermissions requiredPermissions={[Admin]}>
                     <NavLink path='/swagger' label={t('Swagger')} icon={faCogs}/>
                 </RequiredPermissions>
             </div>

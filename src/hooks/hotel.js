@@ -110,3 +110,15 @@ export function saveRoom(room) {
 export function deleteRoomById(id) {
     return restInterceptor.delete("hotel-service/hotel/room/" + id);
 }
+
+export function saveWorker(worker) {
+    return restInterceptor.post("hotel-service/hotel/worker/save", worker);
+}
+
+export function deleteWorkerById(id) {
+    return restInterceptor.delete("hotel-service/hotel/worker/" + id);
+}
+
+export function reassignWorkerById(id) {
+    return restInterceptor.put("hotel-service/hotel/worker/" + id);
+}

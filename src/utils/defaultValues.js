@@ -61,3 +61,11 @@ export const defaultRoom = {
     name: "",
     types: [],
 }
+
+export const defaultWorker = {
+    id: 0,
+    fullName: "",
+    email: "",
+    phone: "",
+    workerType: ""
+}

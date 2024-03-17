@@ -94,9 +94,11 @@
     "Add hotel": "Добави ново място за настаняване",
     "Images": "Снимки",
     "Save first hotel info": "Добавете първо място за настаняване!",
+    "first add hotel": "Добавете първо място за настаняване!",
     "Remove": "Премахни",
     "successImage": "Успешно добавена снимка",
     "successDelete": "Успешно изтриване",
+    "successReassign": "Успешно назначен отново",
     "Facilities": "Удобства",
     "Facility": "Удобство",
     "price": "Цена",
@@ -145,7 +147,12 @@
     "emailPassword": "Емейл google app парола",
     "activateProfileURL": "URL за навигиране към активиране на профил",
     "passportExpiredURL": "URL за навигиране към изтекъл паспорт",
-    "changePasswordURL": "URL за навигиране към промяна на паролата"
+    "changePasswordURL": "URL за навигиране към промяна на паролата",
+    "workers": "Персонал",
+    "workerType": "Длъжност",
+    "MANAGER": "Управител",
+    "RECEPTIONIST": "Рецепционист",
+    "Add worker": "Добави служител"
   },
   "table": {
     "User": "Потребител",
@@ -160,7 +167,13 @@
     "Delete": "Изтриване",
     "People": "Брой хора",
     "Beds": "Легла",
-    "Number": "Номер на стая"
+    "Number": "Номер на стая",
+    "Email": "Емейл",
+    "Phone": "Телефон",
+    "WorkType": "Длъжност",
+    "registrationDate": "Дата на назначаване",
+    "firedDate": "Дата на уволняване",
+    "Action": "Действие"
   },
   "logs": {
     "Chronology": "Хронология",
