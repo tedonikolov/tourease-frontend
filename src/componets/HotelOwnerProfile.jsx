@@ -36,7 +36,7 @@ export default function HotelOwnerProfile({owner, countries}) {
                 phoneNumber = owner.phone.slice(country.label.length);
             }
         });
-        return {countryCode, phoneNumber};
+        return phoneNumber && countryCode ? {countryCode, phoneNumber} : {countryCode: "+359", phoneNumber: ""};
     }
 
     return (
