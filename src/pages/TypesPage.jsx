@@ -116,7 +116,7 @@ export default function TypesPage() {
             </SideBar>
             <div className='content-page flex-column justify-content-start align-items-start w-100'>
                 <Header title={t("Types")}/>
-                {owner.hotels ?
+                {owner.hotels.length>0 ?
                     <div className={"px-2"}>
                         <div className={"w-25"}><CustomSelect
                             options={owner.hotels.map(({name, id}) => ({label: name, value: id}))}
@@ -173,7 +173,7 @@ export default function TypesPage() {
                             </div>
                         </div>}
                     </div>
-                    : <NoDataComponent sentence={t("first add hotel")}/>
+                    : <NoDataComponent sentence={"first add hotel"}/>
                 }
             </div>
         </div>
