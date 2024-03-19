@@ -1,9 +1,8 @@
 import {createContext, useEffect, useState} from "react";
 import {getLoggedUser} from "../hooks/User";
-import {Admin, Hotel, Regular, Transport} from "../utils/Role";
+import {Admin, Hotel, Manager, Receptionist, Regular} from "../utils/Role";
 import {useQuery} from "@tanstack/react-query";
 import {queryClient} from "../hooks/RestInterceptor";
-import {getOwnerByEmail} from "../hooks/hotel";
 
 export const AuthContext = createContext();
 
@@ -26,8 +25,12 @@ export const AuthProvider = ({children}) => {
                 setNavigatePage('/hotel/profile');
                 break;
             }
-            case Transport: {
-                setNavigatePage('');
+            case Manager: {
+                setNavigatePage('/hotel/scheme');
+                break;
+            }
+            case Receptionist: {
+                setNavigatePage('/hotel/scheme');
                 break;
             }
             case Admin: {
@@ -63,15 +66,6 @@ export const AuthProvider = ({children}) => {
             queryKey: ["get logged user", username],
             queryFn: () => getLoggedUser(username),
             enabled: username !== null && token !== null && username !== "" && token !== "",
-            retry: false,
-            staleTime: 5000
-        }
-    )
-
-    const {data: owner, isLoading: ownerLoading} = useQuery({
-            queryKey: ["get owner", username],
-            queryFn: () => getOwnerByEmail(user.email),
-            enabled: isSuccess && user.userType===Hotel,
             retry: false,
             staleTime: 5000
         }
@@ -120,8 +114,6 @@ export const AuthProvider = ({children}) => {
         <AuthContext.Provider
             value={{
                 loggedUser,
-                owner,
-                ownerLoading,
                 setLoggedUser,
                 token,
                 login,

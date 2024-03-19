@@ -22,15 +22,15 @@ export default function CustomTable({tableData, columns, darkHeader = true, view
                 <tbody>
                 {
                     columns.items.map((row, itemIndex) => (
-                            <tr key={itemIndex} className={`${disabled && !disabled(tableData[itemIndex]) && viewComponent ? 'hovered-row' : ''}`}>
+                            <tr key={itemIndex} className={`${viewComponent ? !(disabled && disabled(tableData[itemIndex])) && 'hovered-row' : ''}`}>
                                 {row.map((column, index) => (
                                     typeof column === 'boolean' ?
                                         <td key={index}
                                             onClick={() => {
                                                 const id = tableData[itemIndex].id ?? 0;
 
-                                                if (disabled && !disabled(tableData[itemIndex]) && viewComponent) {
-                                                    viewComponent(id);
+                                                if (viewComponent) {
+                                                    !(disabled && disabled(tableData[itemIndex])) && viewComponent(id);
                                                 }
                                             }}
                                         >
@@ -46,8 +46,8 @@ export default function CustomTable({tableData, columns, darkHeader = true, view
                                             onClick={() => {
                                                 const id = tableData[itemIndex].id ?? 0;
 
-                                                if (disabled && !disabled(tableData[itemIndex]) && viewComponent) {
-                                                    viewComponent(id);
+                                                if (viewComponent) {
+                                                    !(disabled && disabled(tableData[itemIndex])) && viewComponent(id);
                                                 }
                                             }}
                                         >

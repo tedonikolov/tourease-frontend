@@ -17,16 +17,25 @@ import CustomTable from "../componets/CustomTable";
 import NoDataComponent from "../componets/NoDataComponent";
 import {currencyOptions} from "../utils/options";
 import {deleteTypeById, saveType} from "../hooks/hotel";
+import {HotelContext} from "../context/HotelContext";
 
 export default function TypesPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {sideBarVisible} = useContext(SideBarContext);
-    const {owner, ownerLoading} = useContext(AuthContext);
+    const {owner, workerHotel} = useContext(HotelContext);
+    const {loggedUser} = useContext(AuthContext);
     const [hotelId, setHotelId] = useState();
     const [hotel, setHotel] = useState();
     const [type, setType] = useState(defaultType);
     const [typeId, setTypeId] = useState();
     const [bedsOptions, setBedsOptions] = useState();
+
+    useEffect(() => {
+        if(workerHotel){
+            setHotelId(()=>workerHotel.id);
+            setHotel(()=>workerHotel);
+        }
+    }, [workerHotel]);
 
     useEffect(() => {
         if (owner && hotelId) {
@@ -65,7 +74,8 @@ export default function TypesPage() {
         mutationFn: saveType,
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successUpdate")]}/>);
-            queryClient.resetQueries({queryKey: ["get owner", owner.email]});
+            queryClient.resetQueries({queryKey: ["get owner", loggedUser.email]});
+            queryClient.resetQueries({queryKey: ["get worker", loggedUser.email]});
         }
     });
 
@@ -73,7 +83,8 @@ export default function TypesPage() {
         mutationFn: deleteTypeById,
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successDelete")]}/>);
-            queryClient.resetQueries({queryKey: ["get owner", owner.email]});
+            queryClient.resetQueries({queryKey: ["get owner", loggedUser.email]});
+            queryClient.resetQueries({queryKey: ["get worker", loggedUser.email]});
         }
     });
 
@@ -110,18 +121,19 @@ export default function TypesPage() {
     }
 
     return (
-        !ownerLoading && <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
+        (owner || workerHotel) && <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
             <SideBar>
                 <Navigation/>
             </SideBar>
             <div className='content-page flex-column justify-content-start align-items-start w-100'>
                 <Header title={t("Types")}/>
-                {owner.hotels.length>0 ?
+                {((owner && owner.hotels.length>0) || workerHotel) ?
                     <div className={"px-2"}>
+                        {workerHotel ? <div className={"mt-2"}></div> :
                         <div className={"w-25"}><CustomSelect
                             options={owner.hotels.map(({name, id}) => ({label: name, value: id}))}
                             label={t("Hotel")} setValue={setHotelId} defaultValue={owner.hotels[0].id}
-                            setDefaultValue={() => setHotelId(owner.hotels[0].id)}/></div>
+                            setDefaultValue={() => setHotelId(owner.hotels[0].id)}/></div>}
                         {hotel && <div className={"d-flex"}>
                             <div className={"mx-4 w-50 box h-100 px-2 pb-2"}>
                                 <Form onSubmit={save}>

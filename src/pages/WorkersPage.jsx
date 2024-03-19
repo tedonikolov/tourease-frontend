@@ -20,17 +20,26 @@ import {phonecodes} from "../utils/options";
 import CustomPhoneInput from "../componets/CustomPhoneInput";
 import {workType} from "../utils/enums";
 import {faCheckCircle, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {HotelContext} from "../context/HotelContext";
 
 export default function WorkersPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {sideBarVisible} = useContext(SideBarContext);
-    const {owner, ownerLoading} = useContext(AuthContext);
+    const {owner, workerHotel} = useContext(HotelContext);
+    const {loggedUser} = useContext(AuthContext);
     const [hotelId, setHotelId] = useState();
     const [hotel, setHotel] = useState();
     const [worker, setWorker] = useState(defaultWorker);
     const [workerId, setWorkerId] = useState();
     const [disableEmail, setDisableEmail] = useState(false);
     const [show, setShow] = useState(false);
+
+    useEffect(() => {
+        if(workerHotel){
+            setHotelId(()=>workerHotel.id);
+            setHotel(()=>workerHotel);
+        }
+    }, [workerHotel]);
 
     useEffect(() => {
         if (owner && hotelId) {
@@ -62,7 +71,9 @@ export default function WorkersPage() {
         mutationFn: saveWorker,
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successUpdate")]}/>);
-            queryClient.resetQueries({queryKey: ["get owner", owner.email]});
+            queryClient.resetQueries({queryKey: ["get owner", loggedUser.email]});
+            queryClient.resetQueries({queryKey: ["get worker", loggedUser.email]});
+            clear();
         }
     });
 
@@ -70,7 +81,8 @@ export default function WorkersPage() {
         mutationFn: deleteWorkerById,
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successDelete")]}/>);
-            queryClient.resetQueries({queryKey: ["get owner", owner.email]});
+            queryClient.resetQueries({queryKey: ["get owner", loggedUser.email]});
+            queryClient.resetQueries({queryKey: ["get worker", loggedUser.email]});
         }
     });
 
@@ -78,7 +90,8 @@ export default function WorkersPage() {
         mutationFn: reassignWorkerById,
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("successReassign")]}/>);
-            queryClient.resetQueries({queryKey: ["get owner", owner.email]});
+            queryClient.resetQueries({queryKey: ["get owner", loggedUser.email]});
+            queryClient.resetQueries({queryKey: ["get worker", loggedUser.email]});
         }
     });
 
@@ -96,7 +109,7 @@ export default function WorkersPage() {
 
     function save(event) {
         event.preventDefault();
-        mutate(worker)
+        mutate(worker);
     }
 
     function splitPhone() {
@@ -112,13 +125,13 @@ export default function WorkersPage() {
     }
 
     return (
-        !ownerLoading && <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
+        (owner || workerHotel) && <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
             <SideBar>
                 <Navigation/>
             </SideBar>
             <div className='content-page flex-column justify-content-start align-items-start w-100'>
                 <Header title={t("workers")}/>
-                {owner.hotels.length>0 ?
+                {((owner && owner.hotels.length>0) || workerHotel)  ?
                     <div className={"px-2"}>
                         <div className={"d-flex justify-content-center m-3"}><Button className={"main-button"}
                                                                                      onClick={() => {setShow(true); setWorker(() =>({
@@ -126,10 +139,11 @@ export default function WorkersPage() {
                                                                                          hotelId: hotelId
                                                                                      }))}}>{t("Add worker")}</Button>
                         </div>
+                        {workerHotel ? <div className={"mt-2"}></div> :
                         <div className={"w-25"}><CustomSelect
                             options={owner.hotels.map(({name, id}) => ({label: name, value: id}))}
                             label={t("Hotel")} setValue={setHotelId} defaultValue={owner.hotels[0].id}
-                            setDefaultValue={() => setHotelId(owner.hotels[0].id)}/></div>
+                            setDefaultValue={() => setHotelId(owner.hotels[0].id)}/></div>}
                         <Modal size={"lg"} show={show} onHide={() => {
                             setShow(false);
                             clear();

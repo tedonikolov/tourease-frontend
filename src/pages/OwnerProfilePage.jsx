@@ -7,20 +7,20 @@ import {SideBarContext} from "../context/SideBarContext";
 import StepWizard from "react-step-wizard";
 import CustomStepWizardNav from "../componets/CustomStepWizardNav";
 import HotelOwnerProfile from "../componets/HotelOwnerProfile";
-import {AuthContext} from "../context/AuthContext";
 import OwnerHotels from "../componets/OwnerHotels";
 import {countries} from "../utils/options";
+import {HotelContext} from "../context/HotelContext";
 
 export default function OwnerProfilePage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {t: tcountries} = useTranslation("translation", {keyPrefix: "countries"})
     const {sideBarVisible} = useContext(SideBarContext);
-    const {owner,ownerLoading} = useContext(AuthContext);
+    const {owner} = useContext(HotelContext);
 
     const [step, setStep] = useState(1)
 
     return (
-        !ownerLoading && <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
+        owner && <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
             <SideBar>
                 <Navigation/>
             </SideBar>

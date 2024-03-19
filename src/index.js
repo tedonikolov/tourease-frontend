@@ -11,17 +11,20 @@ import {BrowserRouter} from "react-router-dom";
 import {QueryClientProvider} from "@tanstack/react-query";
 import {queryClient} from "./hooks/RestInterceptor";
 import SideBarProvider from "./context/SideBarContext";
+import {HotelProvider} from "./context/HotelContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <QueryClientProvider client={queryClient}>
         <AuthProvider>
-            <SideBarProvider>
-                <BrowserRouter>
-                    <Router/>
-                    <ToastContainer theme={"colored"}/>
-                </BrowserRouter>
-            </SideBarProvider>
+            <HotelProvider>
+                <SideBarProvider>
+                    <BrowserRouter>
+                        <Router/>
+                        <ToastContainer theme={"colored"}/>
+                    </BrowserRouter>
+                </SideBarProvider>
+            </HotelProvider>
         </AuthProvider>
     </QueryClientProvider>
 );

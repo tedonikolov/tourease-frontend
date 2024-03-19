@@ -4,6 +4,10 @@ export function getOwnerByEmail(email) {
     return restInterceptor.get("hotel-service/owner/getOwnerByEmail/" + email);
 }
 
+export function getWorkerByEmail(email){
+    return restInterceptor.get("hotel-service/hotel/worker/getWorker/" + email);
+}
+
 export function saveOwnerInfo(owner) {
     return restInterceptor.post("hotel-service/owner/save", {
         id: owner.id,
