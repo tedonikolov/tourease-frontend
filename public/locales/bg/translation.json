@@ -152,7 +152,8 @@
     "workerType": "Длъжност",
     "MANAGER": "Управител",
     "RECEPTIONIST": "Рецепционист",
-    "Add worker": "Добави служител"
+    "Add worker": "Добави служител",
+    "Scheme": "Схема"
   },
   "table": {
     "User": "Потребител",

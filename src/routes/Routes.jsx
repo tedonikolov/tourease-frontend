@@ -16,6 +16,7 @@ import TypesPage from "../pages/TypesPage";
 import RoomsPage from "../pages/RoomsPage";
 import ConfigurationsPage from "../pages/ConfigurationsPage";
 import WorkersPage from "../pages/WorkersPage";
+import HotelSchemePage from "../pages/HotelSchemePage";
 
 export const Router = () => {
     return (
@@ -40,15 +41,27 @@ export const Router = () => {
                 </Route>
                 <Route
                     path={'/'}
-                    element={<AccessibilityCheckRoute allowedRoles={['HOTEL']}/>}
+                    element={<AccessibilityCheckRoute allowedRoles={['HOTEL', 'MANAGER']}/>}
                 >
-                    <Route path={'/'} element={<OwnerProfilePage/>}/>
-                    <Route path={'/hotel/profile'} element={<OwnerProfilePage/>}/>
                     <Route path={'/hotel/facilities'} element={<FacilitiesPage/>}/>
                     <Route path={'/hotel/beds'} element={<BedsPage/>}/>
                     <Route path={'/hotel/types'} element={<TypesPage/>}/>
                     <Route path={'/hotel/rooms'} element={<RoomsPage/>}/>
                     <Route path={'/hotel/workers'} element={<WorkersPage/>}/>
+                </Route>
+                <Route
+                    path={'/'}
+                    element={<AccessibilityCheckRoute allowedRoles={['HOTEL']}/>}
+                >
+                    <Route path={'/'} element={<OwnerProfilePage/>}/>
+                    <Route path={'/hotel/profile'} element={<OwnerProfilePage/>}/>
+                </Route>
+                <Route
+                    path={'/'}
+                    element={<AccessibilityCheckRoute allowedRoles={['MANAGER']}/>}
+                >
+                    <Route path={'/'} element={<HotelSchemePage/>}/>
+                    <Route path={'/hotel/scheme'} element={<HotelSchemePage/>}/>
                 </Route>
                 <Route
                     path={'/'}

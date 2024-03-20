@@ -1,10 +1,10 @@
 import {Nav} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import RequiredPermissions from "./RequiredPermissions";
-import {Admin, Hotel, Regular} from "../utils/Role";
+import {Admin, Hotel, Manager, Regular} from "../utils/Role";
 import {
     faBed,
-    faCogs,
+    faCogs, faGripHorizontal,
     faHistory,
     faHotel, faHouseUser,
     faKey,
@@ -35,6 +35,11 @@ export default function Navigation () {
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Hotel]}>
                     <NavLink path='/hotel/profile' label={t('profile')} icon={faUser} />
+                </RequiredPermissions>
+                <RequiredPermissions requiredPermissions={[Manager]}>
+                    <NavLink path='/hotel/scheme' label={t('Scheme')} icon={faGripHorizontal} />
+                </RequiredPermissions>
+                <RequiredPermissions requiredPermissions={[Hotel, Manager]}>
                     <NavLink path='/hotel/facilities' label={t('Facilities')} icon={faHotel} />
                     <NavLink path='/hotel/beds' label={t('Beds')} icon={faBed} />
                     <NavLink path='/hotel/types' label={t('Types')} icon={faKey} />

@@ -152,7 +152,8 @@
     "workerType": "Role",
     "MANAGER": "Manager",
     "RECEPTIONIST": "Receptionist",
-    "Add worker": "Add worker"
+    "Add worker": "Add worker",
+    "Scheme": "Scheme"
   },
   "table": {
     "User": "User",
