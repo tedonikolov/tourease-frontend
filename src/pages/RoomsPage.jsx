@@ -128,7 +128,7 @@ export default function RoomsPage() {
                         {workerHotel ? <div className={"mt-2"}></div> :
                         <div className={"w-25"}><CustomSelect
                             options={owner.hotels.map(({name, id}) => ({label: name, value: id}))}
-                            label={t("Hotel")} setValue={setHotelId} defaultValue={owner.hotels[0].id}
+                            label={t("Hotel")} setValue={setHotelId} defaultValue={hotelId}
                             setDefaultValue={() => setHotelId(owner.hotels[0].id)}/></div>}
                         {hotel && <div className={"d-flex"}>
                             <div className={"mx-4 w-50 box h-100 px-2 pb-2"}>

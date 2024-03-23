@@ -142,7 +142,7 @@ export default function WorkersPage() {
                         {workerHotel ? <div className={"mt-2"}></div> :
                         <div className={"w-25"}><CustomSelect
                             options={owner.hotels.map(({name, id}) => ({label: name, value: id}))}
-                            label={t("Hotel")} setValue={setHotelId} defaultValue={owner.hotels[0].id}
+                            label={t("Hotel")} setValue={setHotelId} defaultValue={hotelId}
                             setDefaultValue={() => setHotelId(owner.hotels[0].id)}/></div>}
                         <Modal size={"lg"} show={show} onHide={() => {
                             setShow(false);

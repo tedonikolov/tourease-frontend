@@ -13,6 +13,7 @@ export default function HotelInfo({hotel, setHotel, checkStars, countries}) {
     const apiKey = process.env["GOOGLE_KEY"]
 
     const stars = [
+        {value: "NONE", label: checkStars("NONE")},
         {value: "ONE", label: checkStars("ONE")},
         {value: "TWO", label: checkStars("TWO")},
         {value: "THREE", label: checkStars("THREE")},

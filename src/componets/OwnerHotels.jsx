@@ -38,6 +38,9 @@ export default function OwnerHotels({setStep, hotels, countries, owner}) {
                     <FontAwesomeIcon color='orange' icon={faStar}/>
                     <FontAwesomeIcon color='orange' icon={faStar}/></div>);
             }
+            case "NONE":{
+                return <FontAwesomeIcon color='white' icon={faStar}/>;
+            }
             default: {
                 return column;
             }

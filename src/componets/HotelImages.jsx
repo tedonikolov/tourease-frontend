@@ -1,6 +1,5 @@
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {deleteImage, getImages, insertImage} from "../hooks/hotel";
-import {queryClient} from "../hooks/RestInterceptor";
 import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
 import React from "react";
@@ -40,7 +39,7 @@ export default function HotelImages({hotel}) {
                 {images && images.length>0 && <Carousel>
                     {images.map((image, key) =>
                         <Carousel.Item key={key}>
-                            <Image className={"hotel-info-image"} src={process.env.REACT_APP_API_URL + image}></Image>
+                            <Image className={"hotel-info-image"} src={image.startsWith("http") ? image : process.env.REACT_APP_API_URL + image}></Image>
                             <Carousel.Caption className={"caption"}>
                                 <Button className={"main-button"} onClick={()=>removePic(image.split("/").pop())}>{t("Remove")}</Button>
                             </Carousel.Caption>
