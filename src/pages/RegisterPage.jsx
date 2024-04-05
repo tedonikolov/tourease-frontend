@@ -7,19 +7,20 @@ import {sendActivateProfile} from "../hooks/User";
 import ActivateSuccessful from "../componets/ActivateSuccessful";
 import {useTranslation} from "react-i18next";
 import {useMutation} from "@tanstack/react-query";
+import {Navigate} from "react-router-dom";
 export default function RegisterPage ({activateProfile, step}){
     const {t}=useTranslation("translation",{keyPrefix:"common"})
 
     const [userInfo, setUserInfo] = useState({email: "", password: "", secondPassword: "", userType: "REGULAR"})
 
-    const {mutate:activate}=useMutation({
+    const {mutate:activate, isError}=useMutation({
         mutationFn:sendActivateProfile
     })
 
     useEffect(() => {
         if(activateProfile){
             const url = new URL(window.location.href);
-            const email = url.searchParams.get('email');
+            const email = url.pathname.slice(17);
             activate(email);
         }
     }, []);
@@ -42,6 +43,7 @@ export default function RegisterPage ({activateProfile, step}){
                 <ActivateEmail userInfo={userInfo}/>
                 <ActivateSuccessful/>
             </StepWizard>
+            {isError && <Navigate to={"/error"}/>}
         </div>
     )
 }

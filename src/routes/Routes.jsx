@@ -27,8 +27,8 @@ export const Router = () => {
             >
                 <Route path='/' element={<LandingPage/>}/>
                 <Route path='/register' element={<RegisterPage step={1}/>}/>
-                <Route path='/changePassword' element={<PasswordChangePage step={1}/>}/>
-                <Route path='/activateProfile' element={<RegisterPage activateProfile={true} step={3}/>}/>
+                <Route path='/changePassword/*' element={<PasswordChangePage step={1}/>}/>
+                <Route path='/activateProfile/*' element={<RegisterPage activateProfile={true} step={3}/>}/>
                 <Route path='/:error' element={<NotExist/>}/>
             </Route>
             <Route path='/' element={<PrivateRoute/>}>

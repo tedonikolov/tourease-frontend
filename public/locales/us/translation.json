@@ -246,7 +246,8 @@
     "Owner not found":"Owner not found!",
     "Facility exist": "Facility already exist!",
     "Can't change facility": "Can't change facility!",
-    "Room exist": "Room number exist!"
+    "Room exist": "Room number exist!",
+    "Invalid token": "This page does not exist!"
   },
   "countries": {
     "Afghanistan": "Afghanistan",

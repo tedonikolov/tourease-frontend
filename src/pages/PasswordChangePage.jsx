@@ -3,8 +3,6 @@ import {Button, Form, Modal} from "react-bootstrap";
 import CommonInputText from "../componets/CommonInputText";
 import {sendChangePassword} from "../hooks/User";
 import {Navigate, useNavigate} from "react-router-dom";
-import {toast} from "react-toastify";
-import CustomToastContent from "../componets/CustomToastContent";
 import LoginForm from "../componets/LoginForm";
 import {useTranslation} from "react-i18next";
 import {useMutation} from "@tanstack/react-query";
@@ -19,14 +17,13 @@ export default function PasswordChangePage() {
 
     useEffect(() => {
         const url = new URL(window.location.href);
-        const email = url.searchParams.get('email');
+        const email = url.pathname.slice(16);
         setUserInfo({...userInfo, email: email})
         setLoading(false)
     }, []);
 
     const {mutate: changePassword, isSuccess} = useMutation({
-        mutationFn: sendChangePassword,
-        onError: () => toast.error(<CustomToastContent translated content={["Couldn't change password!"]}/>)
+        mutationFn: sendChangePassword
     })
 
     const disabled = userInfo.password !== userInfo.secondPassword || userInfo.password === '' || userInfo.secondPassword === '';
