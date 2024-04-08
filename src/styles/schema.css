@@ -1,0 +1,50 @@
+.roomCard{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20vh;
+    height: 20vh;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    border: 0.2rem solid #e31d1d;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    font: 1.5em 'Roboto', sans-serif;
+    transition: all 0.3s;
+}
+
+.roomCard:hover{
+    background-color: rgb(255, 255, 255) !important;
+    color: #e31d1d !important;
+    cursor: pointer;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 1);
+}
+
+.red{
+    color: #ff0000;
+}
+
+.purple{
+    color: #22009d;
+}
+
+div:focus {
+    outline: none;
+}
+
+.info {
+    background-color: rgba(0, 123, 255, 0.65) !important; /* Original bootstrap color with 50% opacity */
+}
+
+.warning {
+    background-color: rgba(255, 193, 7, 0.8) !important; /* Original bootstrap color with 80% opacity */
+}
+
+.danger {
+    background-color: rgba(220, 53, 69, 0.8) !important; /* Original bootstrap color with 50% opacity */
+}
+
+.success {
+    background-color: rgba(40, 167, 69, 0.8) !important; /* Original bootstrap color with 50% opacity */
+}

@@ -157,7 +157,15 @@
     "MANAGER": "Управител",
     "RECEPTIONIST": "Рецепционист",
     "Add worker": "Добави служител",
-    "Scheme": "Схема"
+    "Scheme": "Схема",
+    "Legend": "Легенда",
+    "FREE": "Свободна",
+    "ACCOMMODATE": "Заета",
+    "RESERVED": "Резервирана",
+    "ENDING": "Напускащи/Напуснали",
+    "Press": "Натиснете",
+    "for change status of room":"за промяна на статуса на стаята",
+    "Today": "Днес"
   },
   "table": {
     "User": "Потребител",

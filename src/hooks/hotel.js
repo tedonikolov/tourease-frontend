@@ -126,3 +126,18 @@ export function deleteWorkerById(id) {
 export function reassignWorkerById(id) {
     return restInterceptor.put("hotel-service/hotel/worker/" + id);
 }
+
+export function getAllReservationsViewByHotel({hotelId,date}) {
+    return restInterceptor.get("hotel-service/reservation/worker/getAllReservationsViewByHotel", {
+        headers: {
+            hotelId: hotelId,
+        },
+        params: {
+            date: date
+        },
+    });
+}
+
+export function changeRoomStatus(roomId) {
+    return restInterceptor.put("hotel-service/hotel/room/changeStatus/"+roomId);
+}

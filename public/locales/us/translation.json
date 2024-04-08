@@ -157,7 +157,15 @@
     "MANAGER": "Manager",
     "RECEPTIONIST": "Receptionist",
     "Add worker": "Add worker",
-    "Scheme": "Scheme"
+    "Scheme": "Scheme",
+    "Legend": "Legend",
+    "FREE": "Free",
+    "ACCOMMODATE": "Accommodate",
+    "RESERVED": "Reserved",
+    "ENDING": "Ending/Ended",
+    "Press": "Press",
+    "for change status of room": "to change status of room",
+    "Today": "Today"
   },
   "table": {
     "User": "User",

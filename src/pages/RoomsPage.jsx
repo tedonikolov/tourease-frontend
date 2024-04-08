@@ -44,13 +44,6 @@ export default function RoomsPage() {
             let hotel = owner.hotels.find((hotel) => hotel.id === hotelId);
             setHotel(() => hotel);
             setRoom((prev) => ({...prev, hotelId: hotelId}));
-            hotel.rooms.sort((a, b) => {
-                    let regExp = /[a-zA-Z]/g;
-                    if (regExp.test(a.name))
-                        return -1
-                    return a.name - b.name
-                }
-            );
             setTypesOptions(() => hotel.types.map((type) => {
                 return {label: type.name, value: type.id}
             }));
@@ -153,7 +146,7 @@ export default function RoomsPage() {
                                         tableData={hotel.rooms}
                                         columns={{
                                             headings: ["Number", "Name", "Price", "People", "Delete"],
-                                            items: hotel.rooms.map(({
+                                            items: hotel.rooms.sort((a,b)=>a.name.localeCompare(b.name)).map(({
                                                                         name,
                                                                         types
                                                                     }) => [name, types.map((type, index) => {
