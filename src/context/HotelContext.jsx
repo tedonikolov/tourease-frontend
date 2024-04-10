@@ -9,7 +9,11 @@ export const HotelContext = createContext();
 export const HotelProvider = ({children}) => {
     const [owner, setOwner] = useState(null);
     const [workerHotel, setWorkerHotel] = useState(null);
+    const [roomId, setRoomId] = useState(null);
+    const [date, setDate] = useState(null);
+
     const {loggedUser} = useContext(AuthContext)
+
     const {data: ownerData } = useQuery({
             queryKey: ["get owner", loggedUser && loggedUser.email],
             queryFn: () => getOwnerByEmail(loggedUser.email),
@@ -44,6 +48,10 @@ export const HotelProvider = ({children}) => {
             value={{
                 owner,
                 workerHotel,
+                setRoomId,
+                roomId,
+                date,
+                setDate
             }}
         >
             {children}

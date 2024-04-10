@@ -72,8 +72,8 @@ export default function HotelSchemePage() {
                     <ul className={"list-group list-group-horizontal"}>
                         <li className={"list-group-item info"}>{t("FREE")}</li>
                         <li className={"list-group-item success"}>{t("RESERVED")}</li>
-                        <li className={"list-group-item warning"}>{t("ACCOMMODATE")}</li>
-                        <li className={"list-group-item danger"}>{t("ENDING")}</li>
+                        <li className={"list-group-item warning"}>{t("ACCOMMODATED")}</li>
+                        <li className={"list-group-item danger"}>{t("END")}</li>
                     </ul>
                 </div>
                 <div className={"d-flex align-self-center align-items-center mb-3"}>

@@ -141,3 +141,22 @@ export function getAllReservationsViewByHotel({hotelId,date}) {
 export function changeRoomStatus(roomId) {
     return restInterceptor.put("hotel-service/hotel/room/changeStatus/"+roomId);
 }
+
+export function getRoomById(roomId) {
+    return restInterceptor.get("hotel-service/hotel/room/getRoomById", {
+        headers: {
+            id: roomId,
+        },
+    });
+}
+
+export function getReservationForRoom({roomId, date}) {
+    return restInterceptor.get("hotel-service/hotel/room/getReservationForRoom", {
+        headers: {
+            id: roomId,
+        },
+        params: {
+            date: date
+        },
+    });
+}
