@@ -160,3 +160,15 @@ export function getReservationForRoom({roomId, date}) {
         },
     });
 }
+
+export function getCustomerByPassportId(passportId) {
+    return restInterceptor.get("hotel-service/hotel/customer/getCustomerByPassportId/"+passportId);
+}
+
+export function addCustomerToReservation(reservationId, customer) {
+    return restInterceptor.post("hotel-service/reservation/worker/addCustomer", customer,{
+        headers: {
+            reservationId: reservationId,
+        },
+    });
+}
