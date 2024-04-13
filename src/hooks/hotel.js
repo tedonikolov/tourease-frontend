@@ -172,3 +172,36 @@ export function addCustomerToReservation(reservationId, customer) {
         },
     });
 }
+
+export function getTypesForRoom(roomId) {
+    return restInterceptor.get("hotel-service/hotel/type/getTypesByRoomId",{
+        headers: {
+            roomId: roomId,
+        },
+    });
+}
+
+export function getTakenDaysForRoom(roomId) {
+    return restInterceptor.get("hotel-service/hotel/room/getTakenDaysForRoom",{
+        headers: {
+            id: roomId,
+        },
+    });
+}
+
+export function updateReservation(reservationInfo) {
+    let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    let offset = moment.tz(new Date(), timeZone).utcOffset();
+
+    let checkOut = moment.tz(reservationInfo.checkOut, timeZone).add(offset,"minutes").format("YYYY-MM-DDTHH:mm:ssZ");
+    let checkIn = moment.tz(reservationInfo.checkIn, timeZone).add(offset,"minutes").format("YYYY-MM-DDTHH:mm:ssZ");
+
+    return restInterceptor.put("hotel-service/reservation/worker/updateReservation", {
+        id: reservationInfo.id,
+        customers: reservationInfo.customers.map((customer) => customer.id),
+        checkIn: checkIn,
+        checkOut: checkOut,
+        price: reservationInfo.price,
+        currency: reservationInfo.currency,
+    });
+}
