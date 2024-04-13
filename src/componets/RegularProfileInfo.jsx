@@ -44,7 +44,7 @@ export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
                 phoneNumber=regular.phone.slice(country.label.length);
             }
         });
-        return phoneNumber && countryCode ? {countryCode, phoneNumber} : {countryCode: "+359", phoneNumber: ""};
+        return phoneNumber && countryCode ? {countryCode, phoneNumber} : countryCode ? {countryCode: countryCode, phoneNumber: ""} : {countryCode: "+359", phoneNumber: ""};
     }
 
     return (
@@ -64,7 +64,7 @@ export default function RegularProfileInfo({userInfo, countries, setUserInfo}) {
                 <CustomSelect options={gender} defaultValue={regular.gender} setObjectValue={setRegular}
                               label={t('gender')} name={'gender'}/>
 
-                {disabled && <div className={"mt-4 text-danger"}>* Select valid passport date!</div>}
+                {disabled && <div className={"mt-4 text-danger"}>* {t("Select birthday date!")}</div>}
                 <div className={"d-flex justify-content-center mt-3 mb-3"}>
                     <Button type={'submit'} className={'register-button'} disabled={disabled}>{t("save")}</Button>
                 </div>

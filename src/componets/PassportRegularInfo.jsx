@@ -49,7 +49,7 @@ export default function PassportRegularInfo({userInfo, countries, setUserInfo}) 
                         <CustomSelect options={countries} label={t('country')}
                                       defaultValue={passport.country}
                                       setObjectValue={setPassport} name={'country'}/>
-                        {disabled && <div className={"mt-4 text-danger"}>* Select valid passport date!</div>}
+                        {disabled && <div className={"mt-4 text-danger"}>* {t("Select valid passport date!")}</div>}
                         <div className={"d-flex justify-content-center mt-3 mb-3"}>
                             <Button type={'submit'} className={'register-button'} disabled={disabled}>{t("save")}</Button>
                         </div>

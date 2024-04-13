@@ -121,7 +121,7 @@ export default function WorkersPage() {
                 phoneNumber = worker.phone.slice(country.label.length);
             }
         });
-        return phoneNumber && countryCode ? {countryCode, phoneNumber} : {countryCode: "+359", phoneNumber: ""};
+        return phoneNumber && countryCode ? {countryCode, phoneNumber} : countryCode ? {countryCode: countryCode, phoneNumber: ""} : {countryCode: "+359", phoneNumber: ""};
     }
 
     return (
