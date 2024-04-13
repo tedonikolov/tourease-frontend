@@ -4,8 +4,7 @@ import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 
-export default function CustomDatePicker({selectedDate, setValue, name, label, minDate}) {
-
+export default function CustomDatePicker({selectedDate, setValue, name, label, minDate, disabled=false, disabledDates}) {
     return (
         <div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -22,6 +21,12 @@ export default function CustomDatePicker({selectedDate, setValue, name, label, m
                         );
                     }}
                     format={'DD-MM-YYYY'}
+                    disabled={disabled}
+                    shouldDisableDate={(date) =>
+                        disabledDates && disabledDates.some(disabledDate =>
+                            dayjs(disabledDate).isSame(date, 'day')
+                        )
+                    }
                 />
             </LocalizationProvider>
         </div>

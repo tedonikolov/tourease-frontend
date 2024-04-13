@@ -16,7 +16,8 @@ export default function CustomSelect({
                                          isClearable = false,
                                          isSearchable = true,
                                          isMulti = false,
-                                         required = true
+                                         required = true,
+                                         disabled = false
                                      }) {
     const defaultOption = defaultValue && (isMulti ? options.filter(option => {
         return defaultValue.some(value => {
@@ -53,6 +54,7 @@ export default function CustomSelect({
                 value={defaultOption || ""}
                 options={options}
                 required={required}
+                isDisabled={disabled}
                 isSearchable={isSearchable}
                 maxMenuHeight={200}
                 menuPlacement={"auto"}
