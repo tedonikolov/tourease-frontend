@@ -1,5 +1,5 @@
 import {useTranslation} from "react-i18next";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Button, Form} from "react-bootstrap";
 import CommonInputText from "./CommonInputText";
 import CustomDatePicker from "./CustomDatePicker";
@@ -11,9 +11,11 @@ import dayjs from "dayjs";
 import {queryClient} from "../hooks/RestInterceptor";
 import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
+import {AuthContext} from "../context/AuthContext";
 
 export default function ReservationInfo({reservation, filter, setNewReservation, setShowReservation}) {
-    const {t} = useTranslation("translation", {keyPrefix: "common"})
+    const {t} = useTranslation("translation", {keyPrefix: "common"});
+    const [loggedUser] = useContext(AuthContext);
     const [reservationInfo, setReservationInfo] = useState( {...reservation, pricePerNight: 0 });
     const [typesOptions, setTypesOptions] = useState([]);
     const [type, setType] = useState();
@@ -41,7 +43,7 @@ export default function ReservationInfo({reservation, filter, setNewReservation,
     })
 
     const {mutate} = useMutation({
-        mutationFn: () => updateReservation(reservationInfo),
+        mutationFn: () => updateReservation(loggedUser.id, reservationInfo),
         onSuccess: () => {
             queryClient.resetQueries({queryKey: ["get reservation", filter]});
             queryClient.resetQueries({queryKey: ["get unpaid payments", reservation && reservation.customers]});

@@ -1,4 +1,5 @@
 import restInterceptor from "./RestInterceptor";
+import moment from "moment-timezone";
 
 export function getOwnerByEmail(email) {
     return restInterceptor.get("hotel-service/owner/getOwnerByEmail/" + email);
@@ -189,7 +190,55 @@ export function getTakenDaysForRoom(roomId) {
     });
 }
 
-export function updateReservation(reservationInfo) {
+export function markCheckOut(reservationId) {
+    return restInterceptor.put("hotel-service/reservation/worker/checkOutReservation",null,{
+        headers: {
+            reservationId: reservationId,
+        },
+    });
+}
+
+export function createReservationByWorker(workerId, reservationInfo, roomId) {
+    let currentTime = moment();
+    let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    let offset = moment.tz(new Date(), timeZone).utcOffset();
+
+    let checkOut = moment.tz(reservationInfo.checkOut, timeZone).add(offset,"minutes").format("YYYY-MM-DDTHH:mm:ssZ");
+
+    let checkIn = moment.tz(reservationInfo.checkIn, timeZone).add(offset,"minutes");
+    checkIn.set({
+        hour: currentTime.get('hour'),
+        minute: currentTime.get('minute'),
+        second: currentTime.get('second')
+    });
+    checkIn = checkIn.format("YYYY-MM-DDTHH:mm:ssZ");
+
+    return restInterceptor.post("hotel-service/reservation/worker/createReservation",
+        {
+            customer:{
+                fullName: reservationInfo.fullName,
+                phoneNumber: reservationInfo.phoneNumber,
+                passportId: reservationInfo.passportId,
+                country: reservationInfo.country,
+                birthDate: reservationInfo.birthDate,
+                creationDate: reservationInfo.creationDate,
+                expirationDate: reservationInfo.expirationDate,
+                gender: reservationInfo.gender
+            },
+            roomId: roomId,
+            checkIn: checkIn,
+            checkOut: checkOut,
+            price: reservationInfo.price,
+            currency: reservationInfo.currency,
+        }
+        ,{
+        headers: {
+            userId: workerId,
+        },
+    });
+}
+
+export function updateReservation(workerId, reservationInfo) {
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     let offset = moment.tz(new Date(), timeZone).utcOffset();
 
@@ -203,7 +252,24 @@ export function updateReservation(reservationInfo) {
         checkOut: checkOut,
         price: reservationInfo.price,
         currency: reservationInfo.currency,
+    }, {
+        headers: {
+            workerId: workerId,
+        },
     });
+}
+
+export function getAllPaymentsByCustomersForHotel(customers, hotelId, isPaid) {
+    return restInterceptor.get("hotel-service/hotel/payment/worker/getAllPaymentsByCustomersForHotel",
+        {
+            params: {
+                isPaid: isPaid
+            },
+            headers: {
+                customers: customers,
+                hotelId: hotelId,
+            },
+        });
 }
 
 export function createPayment(payment, workerId) {
@@ -216,6 +282,14 @@ export function createPayment(payment, workerId) {
 
 export function markPaymentAsPaid(payment, workerId) {
     return restInterceptor.put("hotel-service/hotel/payment/worker/markPaymentAsPaid",payment,{
+        headers: {
+            workerId: workerId,
+        },
+    });
+}
+
+export function deletePaymentById(paymentId,workerId) {
+    return restInterceptor.delete("hotel-service/hotel/payment/worker/deletePaymentById/"+paymentId,{
         headers: {
             workerId: workerId,
         },
