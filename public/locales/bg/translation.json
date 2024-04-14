@@ -185,7 +185,35 @@
     "checkOut": "Дата на напускане",
     "status": "Статус",
     "Worker": "Служител",
-    "nights": "Нощувки"
+    "nights": "Нощувки",
+    "Pay": "Маркирай плащане",
+    "CheckOut": "Напускане",
+    "successPaid": "Успешно маркирано плащане",
+    "successCheckOut": "Успешно напуснат гост",
+    "successReservation": "Успешно добавена резервация",
+    "pricePerNight": "Цена за нощувка",
+    "CASH": "В брой",
+    "CREDIT_CARD": "Кредитна карта",
+    "BANK_TRANSFER": "Банков превод",
+    "PAYPAL": "PayPal",
+    "RESERVATION": "Нощувка",
+    "BROKEN_ITEM": "Счупен предмет",
+    "FACILITY": "Удобство",
+    "BAR": "Бар",
+    "RESTAURANT": "Ресторант",
+    "paymentType": "Вид плащане",
+    "paidFor": "Услуга",
+    "paymentDate": "Дата на плащане",
+    "Payment": "Сметка",
+    "No payments": "Няма плащания",
+    "Unpaid payments": "Неплатени плащания",
+    "Paid payments": "Платени плащания",
+    "mark pay": "Маркирай плащане",
+    "New payment": "Ново плащане",
+    "New bill": "Нова сметка",
+    "successPayment": "Успешно плащане",
+    "successBill": "Успешно добавена сметка",
+    "updateReservation": "Променена резервация"
   },
   "table": {
     "User": "Потребител",
@@ -212,7 +240,11 @@
     "CheckIn": "Дата на настаняване",
     "CheckOut": "Дата на напускане",
     "Status": "Статус",
-    "Worker": "Служител"
+    "Worker": "Служител",
+    "PaidFor": "Услуга",
+    "Currency": "Валута",
+    "PaymentDate": "Дата на плащане",
+    "PaymentType": "Вид плащане"
   },
   "logs": {
     "Chronology": "Хронология",
@@ -281,7 +313,8 @@
     "Facility exist": "Вече са въведени данни за това удобство!",
     "Can't change facility": "Не може да промените удобството!",
     "Room exist": "Не може да дублирате номера на стаята!",
-    "Invalid token": "Тази страница не е достъпна!"
+    "Invalid token": "Тази страница не е достъпна!",
+    "Room is already reserved": "Стаята е вече резервирана за този период!"
   },
   "countries": {
     "Afghanistan": "Афганистан",

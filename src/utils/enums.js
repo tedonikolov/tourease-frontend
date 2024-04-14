@@ -38,3 +38,18 @@ export const workType = [
     "MANAGER",
     "RECEPTIONIST"
 ]
+
+export const paymentTypes = [
+    "CASH",
+    "CREDIT_CARD",
+    "BANK_TRANSFER",
+    "PAYPAL"
+]
+
+export const paidFor = [
+    "RESERVATION",
+    "BROKEN_ITEM",
+    "FACILITY",
+    "BAR",
+    "RESTAURANT"
+]

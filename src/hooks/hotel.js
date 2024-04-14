@@ -205,3 +205,19 @@ export function updateReservation(reservationInfo) {
         currency: reservationInfo.currency,
     });
 }
+
+export function createPayment(payment, workerId) {
+    return restInterceptor.post("hotel-service/hotel/payment/worker/createPayment",payment,{
+        headers: {
+            workerId: workerId,
+        },
+    });
+}
+
+export function markPaymentAsPaid(payment, workerId) {
+    return restInterceptor.put("hotel-service/hotel/payment/worker/markPaymentAsPaid",payment,{
+        headers: {
+            workerId: workerId,
+        },
+    });
+}

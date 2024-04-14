@@ -69,3 +69,38 @@ export const defaultWorker = {
     phone: "",
     workerType: ""
 }
+
+export const defaultCustomer = {
+    id: 0,
+    fullName: "",
+    passportId: "",
+    creationDate: null,
+    expirationDate: null,
+    country: "",
+    birthDate: null,
+    gender: "",
+    phoneNumber: "",
+}
+
+export const defaultReservation = {
+    id: 0,
+    reservationNumber: "",
+    checkIn: null,
+    checkOut: null,
+    nights: 0,
+    price: 0,
+    pricePerNight: 0,
+    currency: "",
+    paid: false,
+    status: "",
+}
+
+export const defaultPayment = {
+    id: 0,
+    paymentType: null,
+    paidFor: "",
+    price: 0,
+    currency: "",
+    paymentDate: null,
+    paid: false,
+}
