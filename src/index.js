@@ -17,8 +17,8 @@ import CurrencyProvider from "./context/CurrencyContext";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <QueryClientProvider client={queryClient}>
-        <CurrencyProvider>
-            <AuthProvider>
+        <AuthProvider>
+            <CurrencyProvider>
                 <HotelProvider>
                     <SideBarProvider>
                         <BrowserRouter>
@@ -27,8 +27,8 @@ root.render(
                         </BrowserRouter>
                     </SideBarProvider>
                 </HotelProvider>
-            </AuthProvider>
-        </CurrencyProvider>
+            </CurrencyProvider>
+        </AuthProvider>
     </QueryClientProvider>
 );
 
