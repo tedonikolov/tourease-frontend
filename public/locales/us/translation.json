@@ -214,7 +214,8 @@
     "New bill": "New bill",
     "successPayment": "Successfully marked as paid",
     "successBill": "Successfully created bill",
-    "updateReservation": "Updated reservation"
+    "updateReservation": "Updated reservation",
+    "roomStatus": "Room status"
   },
   "table": {
     "User": "User",

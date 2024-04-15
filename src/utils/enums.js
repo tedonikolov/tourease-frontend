@@ -1,4 +1,4 @@
-export const facilitiesNames=[
+export const facilitiesNames = [
     "WIFI",
     "PARKING",
     "SWIMMING_POOL",
@@ -52,4 +52,21 @@ export const paidFor = [
     "FACILITY",
     "BAR",
     "RESTAURANT"
+]
+
+export const ReservationStatus = [
+    "PENDING",
+    "CONFIRMED",
+    "CANCELLED",
+    "ENDING",
+    "FINISHED",
+    "ACCOMMODATED",
+    "NO_SHOW",
+]
+
+export const RoomStatus = [
+    "FREE",
+    "CONFIRMED",
+    "ENDING",
+    "ACCOMMODATED",
 ]

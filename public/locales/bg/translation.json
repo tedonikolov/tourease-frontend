@@ -213,7 +213,8 @@
     "New bill": "Нова сметка",
     "successPayment": "Успешно плащане",
     "successBill": "Успешно добавена сметка",
-    "updateReservation": "Променена резервация"
+    "updateReservation": "Променена резервация",
+    "roomStatus": "Статус на стая"
   },
   "table": {
     "User": "Потребител",

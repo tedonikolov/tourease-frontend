@@ -11,13 +11,17 @@ import {useQuery} from "@tanstack/react-query";
 import {getAllReservationsViewByHotel} from "../hooks/hotel";
 import dayjs from "dayjs";
 import {Button} from "react-bootstrap";
+import CustomSelect from "../componets/CustomSelect";
+import {RoomStatus} from "../utils/enums";
 
 export default function HotelSchemePage() {
     const [t] = useTranslation("translation", {keyPrefix: 'common'});
     const {sideBarVisible} = useContext(SideBarContext);
     const {workerHotel} = useContext(HotelContext);
     const [rooms, setRooms] = useState([]);
-    const [filter, setFilter] = useState({date:dayjs(new Date()).format('YYYY-MM-DD'), hotelId: null});
+    const [viewRooms, setViewRooms] = useState([]);
+    const [roomStatus, setRoomStatus] = useState(null);
+    const [filter, setFilter] = useState({date: dayjs(new Date()).format('YYYY-MM-DD'), hotelId: null});
 
     useEffect(() => {
         if (workerHotel) {
@@ -34,6 +38,7 @@ export default function HotelSchemePage() {
         queryFn: () => getAllReservationsViewByHotel(filter),
         enabled: filter.hotelId != null
     })
+
     useEffect(() => {
         if (data) {
             let newRooms = workerHotel.rooms.map(room => {
@@ -51,6 +56,17 @@ export default function HotelSchemePage() {
         }
     }, [data, workerHotel])
 
+    useEffect(() => {
+        if(rooms) {
+            if (roomStatus) {
+                console.log(roomStatus)
+                setViewRooms(() => rooms.filter(room => room.reservationStatus === roomStatus))
+            } else {
+                setViewRooms(() => rooms)
+            }
+        }
+    }, [rooms, roomStatus]);
+
     return (
         <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
             <SideBar>
@@ -58,17 +74,24 @@ export default function HotelSchemePage() {
             </SideBar>
             <div className='d-flex content-page flex-column justify-content-start align-items-start w-100'>
                 <Header title={t("Scheme")}/>
-                <div className={"d-flex align-self-center"}><CustomDatePicker label={t('date')}
-                                                                              selectedDate={filter.date}
-                                                                              name={'date'}
-                                                                              setValue={setFilter}/>
-                <div className={"d-flex align-self-end h-50"}><Button className={"register-button"} onClick={() => setFilter((prevValue) => ({
-                    ...prevValue,
-                    date: dayjs(new Date()).format('YYYY-MM-DD')
-                }))}>{t("Today")}</Button></div>
+                <div className={"d-flex align-self-center"}>
+                    <CustomDatePicker label={t('date')}
+                                      selectedDate={filter.date}
+                                      name={'date'}
+                                      setValue={setFilter}/>
+                    <div className={"d-flex align-self-end h-50"}>
+                        <Button className={"register-button"}
+                                onClick={() => setFilter((prevValue) => ({
+                                    ...prevValue,
+                                    date: dayjs(new Date()).format('YYYY-MM-DD')
+                                }))}>{t("Today")}</Button>
+                    </div>
                 </div>
+                <div className={"w-25 align-self-center"}><CustomSelect
+                    options={RoomStatus.map((name) => ({label: t(name), value: name}))}
+                    label={t("roomStatus")} setValue={setRoomStatus} defaultValue={roomStatus} isClearable={true}/></div>
                 <div className={"d-flex align-self-center align-items-center mt-3"}>
-                    <label className={"p-2"}>{t("Legend")+":"}</label>
+                    <label className={"p-2"}>{t("Legend") + ":"}</label>
                     <ul className={"list-group list-group-horizontal"}>
                         <li className={"list-group-item info"}>{t("FREE")}</li>
                         <li className={"list-group-item success"}>{t("RESERVED")}</li>
@@ -79,7 +102,7 @@ export default function HotelSchemePage() {
                 <div className={"d-flex align-self-center align-items-center mb-3"}>
                     <label className={"p-2"}>{t("Press")}<b> F2 </b>{t("for change status of room")}</label>
                 </div>
-                {workerHotel && <Rooms rooms={rooms} filter={filter}/>}
+                {workerHotel && <Rooms rooms={viewRooms} filter={filter}/>}
             </div>
         </div>
     )

@@ -32,7 +32,7 @@ export default function CustomSelect({
                 [name]: newValue ? newValue.value : null
             }))
             :
-            setValue(newValue.value);
+            setValue(newValue ? newValue.value : null);
     }
 
     useEffect(() => {
