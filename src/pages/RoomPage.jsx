@@ -26,10 +26,12 @@ import CustomToastContent from "../componets/CustomToastContent";
 import CustomerInfo from "../componets/CustomerInfo";
 import {AuthContext} from "../context/AuthContext";
 import PaymentInfo from "../componets/PaymentInfo";
+import {CurrencyContext} from "../context/CurrencyContext";
 
 export default function RoomPage() {
     const [t] = useTranslation("translation", {keyPrefix: 'common'});
     const {loggedUser} = useContext(AuthContext);
+    const {currency} = useContext(CurrencyContext);
     const {sideBarVisible} = useContext(SideBarContext);
     const {roomId, date, workerHotel} = useContext(HotelContext);
     const [filter, setFilter] = useState(null);
@@ -206,7 +208,7 @@ export default function RoomPage() {
                                 <Modal.Title>{t("Payment")}</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <PaymentInfo payment={defaultPayment} customers={data && data.reservation && data.reservation.customers}
+                                <PaymentInfo payment={{...defaultPayment,currency:currency}} customers={data && data.reservation && data.reservation.customers}
                                                 setShowPayment={setShowPayment}/>
                             </Modal.Body>
                         </Modal>

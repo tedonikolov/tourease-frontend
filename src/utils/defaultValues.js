@@ -90,8 +90,6 @@ export const defaultReservation = {
     nights: 0,
     price: 0,
     pricePerNight: 0,
-    currency: "",
-    paid: false,
     status: "",
 }
 

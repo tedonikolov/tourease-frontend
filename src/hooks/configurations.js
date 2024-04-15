@@ -7,3 +7,7 @@ export function getConfigurations(){
 export function saveConfigurations(configs){
     return restInterceptor.post("configuration-service/admin/save", configs);
 }
+
+export function getCurrencyRates(){
+    return restInterceptor.get("/configuration-service/currency/getCurrencyRates");
+}
