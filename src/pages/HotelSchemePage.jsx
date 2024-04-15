@@ -36,7 +36,7 @@ export default function HotelSchemePage() {
     const {data} = useQuery({
         queryKey: ["get all reservations view by hotel", filter],
         queryFn: () => getAllReservationsViewByHotel(filter),
-        enabled: filter.hotelId != null
+        enabled: filter.hotelId != null && filter.date !== "Invalid Date"
     })
 
     useEffect(() => {

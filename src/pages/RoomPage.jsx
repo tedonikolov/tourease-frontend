@@ -64,7 +64,7 @@ export default function RoomPage() {
         {
             queryKey: ["get reservation", filter],
             queryFn: () => getReservationForRoom(filter),
-            enabled: filter != null,
+            enabled: filter != null && filter.date !== "Invalid Date",
             retry: false,
             staleTime: 5000
         }
