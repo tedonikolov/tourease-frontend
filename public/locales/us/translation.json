@@ -215,7 +215,12 @@
     "successPayment": "Successfully marked as paid",
     "successBill": "Successfully created bill",
     "updateReservation": "Updated reservation",
-    "roomStatus": "Room status"
+    "roomStatus": "Room status",
+    "reservations": "Reservations",
+    "Reservations": "Reservations",
+    "Count": "Count",
+    "Free rooms": "Free rooms",
+    "Total": "Total"
   },
   "table": {
     "User": "User",

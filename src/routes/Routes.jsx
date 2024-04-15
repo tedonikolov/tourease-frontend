@@ -18,6 +18,7 @@ import ConfigurationsPage from "../pages/ConfigurationsPage";
 import WorkersPage from "../pages/WorkersPage";
 import HotelSchemePage from "../pages/HotelSchemePage";
 import RoomPage from "../pages/RoomPage";
+import ReservationsPage from "../pages/ReservationsPage";
 
 export const Router = () => {
     return (
@@ -63,6 +64,7 @@ export const Router = () => {
                 >
                     <Route path={'/'} element={<HotelSchemePage/>}/>
                     <Route path={'/hotel/scheme'} element={<HotelSchemePage/>}/>
+                    <Route path={'/hotel/reservations'} element={<ReservationsPage/>}/>
                     <Route path={'/hotel/room/*'} element={<RoomPage/>}/>
                 </Route>
                 <Route

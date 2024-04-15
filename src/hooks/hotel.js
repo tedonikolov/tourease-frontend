@@ -295,3 +295,15 @@ export function deletePaymentById(paymentId,workerId) {
         },
     });
 }
+
+export function getFreeRoomCountByDatesForHotel({hotelId, fromDate, toDate}) {
+    return restInterceptor.get("hotel-service/hotel/room/getFreeRoomCountByDatesForHotel", {
+        headers: {
+            hotelId: hotelId,
+        },
+        params: {
+            fromDate: fromDate,
+            toDate: toDate
+        },
+    });
+}
