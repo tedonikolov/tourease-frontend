@@ -243,7 +243,7 @@ export function updateReservation(workerId, reservationInfo) {
     let offset = moment.tz(new Date(), timeZone).utcOffset();
 
     let checkOut = moment.tz(reservationInfo.checkOut, timeZone).add(offset,"minutes").format("YYYY-MM-DDTHH:mm:ssZ");
-    let checkIn = moment.tz(reservationInfo.checkIn, timeZone).add(offset,"minutes").format("YYYY-MM-DDTHH:mm:ssZ");
+    let checkIn = moment.tz(reservationInfo.checkIn, timeZone).format("YYYY-MM-DDTHH:mm:ssZ");
 
     return restInterceptor.put("hotel-service/reservation/worker/updateReservation", {
         id: reservationInfo.id,
@@ -304,6 +304,28 @@ export function getFreeRoomCountByDatesForHotel({hotelId, fromDate, toDate}) {
         params: {
             fromDate: fromDate,
             toDate: toDate
+        },
+    });
+}
+
+export function getConfirmReservationsForHotel({hotelId, date}) {
+    return restInterceptor.get("hotel-service/reservation/worker/getAllReservationsForDate", {
+        headers: {
+            hotelId: hotelId,
+        },
+        params: {
+            date: date
+        },
+    });
+}
+
+export function getFreeRoomsForDate({hotelId, date}) {
+    return restInterceptor.get("hotel-service/hotel/room/getFreeRoomsForDate", {
+        headers: {
+            hotelId: hotelId,
+        },
+        params: {
+            date: date
         },
     });
 }

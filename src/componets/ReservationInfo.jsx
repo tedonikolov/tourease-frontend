@@ -14,7 +14,7 @@ import CustomToastContent from "./CustomToastContent";
 import {AuthContext} from "../context/AuthContext";
 import {CurrencyContext} from "../context/CurrencyContext";
 
-export default function ReservationInfo({reservation, filter, setNewReservation, setShowReservation}) {
+export default function ReservationInfo({reservation, filter, setFilter, setNewReservation, setShowReservation, rooms}) {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {loggedUser} = useContext(AuthContext);
     const {currency, handleRate, currencies} = useContext(CurrencyContext);
@@ -50,6 +50,7 @@ export default function ReservationInfo({reservation, filter, setNewReservation,
         onSuccess: () => {
             queryClient.resetQueries({queryKey: ["get reservation", filter]});
             queryClient.resetQueries({queryKey: ["get unpaid payments", reservation && reservation.customers]});
+            filter.hotelId && queryClient.resetQueries({queryKey: ["get all confirm reservations for hotel", {date:filter.date, hotelId:filter.hotelId}]});
             toast.success(<CustomToastContent content={[t("updateReservation")]}/>);
             setShowReservation(false);
         }
@@ -73,9 +74,10 @@ export default function ReservationInfo({reservation, filter, setNewReservation,
 
     useEffect(() => {
         if (reservationInfo && takenDaysForRoom) {
-            reservationInfo.id ? setDisabledDates(() => takenDaysForRoom.filter((day) => {
+            let days = takenDaysForRoom.filter((day) => {  return dayjs(day).isAfter(dayjs(reservationInfo.checkIn).add( 1, 'day').endOf('day'))})
+            reservationInfo.id ? setDisabledDates(() => days.filter((day) => {
                 return !(dayjs(day).isAfter(dayjs(reservationInfo.checkIn).startOf('day')) && dayjs(day).isBefore(dayjs(reservationInfo.checkOut).startOf('day')))
-            })): setDisabledDates(() => takenDaysForRoom);
+            })): setDisabledDates(() => days);
         }
     }, [takenDaysForRoom]);
 
@@ -136,6 +138,13 @@ export default function ReservationInfo({reservation, filter, setNewReservation,
         newValue ? setType(newValue.value) : setType(null);
     }
 
+    function handleSelectRoom(newValue) {
+        setFilter((prevValue) => ({
+            ...prevValue,
+            roomId: newValue.value
+        }))
+    }
+
     function handlePriceChange(event) {
         setReservationInfo((prevState) => ({
             ...prevState,
@@ -184,6 +193,12 @@ export default function ReservationInfo({reservation, filter, setNewReservation,
                                           disabled={reservation.status === "FINISHED"}
                         />
                     </div>
+                    {rooms && <CustomSelect
+                        options={rooms.sort((a, b) => a.name.localeCompare(b.name)).map((room) => {
+                            return {value: room.id, label: room.name}
+                        })}
+                        defaultValue={filter.roomId} handleSelect={handleSelectRoom}
+                        label={t("roomName")}/>}
                     <CommonInputText type={'text'} value={reservationInfo.nights}
                                      label={t('nights')} disabled={true}/>
                     {reservation.status !== "FINISHED" && <CustomSelect

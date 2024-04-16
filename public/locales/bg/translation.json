@@ -219,7 +219,9 @@
     "Reservations": "Резервации",
     "Count": "Общо стаи",
     "Free rooms": "Свободни стаи",
-    "Total": "Общо"
+    "Total": "Общо",
+    "Confirm reservations": "Пристигащи резервации",
+    "roomName": "Стая"
   },
   "table": {
     "User": "Потребител",
@@ -250,7 +252,10 @@
     "PaidFor": "Услуга",
     "Currency": "Валута",
     "PaymentDate": "Дата на плащане",
-    "PaymentType": "Вид плащане"
+    "PaymentType": "Вид плащане",
+    "RoomName": "Стая",
+    "Customer": "Клиент",
+    "Nights": "Нощувки"
   },
   "logs": {
     "Chronology": "Хронология",

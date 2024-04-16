@@ -56,7 +56,7 @@ export default function CustomSelect({
                 required={required}
                 isDisabled={disabled}
                 isSearchable={isSearchable}
-                maxMenuHeight={200}
+                maxMenuHeight={210}
                 menuPlacement={"auto"}
                 formatOptionLabel={option => (
                     <div>

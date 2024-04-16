@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import RequiredPermissions from "./RequiredPermissions";
 import {Admin, Hotel, Manager, Regular} from "../utils/Role";
 import {
-    faBed,
+    faBed, faClipboardList,
     faCogs, faGripHorizontal,
     faHistory,
     faHotel, faHouseUser,
@@ -38,7 +38,7 @@ export default function Navigation () {
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Manager]}>
                     <NavLink path='/hotel/scheme' label={t('Scheme')} icon={faGripHorizontal} />
-                    <NavLink path='/hotel/reservations' label={t('reservations')} icon={faGripHorizontal} />
+                    <NavLink path='/hotel/reservations' label={t('reservations')} icon={faClipboardList} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Hotel, Manager]}>
                     <NavLink path='/hotel/facilities' label={t('Facilities')} icon={faHotel} />

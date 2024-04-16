@@ -220,7 +220,8 @@
     "Reservations": "Reservations",
     "Count": "Count",
     "Free rooms": "Free rooms",
-    "Total": "Total"
+    "Total": "Total",
+    "Confirm reservations": "CheckIn reservations"
   },
   "table": {
     "User": "User",
@@ -251,7 +252,10 @@
     "PaidFor": "Payed for",
     "Currency": "Currency",
     "PaymentType": "Payment type",
-    "PaymentDate": "Payment date"
+    "PaymentDate": "Payment date",
+    "RoomName": "Room",
+    "Customer": "Customer",
+    "Nights": "Nights"
   },
   "logs": {
     "Chronology": "Chronology",
