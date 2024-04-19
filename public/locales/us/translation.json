@@ -229,7 +229,8 @@
     "Ending reservations": "CheckOut reservations",
     "roomName": "Room",
     "successConfirm": "Successfully confirmed reservation",
-    "successCancelled": "Successfully cancelled reservation"
+    "successCancelled": "Successfully cancelled reservation",
+    "Add bed": "Add bed"
   },
   "table": {
     "User": "User",

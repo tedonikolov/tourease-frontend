@@ -34,6 +34,11 @@ export default function TypesPage() {
         if(workerHotel){
             setHotelId(()=>workerHotel.id);
             setHotel(()=>workerHotel);
+            setType((prev) => ({...prev, hotelId: hotelId}));
+            workerHotel.types.sort((a, b) => a.id - b.id);
+            setBedsOptions(() => workerHotel.beds.map((bed) => {
+                return {label: bed.name, value: bed.id}
+            }));
         }
     }, [workerHotel]);
 
@@ -141,7 +146,7 @@ export default function TypesPage() {
                                                      type={"text"} value={type.name}/>
                                     <CustomSelect
                                         options={bedsOptions} required={type.beds.length === 0}
-                                        label={t("Beds")} handleSelect={handleBeds}
+                                        sentence={t("Add bed")} handleSelect={handleBeds}
                                         isClearable={true}/>
                                     <select className={"w-100"} multiple={true}>{type.beds.map((bed, index) =>
                                         <option key={index}

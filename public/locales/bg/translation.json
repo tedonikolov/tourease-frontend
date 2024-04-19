@@ -228,7 +228,8 @@
     "Ending reservations": "Напускащи резервации",
     "roomName": "Стая",
     "successConfirm": "Успешно потвърдена резервация",
-    "successCancelled": "Успешно отказана резервация"
+    "successCancelled": "Успешно отказана резервация",
+    "Add bed": "Добави легло"
   },
   "table": {
     "User": "Потребител",
