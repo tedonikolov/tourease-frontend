@@ -89,13 +89,14 @@
 }
 
 .icon-button{
-    font-size: 20px;
-    color: #5e00ff !important;
+    color: #000000 !important;
+    background-color: #6fb061 !important;
 }
 
 .icon-button:hover{
     cursor: pointer;
-    color: #6fb061 !important;
+    color: #000000 !important;
+    background-color: #6fb061 !important;
     box-shadow: 1px 10px 10px #282c34;
 }
 

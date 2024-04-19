@@ -168,6 +168,8 @@
     "END": "Напускащ/Напуснал",
     "ENDING": "Напускащ",
     "FINISHED": "Напуснал",
+    "NO_SHOW": "Непрестигнала",
+    "CANCELLED": "Отказана",
     "Press": "Натиснете",
     "for change status of room":"за промяна на статуса на стаята",
     "Today": "Днес",
@@ -221,7 +223,12 @@
     "Free rooms": "Свободни стаи",
     "Total": "Общо",
     "Confirm reservations": "Пристигащи резервации",
-    "roomName": "Стая"
+    "Pending reservations": "Чакащи одобрение резервации",
+    "Cancelled reservations": "Отказани резервации",
+    "Ending reservations": "Напускащи резервации",
+    "roomName": "Стая",
+    "successConfirm": "Успешно потвърдена резервация",
+    "successCancelled": "Успешно отказана резервация"
   },
   "table": {
     "User": "Потребител",

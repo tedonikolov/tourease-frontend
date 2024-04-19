@@ -168,6 +168,8 @@
     "END": "Ending/Ended",
     "ENDING": "Ending",
     "FINISHED": "Finished",
+    "NO_SHOW": "No show",
+    "CANCELLED": "Cancelled",
     "Press": "Press",
     "for change status of room": "to change status of room",
     "Today": "Today",
@@ -221,7 +223,13 @@
     "Count": "Count",
     "Free rooms": "Free rooms",
     "Total": "Total",
-    "Confirm reservations": "CheckIn reservations"
+    "Confirm reservations": "CheckIn reservations",
+    "Pending reservations": "Pending reservations",
+    "Cancelled reservations": "Cancelled reservations",
+    "Ending reservations": "CheckOut reservations",
+    "roomName": "Room",
+    "successConfirm": "Successfully confirmed reservation",
+    "successCancelled": "Successfully cancelled reservation"
   },
   "table": {
     "User": "User",

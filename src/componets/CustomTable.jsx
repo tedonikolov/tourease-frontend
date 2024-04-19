@@ -23,7 +23,7 @@ export default function CustomTable({
                 <thead className={`${darkHeader && 'table-dark'}`}>
                 <tr>
                     {columns.headings.map((column, index) => (
-                            <th key={index}>
+                            column && <th key={index}>
                                 {t(column)}
                             </th>
                         )
@@ -54,33 +54,29 @@ export default function CustomTable({
                                             />
                                         </td>
                                         :
-                                        <td key={index}
-                                            onClick={() => {
-                                                const id = tableData[itemIndex].id ?? 0;
+                                        column && <td key={index}
+                                                      onClick={() => {
+                                                          const id = tableData[itemIndex].id ?? 0;
 
-                                                if (viewComponent) {
-                                                    !(disabled && disabled(tableData[itemIndex])) && viewComponent(id);
-                                                }
-                                            }}
+                                                          if (viewComponent) {
+                                                              !(disabled && disabled(tableData[itemIndex])) && viewComponent(id);
+                                                          }
+                                                      }}
                                         >
                                             {checkStars ? checkStars(column) : column}
                                         </td>
                                 ))}
                                 {
-                                    onDelete && <td>
-                                        <Button size={'sm'} className={"delete-button"}
-                                                onClick={() => onDelete(tableData[itemIndex].id)}>
+                                    (onDelete || onAction) && <td className={"d-flex justify-content-between"}>
+                                        {onAction && <Button size={'sm'} className={"icon-button"}>
+                                            <FontAwesomeIcon className={"icon-button"} icon={actionIcon(tableData[itemIndex])}
+                                                             onClick={() => onAction(tableData[itemIndex])}/>
+                                        </Button>}
+                                        {onDelete && <Button size={'sm'} className={"delete-button"}
+                                                             onClick={() => onDelete(tableData[itemIndex].id)}>
                                             <FontAwesomeIcon icon={faTrash} size={'sm'}/>
-                                        </Button>
+                                        </Button>}
                                     </td>
-
-                                }
-                                {
-                                    onAction && <td>
-                                        <FontAwesomeIcon className={"icon-button"} icon={actionIcon(tableData[itemIndex])}
-                                                         onClick={() => onAction(tableData[itemIndex])}/>
-                                    </td>
-
                                 }
                             </tr>
                         )

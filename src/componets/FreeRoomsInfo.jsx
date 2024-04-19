@@ -7,14 +7,9 @@ import {useQuery} from "@tanstack/react-query";
 import {getFreeRoomCountByDatesForHotel} from "../hooks/hotel";
 import {Table} from "react-bootstrap";
 
-export default function FreeRoomsInfo() {
+export default function FreeRoomsInfo({filter, setFilter}) {
     const [t] = useTranslation("translation", {keyPrefix: 'common'});
     const {workerHotel} = useContext(HotelContext);
-    const [filter, setFilter] = useState({
-        fromDate: dayjs(new Date()).format('YYYY-MM-DD'),
-        toDate: dayjs(new Date()).add(8, 'day').format('YYYY-MM-DD'),
-        hotelId: null
-    });
     const [dates, setDates] = useState([]);
 
     useEffect(() => {
@@ -58,8 +53,8 @@ export default function FreeRoomsInfo() {
         }
     }, [filter.toDate]);
 
-    const {data} = useQuery({
-        queryKey: ["get all free room count for hotel", filter],
+    const {isSuccess, data} = useQuery({
+        queryKey: ["get all free room count for hotel", filter.hotelId && filter],
         queryFn: () => getFreeRoomCountByDatesForHotel(filter),
         enabled: filter.hotelId != null,
         retry: false,
@@ -67,6 +62,7 @@ export default function FreeRoomsInfo() {
     })
 
     return (
+        !isSuccess ? <div className="spinner-border text-primary" role="status"/> :
         <div className={"w-100"}>
             <div className={"d-flex justify-content-center"}>
                 <div>

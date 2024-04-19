@@ -228,6 +228,7 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
             roomId: roomId,
             checkIn: checkIn,
             checkOut: checkOut,
+            nights: reservationInfo.nights,
             price: reservationInfo.price,
             currency: reservationInfo.currency,
         }
@@ -247,9 +248,11 @@ export function updateReservation(workerId, reservationInfo) {
 
     return restInterceptor.put("hotel-service/reservation/worker/updateReservation", {
         id: reservationInfo.id,
+        roomId: reservationInfo.room ? reservationInfo.room.id : null,
         customers: reservationInfo.customers.map((customer) => customer.id),
         checkIn: checkIn,
         checkOut: checkOut,
+        nights: reservationInfo.nights,
         price: reservationInfo.price,
         currency: reservationInfo.currency,
     }, {
@@ -308,13 +311,14 @@ export function getFreeRoomCountByDatesForHotel({hotelId, fromDate, toDate}) {
     });
 }
 
-export function getConfirmReservationsForHotel({hotelId, date}) {
+export function getConfirmReservationsForHotel({hotelId, date, status}) {
     return restInterceptor.get("hotel-service/reservation/worker/getAllReservationsForDate", {
         headers: {
             hotelId: hotelId,
         },
         params: {
-            date: date
+            date: date,
+            status: status
         },
     });
 }
@@ -326,6 +330,22 @@ export function getFreeRoomsForDate({hotelId, date}) {
         },
         params: {
             date: date
+        },
+    });
+}
+
+export function cancelReservation(reservationId) {
+    return restInterceptor.put("hotel-service/reservation/worker/cancelReservation",null,{
+        headers: {
+            reservationId: reservationId,
+        },
+    });
+}
+
+export function confirmReservation(reservationId) {
+    return restInterceptor.put("hotel-service/reservation/worker/confirmReservation",null,{
+        headers: {
+            reservationId: reservationId,
         },
     });
 }
