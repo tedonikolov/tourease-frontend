@@ -182,6 +182,17 @@ export function getTypesForRoom(roomId) {
     });
 }
 
+export function getTypesForRoomByPeopleCount(hotelId, peopleCount) {
+    return restInterceptor.get("hotel-service/hotel/type/getTypesForPeopleCount",{
+        params: {
+            peopleCount: peopleCount
+        },
+        headers: {
+            hotelId: hotelId,
+        }
+    });
+}
+
 export function getTakenDaysForRoom(roomId) {
     return restInterceptor.get("hotel-service/hotel/room/getTakenDaysForRoom",{
         headers: {
@@ -226,6 +237,7 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
                 gender: reservationInfo.gender
             },
             roomId: roomId,
+            typeId: reservationInfo.typeId,
             checkIn: checkIn,
             checkOut: checkOut,
             nights: reservationInfo.nights,
@@ -249,6 +261,7 @@ export function updateReservation(workerId, reservationInfo) {
     return restInterceptor.put("hotel-service/reservation/worker/updateReservation", {
         id: reservationInfo.id,
         roomId: reservationInfo.room ? reservationInfo.room.id : null,
+        typeId: reservationInfo.typeId,
         customers: reservationInfo.customers.map((customer) => customer.id),
         checkIn: checkIn,
         checkOut: checkOut,
@@ -323,10 +336,11 @@ export function getConfirmReservationsForHotel({hotelId, date, status}) {
     });
 }
 
-export function getFreeRoomsForDate({hotelId, date}) {
-    return restInterceptor.get("hotel-service/hotel/room/getFreeRoomsForDate", {
+export function getFreeRoomsForDate({hotelId, date, typeId}) {
+    return restInterceptor.get("hotel-service/hotel/room/getFreeRoomsForDateByTypeId", {
         headers: {
             hotelId: hotelId,
+            typeId: typeId
         },
         params: {
             date: date

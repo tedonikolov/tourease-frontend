@@ -230,7 +230,8 @@
     "roomName": "Room",
     "successConfirm": "Successfully confirmed reservation",
     "successCancelled": "Successfully cancelled reservation",
-    "Add bed": "Add bed"
+    "Add bed": "Add bed",
+    "enterName": "Enter name for customer"
   },
   "table": {
     "User": "User",

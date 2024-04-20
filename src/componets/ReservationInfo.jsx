@@ -6,7 +6,13 @@ import CustomDatePicker from "./CustomDatePicker";
 import CustomSelect from "./CustomSelect";
 import {currencyOptions} from "../utils/options";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {getTakenDaysForRoom, getTypesForRoom, updateReservation} from "../hooks/hotel";
+import {
+    getFreeRoomsForDate,
+    getTakenDaysForRoom,
+    getTypesForRoom,
+    getTypesForRoomByPeopleCount,
+    updateReservation
+} from "../hooks/hotel";
 import dayjs from "dayjs";
 import {queryClient} from "../hooks/RestInterceptor";
 import {toast} from "react-toastify";
@@ -20,7 +26,7 @@ export default function ReservationInfo({
                                             setFilter,
                                             setNewReservation,
                                             setShowReservation,
-                                            rooms
+                                            room
                                         }) {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {loggedUser} = useContext(AuthContext);
@@ -28,23 +34,33 @@ export default function ReservationInfo({
     const [oldCurrency, setOldCurrency] = useState(null);
     const [reservationInfo, setReservationInfo] = useState({
         ...reservation,
+        people: reservation.people ?? 1,
         pricePerNight: 0,
         price: 0,
         currency: currency
     });
     const [typesOptions, setTypesOptions] = useState([]);
-    const [type, setType] = useState();
+    const [typeId, setTypeId] = useState();
     const [disabledDates, setDisabledDates] = useState();
 
     useEffect(() => {
-        setReservationInfo({...reservation, pricePerNight: 0, price: 0, currency: currency});
+        setReservationInfo({
+            ...reservation,
+            people: reservation.people ?? 1,
+            pricePerNight: 0,
+            price: 0,
+            currency: currency
+        });
+        if(reservation.type){
+            setTypeId(reservation.type.id)
+        }
     }, [reservation]);
 
     const {data: types} = useQuery(
         {
-            queryKey: ["get types", filter.roomId],
-            queryFn: () => getTypesForRoom(filter.roomId),
-            enabled: filter.roomId != null,
+            queryKey: ["get types", filter.hotelId, reservationInfo.people, filter.roomId],
+            queryFn: () => filter.roomId != null ? getTypesForRoom(filter.roomId) : getTypesForRoomByPeopleCount(filter.hotelId, reservationInfo.people),
+            enabled: (reservationInfo.people != null && reservationInfo.people != "" && filter.hotelId!=null) || filter.roomId != null,
             retry: false,
             staleTime: 5000
         });
@@ -55,6 +71,12 @@ export default function ReservationInfo({
         enabled: filter.roomId != null,
         retry: false,
         staleTime: 5000
+    })
+
+    const {data: rooms} = useQuery({
+        queryKey: ["get all free rooms for hotel", filter.hotelId && {date: filter.date, hotelId: filter.hotelId, typeId: typeId}],
+        queryFn: () => getFreeRoomsForDate({...filter, typeId: typeId}),
+        enabled: filter.hotelId != null && filter.date !== "Invalid Date" && typeId != null,
     })
 
     const {mutate} = useMutation({
@@ -104,24 +126,43 @@ export default function ReservationInfo({
     useEffect(() => {
         if (types) {
             setTypesOptions(() => types.map((type) => {
-                return {label: type.name, value: type}
+                return {label: type.name, value: type.id}
             }));
         }
     }, [types]);
 
     useEffect(() => {
-        if (type) {
+        if (typeId) {
+            if (types) {
+                let type = types.find((type) => type.id === typeId);
+                setReservationInfo((prev) => ({
+                    ...prev,
+                    typeId: type.id,
+                    pricePerNight: type.price,
+                    price: type.price * reservationInfo.nights,
+                    currency: type.currency
+                }))
+                setOldCurrency(() => {
+                    return {
+                        currency: type.currency,
+                        pricePerNight: type.price,
+                        price: type.price * reservationInfo.nights
+                    }
+                });
+            }
+        } else {
             setReservationInfo((prev) => ({
                 ...prev,
-                pricePerNight: type.price,
-                price: type.price * reservationInfo.nights,
-                currency: type.currency
+                typeId: null,
+                pricePerNight: 0,
+                price: 0,
+                currency: currency
             }))
             setOldCurrency(() => {
-                return {currency: type.currency, pricePerNight: type.price, price: type.price * reservationInfo.nights}
+                return {currency: currency, pricePerNight: 0, price: 0}
             });
         }
-    }, [type]);
+    }, [typeId, types]);
 
     useEffect(() => {
         setReservationInfo((prev) => ({
@@ -163,7 +204,7 @@ export default function ReservationInfo({
     }
 
     function handleSelect(newValue) {
-        newValue ? setType(newValue.value) : setType(null);
+        newValue ? setTypeId(newValue.value) : setTypeId(null);
     }
 
     function handleSelectRoom(newValue) {
@@ -237,18 +278,21 @@ export default function ReservationInfo({
                                           disabled={reservation.status === "FINISHED" || reservation.status === "NO_SHOW" || reservation.status === "CANCELLED"}
                         />
                     </div>
-                    {rooms && <CustomSelect
-                        options={rooms.sort((a, b) => a.name.localeCompare(b.name)).map((room) => {
+                    <CommonInputText type={'text'} value={reservationInfo.nights}
+                                     label={t('nights')} disabled={true}/>
+                    {filter.hotelId && <CommonInputText name={"people"} label={t("people")}
+                                     setObjectValue={setReservationInfo}
+                                     type={"number"} value={reservationInfo.people}/>}
+                    {filter.hotelId && <CustomSelect
+                        options={typesOptions} defaultValue={typeId} handleSelect={handleSelect}
+                        label={t("Type")} required={false}
+                        isClearable={true}/>}
+                    {rooms && typeId && <CustomSelect
+                        options={(room ? [...rooms, room] : rooms).sort((a, b) => a.name.localeCompare(b.name)).map((room) => {
                             return {value: room.id, label: room.name}
                         })}
                         defaultValue={filter.roomId} handleSelect={handleSelectRoom}
                         label={t("roomName")}/>}
-                    <CommonInputText type={'text'} value={reservationInfo.nights}
-                                     label={t('nights')} disabled={true}/>
-                    {reservation.status !== "FINISHED" && <CustomSelect
-                        options={typesOptions} defaultValue={type} handleSelect={handleSelect}
-                        label={t("Type")} required={false}
-                        isClearable={true}/>}
                     <CommonInputText name={"pricePerNight"} label={t("pricePerNight")}
                                      handleInput={handlePricePerNightChange}
                                      type={"number"} value={reservationInfo.pricePerNight}/>

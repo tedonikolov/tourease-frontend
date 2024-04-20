@@ -9,7 +9,6 @@ import {
     cancelReservation, confirmReservation,
     createReservationByWorker,
     getConfirmReservationsForHotel,
-    getFreeRoomsForDate
 } from "../hooks/hotel";
 import CustomTable from "./CustomTable";
 import NoDataComponent from "./NoDataComponent";
@@ -28,7 +27,12 @@ export default function Reservations({status, fromDate, toDate}) {
     const [t] = useTranslation("translation", {keyPrefix: 'common'});
     const {workerHotel} = useContext(HotelContext);
     const {loggedUser} = useContext(AuthContext);
-    const [filter, setFilter] = useState({date: dayjs(new Date()).format('YYYY-MM-DD'), hotelId:null, status:null, roomId:null});
+    const [filter, setFilter] = useState({
+        date: dayjs(new Date()).format('YYYY-MM-DD'),
+        hotelId: null,
+        status: null,
+        roomId: null
+    });
     const [showNewReservation, setShowNewReservation] = useState(false);
     const [newReservation, setNewReservation] = useState(false);
     const [reservation, setReservation] = useState(false);
@@ -40,7 +44,7 @@ export default function Reservations({status, fromDate, toDate}) {
                 hotelId: workerHotel.id
             }))
         }
-        if(status){
+        if (status) {
             setFilter((prevValue) => ({
                 ...prevValue,
                 status: status
@@ -48,7 +52,7 @@ export default function Reservations({status, fromDate, toDate}) {
         }
     }, [workerHotel, status]);
 
-    function clearCache(){
+    function clearCache() {
         queryClient.resetQueries({
             queryKey: ["get all reservations for hotel", {
                 date: filter.date,
@@ -70,35 +74,44 @@ export default function Reservations({status, fromDate, toDate}) {
                 status: "CANCELLED"
             }]
         });
-        queryClient.resetQueries({queryKey: ["get all free rooms for hotel", {date:filter.date, hotelId:filter.hotelId}]});
-        queryClient.resetQueries({queryKey: ["get reservation", {date:filter.date, roomId:filter.roomId}]});
+        queryClient.resetQueries({
+            queryKey: ["get all free rooms for hotel", {
+                date: filter.date,
+                hotelId: filter.hotelId
+            }]
+        });
+        queryClient.resetQueries({queryKey: ["get reservation", {date: filter.date, roomId: filter.roomId}]});
     }
 
-    const {isSuccess, data:reservations} = useQuery({
-        queryKey: ["get all reservations for hotel", filter.hotelId && {date:filter.date, hotelId:filter.hotelId, status:filter.status}],
+    const {isSuccess, data: reservations} = useQuery({
+        queryKey: ["get all reservations for hotel", filter.hotelId && {
+            date: filter.date,
+            hotelId: filter.hotelId,
+            status: filter.status
+        }],
         queryFn: () => getConfirmReservationsForHotel(filter),
         enabled: filter.hotelId != null && filter.date !== "Invalid Date",
-    })
-
-    const {data:rooms} = useQuery({
-        queryKey: ["get all free rooms for hotel", filter.hotelId && {date:filter.date, hotelId:filter.hotelId}],
-        queryFn: () => getFreeRoomsForDate(filter),
-        enabled: filter.hotelId != null && filter.date !== "Invalid Date"
     })
 
     const {mutate: createReservation} = useMutation({
         mutationFn: () => createReservationByWorker(loggedUser.id, newReservation, filter.roomId),
         onSuccess: () => {
             clearCache();
-            queryClient.resetQueries({queryKey: ["get all free room count for hotel", {fromDate:fromDate, toDate:toDate, hotelId:filter.hotelId}]});
+            queryClient.resetQueries({
+                queryKey: ["get all free room count for hotel", {
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    hotelId: filter.hotelId
+                }]
+            });
             toast.success(<CustomToastContent content={[t("successReservation")]}/>);
             setShowNewReservation(false);
         }
     })
 
     const disabled = (newReservation.checkIn === 'Invalid Date' || newReservation.checkIn === null
-            || newReservation.checkOut === 'Invalid Date' || newReservation.checkOut === null) ||
-        newReservation.price === 0 || newReservation.currency === "" || newReservation.fullName === "" || filter.roomId===null;
+            || newReservation.checkOut === 'Invalid Date' || newReservation.checkOut === null) || newReservation.typeId === null ||
+        newReservation.price === 0 || newReservation.currency === "" || newReservation.fullName === "" || filter.roomId === null;
 
     const {mutate: cancelReservationById} = useMutation({
         mutationFn: (id) => cancelReservation(id),
@@ -112,7 +125,13 @@ export default function Reservations({status, fromDate, toDate}) {
         mutationFn: (reservation) => confirmReservation(reservation.id),
         onSuccess: () => {
             clearCache();
-            queryClient.resetQueries({queryKey: ["get all free room count for hotel", {fromDate:fromDate, toDate:toDate, hotelId:filter.hotelId}]});
+            queryClient.resetQueries({
+                queryKey: ["get all free room count for hotel", {
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    hotelId: filter.hotelId
+                }]
+            });
             toast.success(<CustomToastContent content={[t("successConfirm")]}/>);
         }
     })
@@ -122,8 +141,7 @@ export default function Reservations({status, fromDate, toDate}) {
     }
 
     return (
-        !isSuccess ? <div className="spinner-border text-primary" role="status"/> :
-            <div className={"w-100"}>
+        <div className={"w-100"}>
             <div className={"d-flex align-self-center justify-items-center m-2"}>
                 <CustomDatePicker label={t('date')}
                                   selectedDate={filter.date}
@@ -135,87 +153,100 @@ export default function Reservations({status, fromDate, toDate}) {
                                 ...prevValue,
                                 date: dayjs(new Date()).format('YYYY-MM-DD')
                             }))}>{t("Today")}</Button></div>
-                {(status==="PENDING" || status==="CONFIRMED") && <div className={"d-flex align-self-end mx-4"}>
+                {(status === "PENDING" || status === "CONFIRMED") && <div className={"d-flex align-self-end mx-4"}>
                     <Button className={"register-button"}
                             onClick={() => setShowNewReservation(true)}>
                         {t("New reservation")}</Button>
                 </div>}
             </div>
-            <div className={"box"}>
-            {reservations && reservations.length > 0 ? <CustomTable
-                    darkHeader={false}
-                    tableData={reservations}
-                    viewComponent={(reservationId)=>setReservation(reservations.find(({id})=>id===reservationId))}
-                    columns={{
-                        headings: ["ReservationNumber", "RoomName", "CheckIn", "CheckOut", "Nights", "Price", "Customer", "Worker", (status==="CANCELLED" && "Status"), (status==="PENDING" && "Action")],
-                        items: reservations.map(({
-                                                              reservationNumber, room, checkIn, checkOut, nights, price, currency, customers, workerName, status
-                                                          }) =>
-                            [reservationNumber, room.name, dayjs(checkIn).format("DD-MM-YYYY"),  dayjs(checkOut).format("DD-MM-YYYY"),
-                            nights, price+" "+(currency!=null ? currency : ""), customers.map(customer=>customer.fullName), workerName.split(" ")[0],
-                            filter.status==="CANCELLED" ? t(status) : null])
-                    }}
-                    onDelete={filter.status==="PENDING" && cancelReservationById}
-                    onAction={filter.status==="PENDING" && confirmReservationById}
-                    actionIcon={filter.status==="PENDING" && buttonIcon}
-                />
-                :
-                <div><NoDataComponent sentence={"No reservations"}/></div>}
-            </div>
-            <Modal show={reservation} onHide={() => {
-                setReservation(null)
-                setFilter((prevValue) => ({
-                    ...prevValue,
-                    roomId: null
-                }))
-            }} size={"lg"}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{t("Reservation")}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {reservation && <ReservationInfo
-                        reservation={reservation} setShowReservation={setReservation}
-                        rooms={[...rooms, reservation.room]} setFilter={setFilter}
-                        filter={{...filter, roomId: filter.roomId ? filter.roomId : reservation.room.id}}/>}
-                </Modal.Body>
-            </Modal>
-            <Modal show={showNewReservation} onHide={() => {
-                setShowNewReservation(false)
-                setFilter((prevValue) => ({
-                    ...prevValue,
-                    roomId: null
-                }))
-            }} size={"xl"}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{t("Reservation")}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className={"d-flex"}>
-                        <div className={"box px-4"}>
-                            <ReservationInfo
-                                reservation={defaultReservation} setNewReservation={setNewReservation}
-                                filter={filter} rooms={rooms} setFilter={setFilter}/>
-                        </div>
-                        <div className={"box px-4"}>
-                            <CustomerInfo reservationId={0}
-                                          customer={defaultCustomer}
-                                          filter={filter}
-                                          setNewReservation={setNewReservation}/>
-                        </div>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer className={"d-flex justify-content-between"}>
-                    <Button className={"login-button"} disabled={disabled}
-                            onClick={createReservation}>{t("save")}</Button>
-                    <Button className={"close-button"}
-                            onClick={() => { setShowNewReservation(false)
-                                setFilter((prevValue) => ({
-                                ...prevValue,
-                                roomId: null
-                            }))
-                            }}>{t("close")}</Button>
-                </Modal.Footer>
-            </Modal>
+            {!isSuccess ? <div className="spinner-border text-primary" role="status"/> :
+                <div className={"box"}>
+                    {reservations && reservations.length > 0 ? <CustomTable
+                            darkHeader={false}
+                            tableData={reservations}
+                            viewComponent={(reservationId) => setReservation(reservations.find(({id}) => id === reservationId))}
+                            columns={{
+                                headings: ["ReservationNumber", "RoomName", "People", "CheckIn", "CheckOut", "Nights", "Price", "Customer", "Worker", (status === "CANCELLED" && "Status"), (status === "PENDING" && "Action")],
+                                items: reservations.map(({
+                                                             reservationNumber,
+                                                             room,
+                                                             people,
+                                                             checkIn,
+                                                             checkOut,
+                                                             nights,
+                                                             price,
+                                                             currency,
+                                                             customers,
+                                                             workerName,
+                                                             status
+                                                         }) =>
+                                    [reservationNumber, room.name, people, dayjs(checkIn).format("DD-MM-YYYY"), dayjs(checkOut).format("DD-MM-YYYY"),
+                                        nights, price + " " + (currency != null ? currency : ""), customers.map(customer => customer.fullName), workerName.split(" ")[0],
+                                        filter.status === "CANCELLED" ? t(status) : null])
+                            }}
+                            onDelete={filter.status === "PENDING" && cancelReservationById}
+                            onAction={filter.status === "PENDING" && confirmReservationById}
+                            actionIcon={filter.status === "PENDING" && buttonIcon}
+                        />
+                        :
+                        <div><NoDataComponent sentence={"No reservations"}/></div>}
+                    <Modal show={reservation} onHide={() => {
+                        setReservation(null)
+                        setFilter((prevValue) => ({
+                            ...prevValue,
+                            roomId: null
+                        }))
+                    }} size={"lg"}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{t("Reservation")}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {reservation && <ReservationInfo
+                                reservation={reservation} setShowReservation={setReservation}
+                                setFilter={setFilter} room={reservation.room}
+                                filter={{...filter, roomId: filter.roomId ? filter.roomId : reservation.room.id}}/>}
+                        </Modal.Body>
+                    </Modal>
+                    <Modal show={showNewReservation} onHide={() => {
+                        setShowNewReservation(false)
+                        setFilter((prevValue) => ({
+                            ...prevValue,
+                            roomId: null
+                        }))
+                    }} size={"xl"}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{t("Reservation")}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className={"d-flex"}>
+                                <div className={"box px-4"}>
+                                    <ReservationInfo
+                                        reservation={defaultReservation} setNewReservation={setNewReservation}
+                                        filter={filter} setFilter={setFilter}/>
+                                </div>
+                                <div className={"box px-4"}>
+                                    <CustomerInfo reservationId={0}
+                                                  customer={defaultCustomer}
+                                                  filter={filter}
+                                                  setNewReservation={setNewReservation}/>
+                                </div>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer className={"d-flex justify-content-between"}>
+                            <Button className={"login-button"} disabled={disabled}
+                                    onClick={createReservation}>{t("save")}</Button>
+                            {newReservation.fullName === "" && <div className={"text-danger"}>{t("enterName")}</div>}
+                            <Button className={"close-button"}
+                                    onClick={() => {
+                                        setShowNewReservation(false)
+                                        setFilter((prevValue) => ({
+                                            ...prevValue,
+                                            roomId: null
+                                        }))
+                                    }}>{t("close")}</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>}
         </div>
     )
 }
