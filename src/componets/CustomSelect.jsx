@@ -9,6 +9,7 @@ export default function CustomSelect({
                                          setValue,
                                          handleSelect,
                                          label,
+                                         sentence,
                                          name,
                                          defaultValue,
                                          setDefaultValue,
@@ -50,7 +51,7 @@ export default function CustomSelect({
                 onChange={handleSelect ? handleSelect : handleInputChange}
                 isMulti={isMulti}
                 isClearable={isClearable}
-                placeholder={label && (t('choose') + ' ' + label.toLowerCase())}
+                placeholder={sentence ? sentence : label && (t('choose') + ' ' + label.toLowerCase())}
                 value={defaultOption || ""}
                 options={options}
                 required={required}
