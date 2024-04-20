@@ -194,7 +194,7 @@ export default function WorkersPage() {
                                                                       registrationDate,
                                                                       firedDate,
                                                                       workerType
-                                                                  }) => [fullName, email, phone, t(workerType), registrationDate, firedDate])
+                                                                  }) => [fullName, email, phone, t(workerType), registrationDate, firedDate ? firedDate : " "])
                                     }}
                                     onAction={buttonHandler}
                                     actionIcon={buttonIcon}
