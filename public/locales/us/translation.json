@@ -127,6 +127,9 @@
     "ELEVATOR":"Elevator",
     "HOUR_FRONT_DESK":"24 hour reception",
     "BREAKFAST": "Breakfast",
+    "HALFBORD": "Half board",
+    "FULLBORD": "Full board",
+    "ALLINCLUSIVE": "All inclusive",
     "CHILD_BREAKFAST": "Child breakfast",
     "LUNCH": "Lunch",
     "CHILD_LUNCH": "Child lunch",
@@ -231,7 +234,9 @@
     "successConfirm": "Successfully confirmed reservation",
     "successCancelled": "Successfully cancelled reservation",
     "Add bed": "Add bed",
-    "enterName": "Enter name for customer"
+    "enterName": "Enter name for customer",
+    "Meals": "Meals",
+    "Meal": "Meal"
   },
   "table": {
     "User": "User",
@@ -265,7 +270,8 @@
     "PaymentDate": "Payment date",
     "RoomName": "Room",
     "Customer": "Customer",
-    "Nights": "Nights"
+    "Nights": "Nights",
+    "MealType": "Meal type"
   },
   "logs": {
     "Chronology": "Chronology",
@@ -333,6 +339,8 @@
     "Owner not found":"Owner not found!",
     "Facility exist": "Facility already exist!",
     "Can't change facility": "Can't change facility!",
+    "Meal exist": "Meal already exist!",
+    "Can't change meal": "Can't change meal!",
     "Room exist": "Room number exist!",
     "Invalid token": "This page does not exist!"
   },

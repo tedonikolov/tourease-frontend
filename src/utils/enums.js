@@ -24,6 +24,13 @@ export const facilitiesNames = [
     "CHILD_DINNER"
 ]
 
+export const mealTypes = [
+    "BREAKFAST",
+    "HALFBORD",
+    "FULLBORD",
+    "ALLINCLUSIVE"
+]
+
 export const currency = [
     "BGN",
     "EUR",
@@ -52,16 +59,6 @@ export const paidFor = [
     "FACILITY",
     "BAR",
     "RESTAURANT"
-]
-
-export const ReservationStatus = [
-    "PENDING",
-    "CONFIRMED",
-    "CANCELLED",
-    "ENDING",
-    "FINISHED",
-    "ACCOMMODATED",
-    "NO_SHOW",
 ]
 
 export const RoomStatus = [

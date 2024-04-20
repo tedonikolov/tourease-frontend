@@ -40,6 +40,14 @@ export const defaultFacility = {
     currency: ""
 }
 
+export const defaultMeal = {
+    id: 0,
+    type: "",
+    price: "",
+    currency: ""
+}
+
+
 export const defaultBed = {
     id: 0,
     name: "",

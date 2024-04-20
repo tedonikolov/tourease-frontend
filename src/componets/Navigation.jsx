@@ -42,6 +42,7 @@ export default function Navigation () {
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Hotel, Manager]}>
                     <NavLink path='/hotel/facilities' label={t('Facilities')} icon={faHotel} />
+                    <NavLink path='/hotel/meals' label={t('Meals')} icon={faHotel} />
                     <NavLink path='/hotel/beds' label={t('Beds')} icon={faBed} />
                     <NavLink path='/hotel/types' label={t('Types')} icon={faKey} />
                     <NavLink path='/hotel/rooms' label={t('Rooms')} icon={faHouseUser} />

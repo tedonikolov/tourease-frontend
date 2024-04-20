@@ -19,6 +19,7 @@ import WorkersPage from "../pages/WorkersPage";
 import HotelSchemePage from "../pages/HotelSchemePage";
 import RoomPage from "../pages/RoomPage";
 import ReservationsPage from "../pages/ReservationsPage";
+import MealsPage from "../pages/MealsPage";
 
 export const Router = () => {
     return (
@@ -46,6 +47,7 @@ export const Router = () => {
                     element={<AccessibilityCheckRoute allowedRoles={['HOTEL', 'MANAGER']}/>}
                 >
                     <Route path={'/hotel/facilities'} element={<FacilitiesPage/>}/>
+                    <Route path={'/hotel/meals'} element={<MealsPage/>}/>
                     <Route path={'/hotel/beds'} element={<BedsPage/>}/>
                     <Route path={'/hotel/types'} element={<TypesPage/>}/>
                     <Route path={'/hotel/rooms'} element={<RoomsPage/>}/>
