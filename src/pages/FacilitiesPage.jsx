@@ -30,10 +30,16 @@ export default function FacilitiesPage() {
     const [hotel, setHotel] = useState();
     const [facility, setFacility] = useState(defaultFacility);
     const [facilityId, setFacilityId] = useState();
-    const [facilityOptions, setFacilityOptions] = useState(facilitiesNames);
+    const [facilityOptions, setFacilityOptions] = useState(facilitiesNames.map((name) => ({label: t(name), value: name})));
 
     useEffect(() => {
         if(workerHotel){
+            setFacility((prev) => ({...prev, hotelId: workerHotel.id}))
+            workerHotel.facilities.length > 0 && setFacilityOptions(() => facilitiesNames.filter((facility) => !workerHotel.facilities.find((savedFacility) => savedFacility.name === facility)).map((name) => ({
+                label: t(name),
+                value: name
+            })))
+            workerHotel.facilities.sort((a, b) => a.id - b.id)
             setHotelId(()=>workerHotel.id);
             setHotel(()=>workerHotel);
         }
