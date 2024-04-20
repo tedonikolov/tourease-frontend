@@ -17,6 +17,8 @@ import CustomTable from "../componets/CustomTable";
 import NoDataComponent from "../componets/NoDataComponent";
 import {deleteRoomById, saveRoom} from "../hooks/hotel";
 import {HotelContext} from "../context/HotelContext";
+import CustomPagination from "../componets/CustomPagination";
+import CustomPageSizeSelector from "../componets/CustomPageSizeSelector";
 
 export default function RoomsPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
@@ -28,11 +30,28 @@ export default function RoomsPage() {
     const [room, setRoom] = useState(defaultRoom);
     const [roomId, setRoomId] = useState();
     const [typesOptions, setTypesOptions] = useState();
+    const [rooms, setRooms] = useState();
+
+    const [pagination, setPagination] = useState({
+        page: 1,
+        pageSize: 10
+    });
+
+    useEffect(() => {
+        if(hotel) {
+            setRooms(() => hotel.rooms.sort((a,b)=>a.name.localeCompare(b.name)).slice((pagination.page - 1) * pagination.pageSize, pagination.page * pagination.pageSize));
+        }
+    }, [hotel, pagination]);
+
+    useEffect(() => {
+        setPagination((prev) => ({...prev, page: 1}));
+    }, [pagination.pageSize]);
 
     useEffect(() => {
         if(workerHotel){
             setHotelId(()=>workerHotel.id);
             setHotel(()=>workerHotel);
+            setRoom((prev) => ({...prev, hotelId: workerHotel.id}));
             setTypesOptions(() => workerHotel.types.map((type) => {
                 return {label: type.name, value: type.id}
             }));
@@ -139,27 +158,35 @@ export default function RoomsPage() {
                                 </Form>
                             </div>
                             <div className={"w-100"}>
-                                {hotel && hotel.rooms.length > 0 &&
-                                    <CustomTable
-                                        darkHeader={false}
-                                        viewComponent={setRoomId}
-                                        tableData={hotel.rooms}
-                                        columns={{
-                                            headings: ["Number", "Name", "Price", "People", "Delete"],
-                                            items: hotel.rooms.sort((a,b)=>a.name.localeCompare(b.name)).map(({
-                                                                        name,
-                                                                        types
-                                                                    }) => [name, types.map((type, index) => {
-                                                return (index !== 0 ? "|" : "") + type.name
-                                            }), types.map((type, index) => {
-                                                return (index !== 0 ? "|" : "") + type.price + " " + type.currency
-                                            }), types.map((type, index) => {
-                                                return (index !== 0 ? "|" : "") + calcPeople(type.beds)
-                                            })
-                                            ])
-                                        }}
-                                        onDelete={deleteRoom}
-                                    />}
+                                {rooms && rooms.length > 0 &&
+                                    <div>
+                                        <div className={"d-flex justify-content-between align-items-center"}>
+                                            <CustomPagination recordsCount={hotel.rooms.length} pagination={pagination}
+                                                              setPagination={setPagination}/>
+                                            <CustomPageSizeSelector value={pagination.pageSize} setValue={setPagination}/>
+                                        </div>
+                                        <CustomTable
+                                            darkHeader={false}
+                                            viewComponent={setRoomId}
+                                            tableData={rooms}
+                                            columns={{
+                                                headings: ["Number", "Name", "Price", "People", "Delete"],
+                                                items: rooms.map(({
+                                                                            name,
+                                                                            types
+                                                                        }) => [name, types.map((type, index) => {
+                                                    return (index !== 0 ? "|" : "") + type.name
+                                                }), types.map((type, index) => {
+                                                    return (index !== 0 ? "|" : "") + type.price + " " + type.currency
+                                                }), types.map((type, index) => {
+                                                    return (index !== 0 ? "|" : "") + calcPeople(type.beds)
+                                                })
+                                                ])
+                                            }}
+                                            onDelete={deleteRoom}
+                                        />
+                                    </div>
+                                    }
                             </div>
                         </div>}
                     </div>
