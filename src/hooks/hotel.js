@@ -39,6 +39,14 @@ export function saveHotelInfo(hotel) {
     });
 }
 
+export function changeWorkingPeriod({openingDate, closingDate, hotelId}) {
+    return restInterceptor.post("hotel-service/hotel/changeWorkingPeriod", {
+        hotelId: hotelId,
+        openingDate: openingDate,
+        closingDate: closingDate
+    });
+}
+
 export function insertImage({image, hotelId}) {
     return restInterceptor.post("hotel-service/hotel/image", {
         image: image,

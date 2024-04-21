@@ -239,9 +239,11 @@
     "Meal": "Meal",
     "priceForMeal": "Price for meal per person",
     "discount": "Discount in %",
-    "sub": "Advance payment"
     "sub": "Advance payment",
     "HotelInfo": "Hotel information",
+    "WorkingPeriod": "Working period",
+    "openingDate": "Opening date",
+    "closingDate": "Closing date"
   },
   "table": {
     "User": "User",
