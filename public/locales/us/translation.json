@@ -240,6 +240,8 @@
     "priceForMeal": "Price for meal per person",
     "discount": "Discount in %",
     "sub": "Advance payment"
+    "sub": "Advance payment",
+    "HotelInfo": "Hotel information",
   },
   "table": {
     "User": "User",

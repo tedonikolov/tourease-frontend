@@ -20,6 +20,7 @@ import HotelSchemePage from "../pages/HotelSchemePage";
 import RoomPage from "../pages/RoomPage";
 import ReservationsPage from "../pages/ReservationsPage";
 import MealsPage from "../pages/MealsPage";
+import HotelPage from "../pages/HotelPage";
 
 export const Router = () => {
     return (
@@ -68,6 +69,7 @@ export const Router = () => {
                     <Route path={'/hotel/scheme'} element={<HotelSchemePage/>}/>
                     <Route path={'/hotel/reservations'} element={<ReservationsPage/>}/>
                     <Route path={'/hotel/room/*'} element={<RoomPage/>}/>
+                    <Route path={'/hotel'} element={<HotelPage/>}/>
                 </Route>
                 <Route
                     path={'/'}

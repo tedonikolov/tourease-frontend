@@ -38,6 +38,7 @@ export default function Navigation () {
                     <NavLink path='/hotel/profile' label={t('profile')} icon={faUser} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Manager]}>
+                    <NavLink path='/hotel' label={t('HotelInfo')} icon={faUser} />
                     <NavLink path='/hotel/scheme' label={t('Scheme')} icon={faGripHorizontal} />
                     <NavLink path='/hotel/reservations' label={t('reservations')} icon={faClipboardList} />
                 </RequiredPermissions>
