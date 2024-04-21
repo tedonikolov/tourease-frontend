@@ -236,7 +236,10 @@
     "Add bed": "Add bed",
     "enterName": "Enter name for customer",
     "Meals": "Meals",
-    "Meal": "Meal"
+    "Meal": "Meal",
+    "priceForMeal": "Price for meal per person",
+    "discount": "Discount in %",
+    "sub": "Advance payment"
   },
   "table": {
     "User": "User",
