@@ -228,7 +228,13 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     let offset = moment.tz(new Date(), timeZone).utcOffset();
 
-    let checkOut = moment.tz(reservationInfo.checkOut, timeZone).add(offset,"minutes").format("YYYY-MM-DDTHH:mm:ssZ");
+    let checkOut = moment.tz(reservationInfo.checkOut, timeZone).add(offset,"minutes")
+    checkOut.set({
+        hour: "12",
+        minute: "00",
+        second: "00"
+    });
+    checkOut = checkOut.format("YYYY-MM-DDTHH:mm:ssZ");
 
     let checkIn = moment.tz(reservationInfo.checkIn, timeZone).add(offset,"minutes");
     checkIn.set({
@@ -252,6 +258,8 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
             },
             roomId: roomId,
             typeId: reservationInfo.typeId,
+            mealId: reservationInfo.mealId,
+            peopleCount: reservationInfo.peopleCount,
             checkIn: checkIn,
             checkOut: checkOut,
             nights: reservationInfo.nights,
@@ -267,15 +275,23 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
 
 export function updateReservation(workerId, reservationInfo) {
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    let offset = moment.tz(new Date(), timeZone).utcOffset();
 
-    let checkOut = moment.tz(reservationInfo.checkOut, timeZone).add(offset,"minutes").format("YYYY-MM-DDTHH:mm:ssZ");
+    let checkOut = moment.tz(reservationInfo.checkOut, timeZone);
+    checkOut.set({
+        hour: "12",
+        minute: "00",
+        second: "00"
+    });
+    checkOut = checkOut.format("YYYY-MM-DDTHH:mm:ssZ");
+
     let checkIn = moment.tz(reservationInfo.checkIn, timeZone).format("YYYY-MM-DDTHH:mm:ssZ");
 
     return restInterceptor.put("hotel-service/reservation/worker/updateReservation", {
         id: reservationInfo.id,
         roomId: reservationInfo.room ? reservationInfo.room.id : null,
         typeId: reservationInfo.typeId,
+        mealId: reservationInfo.mealId,
+        peopleCount: reservationInfo.peopleCount,
         customers: reservationInfo.customers.map((customer) => customer.id),
         checkIn: checkIn,
         checkOut: checkOut,

@@ -166,11 +166,12 @@ export default function Reservations({status, fromDate, toDate}) {
                             tableData={reservations}
                             viewComponent={(reservationId) => setReservation(reservations.find(({id}) => id === reservationId))}
                             columns={{
-                                headings: ["ReservationNumber", "RoomName", "People", "CheckIn", "CheckOut", "Nights", "Price", "Customer", "Worker", (status === "CANCELLED" && "Status"), (status === "PENDING" && "Action")],
+                                headings: ["ReservationNumber", "CreationDate", "RoomName", "People", "CheckIn", "CheckOut", "Nights", "Price", "Customer", "Worker", (status === "CANCELLED" && "Status"), (status === "PENDING" && "Action")],
                                 items: reservations.map(({
                                                              reservationNumber,
+                                                             createdDate,
                                                              room,
-                                                             people,
+                                                             peopleCount,
                                                              checkIn,
                                                              checkOut,
                                                              nights,
@@ -180,7 +181,7 @@ export default function Reservations({status, fromDate, toDate}) {
                                                              workerName,
                                                              status
                                                          }) =>
-                                    [reservationNumber, room.name, people, dayjs(checkIn).format("DD-MM-YYYY"), dayjs(checkOut).format("DD-MM-YYYY"),
+                                    [reservationNumber, dayjs(createdDate).format("DD-MM-YYYY"), room.name, peopleCount, dayjs(checkIn).format("DD-MM-YYYY"), dayjs(checkOut).format("DD-MM-YYYY"),
                                         nights, price + " " + (currency != null ? currency : ""), customers.map(customer => customer.fullName), workerName.split(" ")[0],
                                         filter.status === "CANCELLED" ? t(status) : null])
                             }}
@@ -203,7 +204,7 @@ export default function Reservations({status, fromDate, toDate}) {
                         <Modal.Body>
                             {reservation && <ReservationInfo
                                 reservation={reservation} setShowReservation={setReservation}
-                                setFilter={setFilter} room={reservation.room}
+                                setFilter={setFilter} room={reservation.room} fromDate={fromDate} toDate={toDate}
                                 filter={{...filter, roomId: filter.roomId ? filter.roomId : reservation.room.id}}/>}
                         </Modal.Body>
                     </Modal>
