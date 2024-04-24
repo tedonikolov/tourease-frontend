@@ -243,7 +243,9 @@
     "HotelInfo": "Hotel information",
     "WorkingPeriod": "Working period",
     "openingDate": "Opening date",
-    "closingDate": "Closing date"
+    "closingDate": "Closing date",
+    "Login": "Log in",
+    "Hotels": "Hotels"
   },
   "table": {
     "User": "User",

@@ -18,7 +18,7 @@ export const AuthProvider = ({children}) => {
         setPermission(user.userType);
         switch (user.userType) {
             case Regular: {
-                setNavigatePage('/regular/profile');
+                setNavigatePage('/');
                 break;
             }
             case Owner: {

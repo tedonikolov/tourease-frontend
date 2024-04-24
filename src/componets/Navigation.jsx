@@ -8,7 +8,7 @@ import {
     faCogs, faGripHorizontal,
     faHistory,
     faHotel, faHouseUser,
-    faKey,
+    faKey, faSearch,
     faUser, faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import NavLink from "./NavLink";
@@ -31,7 +31,11 @@ export default function Navigation () {
             />
             <div className='d-flex flex-column align-items-start'>
                 <h6 className='px-4 pt-3 text-uppercase color-second'>{t('menu')}</h6>
+                <RequiredPermissions isOpen={true}>
+                    <NavLink path='/login' label={t('Login')} icon={faUser} />
+                </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Regular]}>
+                    <NavLink path='/' label={t('Hotels')} icon={faSearch} />
                     <NavLink path='/regular/profile' label={t('profile')} icon={faUser} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Owner]}>

@@ -22,6 +22,7 @@ import ReservationsPage from "../pages/ReservationsPage";
 import MealsPage from "../pages/MealsPage";
 import HotelPage from "../pages/HotelPage";
 import {Admin, Manager, Owner, Receptionist, Regular} from "../utils/Role";
+import MainRegularPage from "../pages/MainRegularPage";
 
 export const Router = () => {
     return (
@@ -30,7 +31,8 @@ export const Router = () => {
                 path='/'
                 element={<AccessibilityCheckRoute isOpen={true}/>}
             >
-                <Route path='/' element={<LandingPage/>}/>
+                <Route path='/' element={<MainRegularPage/>}/>
+                <Route path='/login' element={<LandingPage/>}/>
                 <Route path='/register' element={<RegisterPage step={1}/>}/>
                 <Route path='/changePassword/*' element={<PasswordChangePage step={1}/>}/>
                 <Route path='/activateProfile/*' element={<RegisterPage activateProfile={true} step={3}/>}/>
@@ -41,7 +43,7 @@ export const Router = () => {
                     path={'/'}
                     element={<AccessibilityCheckRoute allowedRoles={[Regular]}/>}
                 >
-                    <Route path={'/'} element={<RegularProfilePage/>}/>
+                    <Route path={'/'} element={<MainRegularPage/>}/>
                     <Route path={'/regular/profile'} element={<RegularProfilePage/>}/>
                 </Route>
                 <Route
