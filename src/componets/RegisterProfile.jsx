@@ -11,8 +11,7 @@ export default function RegisterProfile({userInfo, setUserInfo, nextStep}) {
     const {t} = useTranslation("translation", {keyPrefix: "common"})
 
     const types = [{value: 'REGULAR', label: t('Regular')},
-        {value: 'HOTEL', label: t('Hotel')},
-        {value: 'TRANSPORT', label: t('Transport')}]
+        {value: 'OWNER', label: t('Hotel')}]
 
     const {mutate: create, isPending} = useMutation({
         mutationFn: createProfile,

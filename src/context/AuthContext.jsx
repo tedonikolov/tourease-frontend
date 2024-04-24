@@ -1,6 +1,6 @@
 import {createContext, useEffect, useState} from "react";
 import {getLoggedUser} from "../hooks/User";
-import {Admin, Hotel, Manager, Receptionist, Regular} from "../utils/Role";
+import {Admin, Manager, Owner, Receptionist, Regular} from "../utils/Role";
 import {useQuery} from "@tanstack/react-query";
 import {queryClient} from "../hooks/RestInterceptor";
 
@@ -21,7 +21,7 @@ export const AuthProvider = ({children}) => {
                 setNavigatePage('/regular/profile');
                 break;
             }
-            case Hotel: {
+            case Owner: {
                 setNavigatePage('/hotel/profile');
                 break;
             }

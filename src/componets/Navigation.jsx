@@ -1,7 +1,7 @@
 import {Nav} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import RequiredPermissions from "./RequiredPermissions";
-import {Admin, Hotel, Manager, Regular} from "../utils/Role";
+import {Admin, Manager, Owner, Receptionist, Regular} from "../utils/Role";
 import {
     faAppleAlt,
     faBed, faClipboardList,
@@ -34,15 +34,17 @@ export default function Navigation () {
                 <RequiredPermissions requiredPermissions={[Regular]}>
                     <NavLink path='/regular/profile' label={t('profile')} icon={faUser} />
                 </RequiredPermissions>
-                <RequiredPermissions requiredPermissions={[Hotel]}>
+                <RequiredPermissions requiredPermissions={[Owner]}>
                     <NavLink path='/hotel/profile' label={t('profile')} icon={faUser} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Manager]}>
                     <NavLink path='/hotel' label={t('HotelInfo')} icon={faUser} />
+                </RequiredPermissions>
+                <RequiredPermissions requiredPermissions={[Manager, Receptionist]}>
                     <NavLink path='/hotel/scheme' label={t('Scheme')} icon={faGripHorizontal} />
                     <NavLink path='/hotel/reservations' label={t('reservations')} icon={faClipboardList} />
                 </RequiredPermissions>
-                <RequiredPermissions requiredPermissions={[Hotel, Manager]}>
+                <RequiredPermissions requiredPermissions={[Owner, Manager]}>
                     <NavLink path='/hotel/facilities' label={t('Facilities')} icon={faHotel} />
                     <NavLink path='/hotel/meals' label={t('Meals')} icon={faAppleAlt} />
                     <NavLink path='/hotel/beds' label={t('Beds')} icon={faBed} />

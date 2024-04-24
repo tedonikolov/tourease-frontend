@@ -21,6 +21,7 @@ import RoomPage from "../pages/RoomPage";
 import ReservationsPage from "../pages/ReservationsPage";
 import MealsPage from "../pages/MealsPage";
 import HotelPage from "../pages/HotelPage";
+import {Admin, Manager, Owner, Receptionist, Regular} from "../utils/Role";
 
 export const Router = () => {
     return (
@@ -38,14 +39,14 @@ export const Router = () => {
             <Route path='/' element={<PrivateRoute/>}>
                 <Route
                     path={'/'}
-                    element={<AccessibilityCheckRoute allowedRoles={['REGULAR']}/>}
+                    element={<AccessibilityCheckRoute allowedRoles={[Regular]}/>}
                 >
                     <Route path={'/'} element={<RegularProfilePage/>}/>
                     <Route path={'/regular/profile'} element={<RegularProfilePage/>}/>
                 </Route>
                 <Route
                     path={'/'}
-                    element={<AccessibilityCheckRoute allowedRoles={['HOTEL', 'MANAGER']}/>}
+                    element={<AccessibilityCheckRoute allowedRoles={[Owner, Manager]}/>}
                 >
                     <Route path={'/hotel/facilities'} element={<FacilitiesPage/>}/>
                     <Route path={'/hotel/meals'} element={<MealsPage/>}/>
@@ -56,24 +57,29 @@ export const Router = () => {
                 </Route>
                 <Route
                     path={'/'}
-                    element={<AccessibilityCheckRoute allowedRoles={['HOTEL']}/>}
+                    element={<AccessibilityCheckRoute allowedRoles={[Owner]}/>}
                 >
                     <Route path={'/'} element={<OwnerProfilePage/>}/>
                     <Route path={'/hotel/profile'} element={<OwnerProfilePage/>}/>
                 </Route>
                 <Route
                     path={'/'}
-                    element={<AccessibilityCheckRoute allowedRoles={['MANAGER']}/>}
+                    element={<AccessibilityCheckRoute allowedRoles={[Manager, Receptionist]}/>}
                 >
                     <Route path={'/'} element={<HotelSchemePage/>}/>
                     <Route path={'/hotel/scheme'} element={<HotelSchemePage/>}/>
                     <Route path={'/hotel/reservations'} element={<ReservationsPage/>}/>
                     <Route path={'/hotel/room/*'} element={<RoomPage/>}/>
+                </Route>
+                <Route
+                    path={'/'}
+                    element={<AccessibilityCheckRoute allowedRoles={[Manager]}/>}
+                >
                     <Route path={'/hotel'} element={<HotelPage/>}/>
                 </Route>
                 <Route
                     path={'/'}
-                    element={<AccessibilityCheckRoute allowedRoles={['ADMIN']}/>}
+                    element={<AccessibilityCheckRoute allowedRoles={[Admin]}/>}
                 >
                     <Route path={'/logs'} element={<LogsPage/>}/>
                     <Route path={'/swagger'} element={<Swagger/>}/>

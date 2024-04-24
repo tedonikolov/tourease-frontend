@@ -92,6 +92,7 @@ export const defaultCustomer = {
 
 export const defaultReservation = {
     id: 0,
+    mealId: 0,
     reservationNumber: "",
     checkIn: null,
     checkOut: null,

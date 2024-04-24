@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect, useState} from "react";
-import {Hotel, Manager, Receptionist} from "../utils/Role";
+import {Manager, Owner, Receptionist} from "../utils/Role";
 import {useQuery} from "@tanstack/react-query";
 import {getOwnerByEmail, getWorkerByEmail} from "../hooks/hotel";
 import {AuthContext} from "./AuthContext";
@@ -17,7 +17,7 @@ export const HotelProvider = ({children}) => {
     const {data: ownerData } = useQuery({
             queryKey: ["get owner", loggedUser && loggedUser.email],
             queryFn: () => getOwnerByEmail(loggedUser.email),
-            enabled: loggedUser!=null && loggedUser.userType===Hotel,
+            enabled: loggedUser!=null && loggedUser.userType===Owner,
             retry: false,
             staleTime: 5000
         }

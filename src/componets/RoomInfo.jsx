@@ -13,10 +13,11 @@ import {queryClient} from "../hooks/RestInterceptor";
 import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
 import {AuthContext} from "../context/AuthContext";
+import {Manager} from "../utils/Role";
 
 export default function RoomInfo({data, newCustomer, setNewCustomer, filter, paidPayments, unPaidPayments}) {
     const [t] = useTranslation("translation", {keyPrefix: 'common'});
-    const {loggedUser} = useContext(AuthContext);
+    const {loggedUser, permission} = useContext(AuthContext);
     const reservation = data ? data.reservation : null;
     const worker = data ? data.worker : null;
     const [customer, setCustomer] = useState(null);
@@ -73,14 +74,13 @@ export default function RoomInfo({data, newCustomer, setNewCustomer, filter, pai
                             tableData={reservation.customers}
                             tableColor={reservation.status === "CONFIRMED" ? "table-success" : reservation.status === "ENDING" ? unPaidPayments && unPaidPayments.length===0 ? "table-warning" : "table-danger" : "table-info"}
                             columns={{
-                                headings: ["ReservationNumber", "CreationDate", "Name", "CheckIn", "CheckOut", "Status", "Worker"],
+                                headings: ["ReservationNumber",  "Name", "CheckIn", "CheckOut", "MealType", "Status", "Worker"],
                                 items: reservation.customers.map(({
                                                                       fullName
                                                                   }) =>
-                                    [reservation.reservationNumber, dayjs(reservation.creationDate).format("DD-MM-YYYY"),
-                                        fullName, dayjs(reservation.checkIn).format("DD-MM-YYYY"),
-                                        dayjs(reservation.checkOut).format("DD-MM-YYYY"), t(reservation.status),
-                                        worker.fullName.split(" ")[0]])
+                                    [reservation.reservationNumber, fullName, dayjs(reservation.checkIn).format("DD-MM-YYYY"),
+                                        dayjs(reservation.checkOut).format("DD-MM-YYYY"),
+                                        t(reservation.meal.type), t(reservation.status), worker.fullName.split(" ")[0]])
                             }}
                         />
                         :
@@ -98,13 +98,13 @@ export default function RoomInfo({data, newCustomer, setNewCustomer, filter, pai
                                         viewComponent={setPaymentId}
                                         tableData={unPaidPayments}
                                         columns={{
-                                            headings: ["Name", "PaidFor", "Price", "Currency", "Delete"],
+                                            headings: ["Name", "PaidFor", "Price", "Currency", permission===Manager && "Delete"],
                                             items: unPaidPayments.map(({
                                                                            customer, price, currency, paidFor
                                                                        }) =>
                                                 [customer.fullName, t(paidFor), price, currency])
                                         }}
-                                        onDelete={deletePayment}
+                                        onDelete={permission===Manager && deletePayment}
                                     />
                                     :
                                     <div><NoDataComponent sentence={"No payments"}/></div>}

@@ -152,7 +152,7 @@ export default function PaymentInfo({payment, customers, setPaymentId, setShowPa
                                                                disabled={paymentInfo.id !== 0} label={t('paidFor')}
                                                                name={'paidFor'}/></div>
                 </div>
-                {paymentInfo.paidFor === "FACILITY" &&
+                {paymentInfo.paidFor === "FACILITY" && paymentInfo.id === 0 &&
                     <div className={"w-60"}><CustomSelect options={workerHotel.facilities.map((facility) => {
                         return {value: facility.id, label: t(facility.name)}
                     })} defaultValue={facility && facility.id} setObjectValue={setPaymentInfo} required={false}

@@ -20,6 +20,7 @@ import CustomToastContent from "./CustomToastContent";
 import {AuthContext} from "../context/AuthContext";
 import {CurrencyContext} from "../context/CurrencyContext";
 import {HotelContext} from "../context/HotelContext";
+import {Manager} from "../utils/Role";
 
 export default function ReservationInfo({
                                             reservation,
@@ -32,7 +33,7 @@ export default function ReservationInfo({
                                             toDate
                                         }) {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
-    const {loggedUser} = useContext(AuthContext);
+    const {loggedUser,permission} = useContext(AuthContext);
     const {currency, handleRate, currencies} = useContext(CurrencyContext);
     const {workerHotel} = useContext(HotelContext);
     const [oldCurrency, setOldCurrency] = useState(null);
@@ -40,7 +41,6 @@ export default function ReservationInfo({
         ...reservation,
         peopleCount: reservation.peopleCount ?? 1,
         pricePerNight: 0,
-        priceForNights: 0,
         priceForMeal: 1,
         price: 0,
         discount: 0,
@@ -58,7 +58,6 @@ export default function ReservationInfo({
             ...reservation,
             peopleCount: reservation.peopleCount ?? 1,
             pricePerNight: 0,
-            priceForNights: 0,
             priceForMeal: 1,
             price: 0,
             discount: 0,
@@ -169,7 +168,6 @@ export default function ReservationInfo({
                     ...prev,
                     typeId: type.id,
                     pricePerNight: type.price,
-                    priceForNights: (type.price * reservationInfo.nights),
                     currency: type.currency
                 }))
                 setOldCurrency((prev) => {
@@ -177,7 +175,6 @@ export default function ReservationInfo({
                         ...prev,
                         currency: type.currency,
                         pricePerNight: type.price,
-                        priceForNights: (type.price * reservationInfo.nights)
                     }
                 });
             }
@@ -186,7 +183,6 @@ export default function ReservationInfo({
                 ...prev,
                 typeId: null,
                 pricePerNight: 0,
-                priceForNights: 0,
                 currency: currency
             }))
             setOldCurrency((prev) => {
@@ -194,7 +190,7 @@ export default function ReservationInfo({
                     ...prev,
                     currency: currency,
                     pricePerNight: 0,
-                    priceForNights: 0}
+                }
             });
         }
     }, [typeId,types]);
@@ -236,31 +232,16 @@ export default function ReservationInfo({
         if(oldCurrency && reservationInfo.currency === oldCurrency.currency) {
             setReservationInfo((prev) => ({
                 ...prev,
-                price: (reservationInfo.priceForMeal * reservationInfo.peopleCount) + reservationInfo.priceForNights
+                price: ((reservationInfo.priceForMeal * reservationInfo.peopleCount) + reservationInfo.pricePerNight) * reservationInfo.nights
             }))
             setOldCurrency((prev) => {
                 return {
                     ...prev,
-                    price: (reservationInfo.priceForMeal * reservationInfo.peopleCount) + reservationInfo.priceForNights
+                    price: ((reservationInfo.priceForMeal * reservationInfo.peopleCount) + reservationInfo.pricePerNight) * reservationInfo.nights
                 }
             });
         }
-    }, [reservationInfo.priceForNights, reservationInfo.peopleCount, reservationInfo.priceForMeal]);
-
-    useEffect(() => {
-        if(reservationInfo.pricePerNight != 0) {
-            setReservationInfo((prev) => ({
-                ...prev,
-                priceForNights: (reservationInfo.pricePerNight * reservationInfo.nights)
-            }))
-            setOldCurrency((prev) => {
-                return {
-                    ...prev,
-                    priceForNights: (reservationInfo.pricePerNight * reservationInfo.nights)
-                }
-            });
-        }
-    }, [reservationInfo.nights, reservationInfo.pricePerNight]);
+    }, [reservationInfo.pricePerNight, reservationInfo.peopleCount, reservationInfo.priceForMeal, reservationInfo.nights]);
 
     useEffect(() => {
         if (!reservationInfo.checkIn) {
@@ -335,18 +316,16 @@ export default function ReservationInfo({
         setReservationInfo((prevState) => ({
             ...prevState,
             pricePerNight: event.target.value,
-            priceForNights: event.target.value * reservationInfo.nights,
             priceForMeal: reservationInfo.priceForMeal,
-            price: (reservationInfo.priceForMeal * reservationInfo.peopleCount) + (event.target.value * reservationInfo.nights)
+            price: ((reservationInfo.priceForMeal * reservationInfo.peopleCount) + event.target.value) * reservationInfo.nights
         }))
         setOldCurrency((prev) => {
             return {
                 ...prev,
                 currency: reservationInfo.currency,
                 pricePerNight: event.target.value,
-                priceForNights: event.target.value * reservationInfo.nights,
                 priceForMeal: reservationInfo.priceForMeal,
-                price: (reservationInfo.priceForMeal * reservationInfo.peopleCount) + (event.target.value * reservationInfo.nights)
+                price: ((reservationInfo.priceForMeal * reservationInfo.peopleCount) + event.target.value) * reservationInfo.nights
             }
         });
     }
@@ -355,18 +334,16 @@ export default function ReservationInfo({
         setReservationInfo((prevState) => ({
             ...prevState,
             pricePerNight: reservationInfo.pricePerNight,
-            priceForNights: reservationInfo.pricePerNight * reservationInfo.nights,
             priceForMeal: event.target.value,
-            price: (event.target.value * reservationInfo.peopleCount) + reservationInfo.priceForNights
+            price: ((event.target.value * reservationInfo.peopleCount) + reservationInfo.pricePerNight) * reservationInfo.nights
         }))
         setOldCurrency((prev) => {
             return {
                 ...prev,
                 currency: reservationInfo.currency,
                 pricePerNight: reservationInfo.pricePerNight,
-                priceForNights: reservationInfo.pricePerNight * reservationInfo.nights,
                 priceForMeal: event.target.value,
-                price: (event.target.value * reservationInfo.peopleCount) + reservationInfo.priceForNights
+                price: ((event.target.value * reservationInfo.peopleCount) + reservationInfo.pricePerNight) * reservationInfo.nights
             }
         });
     }
@@ -403,24 +380,27 @@ export default function ReservationInfo({
                     </div>
                     <CommonInputText type={'text'} value={reservationInfo.nights}
                                      label={t('nights')} disabled={true}/>
-                    {filter.hotelId && <CommonInputText name={"peopleCount"} label={t("people")}
+                    <CommonInputText name={"peopleCount"} label={t("people")}
                                                         setObjectValue={setReservationInfo}
-                                                        type={"number"} value={reservationInfo.peopleCount}/>}
-                    {filter.hotelId && <CustomSelect
+                                                        disabled={reservation.id != 0 && reservationInfo.status !== "PENDING" && permission !== Manager}
+                                                        type={"number"} value={reservationInfo.peopleCount}/>
+                    {typesOptions && <CustomSelect
                         options={typesOptions} defaultValue={typeId} handleSelect={handleSelectType}
                         label={t("Type")} required={false}
-                        isClearable={true}/>}
+                        disabled={reservation.id != 0 && reservationInfo.status !== "PENDING" && permission !== Manager}/>}
                     {rooms && typeId && <CustomSelect
                         options={(room ? [...rooms, room] : rooms).sort((a, b) => a.name.localeCompare(b.name)).map((room) => {
                             return {value: room.id, label: room.name}
                         })}
-                        defaultValue={filter.roomId} handleSelect={handleSelectRoom}
-                        label={t("roomName")}/>}
+                        defaultValue={filter.roomId} handleSelect={handleSelectRoom} label={t("roomName")}
+                        disabled={reservation.id != 0 && (reservationInfo.status !== "PENDING" && reservationInfo.status !== "CONFIRMED")}
+                    />}
                     {workerHotel.meals && <CustomSelect
-                        options={workerHotel.meals.map((meal) => ({label: t(meal.type), value: meal.id}))}
+                        options={workerHotel.meals.sort((a, b) => a.id - b.id).map((meal) => ({label: t(meal.type), value: meal.id}))}
                         defaultValue={mealId} handleSelect={handleSelectMeal}
                         label={t("Meal")} required={false}
-                        isClearable={true}/>}
+                        disabled={reservation.id != 0 && reservationInfo.status !== "PENDING" && permission !== Manager}
+                        />}
                     <CommonInputText name={"priceForMeal"} label={t("priceForMeal")}
                                      handleInput={handlePriceForMealChange}
                                      type={"number"} value={reservationInfo.priceForMeal}/>

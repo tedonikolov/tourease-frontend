@@ -28,7 +28,7 @@ export default function ChangeLanguageComponent() {
                 isSearchable={false}
                 options={languages}
                 handleSelect={handleSelect}
-                defaultValue={i18n.language}
+                defaultValue={i18n.language==="bg-BG" || i18n.language==="bg" ?  languages[1].value : languages[0].value}
                 hideIndicator={true}/>
         </div>
     );

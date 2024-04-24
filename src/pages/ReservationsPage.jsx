@@ -9,9 +9,12 @@ import Reservations from "../componets/Reservations";
 import StepWizard from "react-step-wizard";
 import CustomStepWizardNav from "../componets/CustomStepWizardNav";
 import dayjs from "dayjs";
+import {AuthContext} from "../context/AuthContext";
+import {Manager} from "../utils/Role";
 
 export default function ReservationsPage() {
     const [t] = useTranslation("translation", {keyPrefix: 'common'});
+    const {permission} = useContext(AuthContext);
     const {sideBarVisible} = useContext(SideBarContext);
     const [filter, setFilter] = useState({
         fromDate: dayjs(new Date()).format('YYYY-MM-DD'),
@@ -30,7 +33,12 @@ export default function ReservationsPage() {
                 <div className={"w-100 mt-4"}>
                     <StepWizard
                         className=''
-                        nav={<CustomStepWizardNav steps={[t('Confirm reservations'), t('Pending reservations'), t('Cancelled reservations'), t('Ending reservations')]}/>}
+                        nav={<CustomStepWizardNav steps={[
+                            t('Confirm reservations'),
+                            permission === Manager ? t('Pending reservations') : null,
+                            permission === Manager ? t('Cancelled reservations') : null,
+                            t('Ending reservations')
+                        ].filter(Boolean)}/>}
                         transitions={{
                             enterRight: '',
                             enterLeft: '',
@@ -39,8 +47,8 @@ export default function ReservationsPage() {
                         }}
                     >
                         <Reservations status={"CONFIRMED"} fromDate={filter.fromDate} toDate={filter.toDate}/>
-                        <Reservations status={"PENDING"} fromDate={filter.fromDate} toDate={filter.toDate}/>
-                        <Reservations status={"CANCELLED"} fromDate={filter.fromDate} toDate={filter.toDate}/>
+                        {permission===Manager && <Reservations status={"PENDING"} fromDate={filter.fromDate} toDate={filter.toDate}/>}
+                        {permission===Manager && <Reservations status={"CANCELLED"} fromDate={filter.fromDate} toDate={filter.toDate}/>}
                         <Reservations status={"ENDING"} fromDate={filter.fromDate} toDate={filter.toDate}/>
                     </StepWizard>
                 </div>

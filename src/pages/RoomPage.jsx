@@ -107,7 +107,8 @@ export default function RoomPage() {
 
     const disabled = (newReservation.checkIn === 'Invalid Date' || newReservation.checkIn === null
             || newReservation.checkOut === 'Invalid Date' || newReservation.checkOut === null) ||
-        newReservation.price === 0 || newReservation.currency === "" || newReservation.fullName === "";
+        newReservation.price === 0 || newReservation.currency === "" || newReservation.fullName === "" ||
+        newReservation.mealId === 0 || newReservation.peopleCount == 0;
 
     return (
         <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>

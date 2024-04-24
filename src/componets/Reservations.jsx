@@ -111,7 +111,8 @@ export default function Reservations({status, fromDate, toDate}) {
 
     const disabled = (newReservation.checkIn === 'Invalid Date' || newReservation.checkIn === null
             || newReservation.checkOut === 'Invalid Date' || newReservation.checkOut === null) || newReservation.typeId === null ||
-        newReservation.price === 0 || newReservation.currency === "" || newReservation.fullName === "" || filter.roomId === null;
+        newReservation.price === 0 || newReservation.currency === "" || newReservation.fullName === "" ||
+        filter.roomId === null || newReservation.mealId === 0 || newReservation.peopleCount == 0;
 
     const {mutate: cancelReservationById} = useMutation({
         mutationFn: (id) => cancelReservation(id),
