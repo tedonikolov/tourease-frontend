@@ -1,6 +1,6 @@
 import {Button, Modal} from "react-bootstrap";
 import CustomStepWizardNav from "./CustomStepWizardNav";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import HotelInfo from "./HotelInfo";
 import {useMutation} from "@tanstack/react-query";
@@ -10,7 +10,7 @@ import CustomToastContent from "./CustomToastContent";
 import {queryClient} from "../hooks/RestInterceptor";
 import HotelImages from "./HotelImages";
 
-export default function Hotel({setStep, hotel, clear, setHotel, checkStars, countries}) {
+export default function Hotel({setStep, hotel, clear, setHotel, checkStars, countries, owner}) {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const [show, setShow] = useState(true);
 
@@ -30,7 +30,16 @@ export default function Hotel({setStep, hotel, clear, setHotel, checkStars, coun
         mutate(hotel);
     }
 
+    useEffect(() => {
+        if(!hotel.owner){
+            setHotel(()=>({...hotel, owner: owner}))
+        }
+    }, [hotel]);
+
     const [step, goToStep] = useState(1)
+
+    const disabled = !hotel.name || !hotel.location.country || !hotel.location.city || !hotel.location.latitude
+        || !hotel.location.longitude || !hotel.stars || !hotel.owner;
 
     return (
         <div>
@@ -47,7 +56,7 @@ export default function Hotel({setStep, hotel, clear, setHotel, checkStars, coun
                     {step === 2 && <HotelImages hotel={hotel}/>}
                 </Modal.Body>
                 <Modal.Footer className='d-flex justify-content-between'>
-                    <Button form={"hotel"} className={"main-button"} onClick={saveHotel}>{t("save")}</Button>
+                    <Button form={"hotel"} className={"main-button"} disabled={disabled} onClick={saveHotel}>{t("save")}</Button>
                     <Button className={"close-button"} onClick={() => {
                         setShow(false);
                         clear();

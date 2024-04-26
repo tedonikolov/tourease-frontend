@@ -22,3 +22,25 @@
     background-color: #5e00ff;
     box-shadow: 1px 10px 10px #282c34;
 }
+
+.searchBy {
+    background-color: #fff;
+    border: #00ff48 solid 5px;
+    box-shadow: 5px 10px 10px #5e00ff;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.searchBy:focus {
+    border-color: #5e00ff;
+    outline: none;
+}
+
+.searchBy::placeholder {
+    color: #5e00ff;
+    font: 1em 'Roboto', sans-serif;
+    font-style: italic;
+}

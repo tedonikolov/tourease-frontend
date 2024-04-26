@@ -5,6 +5,8 @@ import CustomSelect from "./CustomSelect";
 import NoDataComponent from "./NoDataComponent";
 import GoogleMapReact from 'google-map-react';
 import {geocode, RequestType, setKey} from "react-geocode";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHandPointDown} from "@fortawesome/free-solid-svg-icons";
 
 export default function HotelInfo({hotel, setHotel, checkStars, countries}) {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
@@ -60,6 +62,16 @@ export default function HotelInfo({hotel, setHotel, checkStars, countries}) {
         }
     }, [location.address]);
 
+    const Marker = () => (
+        <div style={{
+            color: 'red',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '25px'
+        }}>
+            <FontAwesomeIcon icon={faHandPointDown}/>
+        </div>
+    );
+
     return (
         <div>
             <form id={"hotel"}>
@@ -97,15 +109,17 @@ export default function HotelInfo({hotel, setHotel, checkStars, countries}) {
                 </div>
                 <div className={"login-box mt-3"} style={{height: '70vh', width: '100%'}}>
                     <GoogleMapReact bootstrapURLKeys={{key: apiKey}}
-                                    zoom={zoom} center={{
+                        zoom={zoom} center={{
                         lat: location.latitude ? location.latitude : 46.350,
                         lng: location.longitude ? location.longitude : 13.616
                     }}
-                                    onChange={({center}) => setLocation((prevValue) => ({
-                                        ...prevValue,
-                                        latitude: center.lat,
-                                        longitude: center.lng
-                                    }))}>
+                        onClick={({lat, lng}) => setLocation((prevValue) => ({
+                            ...prevValue,
+                            latitude: lat,
+                            longitude: lng
+                        }))}
+                    >
+                        <Marker lat={location.latitude} lng={location.longitude}/>
                     </GoogleMapReact>
                 </div>
             </form>

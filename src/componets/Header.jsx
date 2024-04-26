@@ -39,11 +39,11 @@ export default function Header({title}) {
             <div className='d-flex w-40 align-items-center'>
                 <ChangeLanguageComponent/>
 
-                <h5 className='mb-0 px-2 w-50 text-end'>
+                {loggedUser && <h5 className='mb-0 px-2 w-50 text-end'>
                     {t("welcome")}, {sliceUsername(loggedUser.regular ? loggedUser.regular.firstName : loggedUser.email)}!
-                </h5>
+                </h5>}
 
-                <Button
+                {loggedUser && <Button
                     variant='outline-primary color-main'
                     size='sm'
                     onClick={() => {
@@ -52,7 +52,7 @@ export default function Header({title}) {
                     }}
                 >
                     <FontAwesomeIcon icon={faSignOutAlt} className='fa-fw' rotation={180}/>
-                </Button>
+                </Button>}
             </div>
         </div>
     );

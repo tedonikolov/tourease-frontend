@@ -49,8 +49,8 @@ export default function OwnerHotels({setStep, hotels, countries, owner}) {
 
     return (
         <div>
-            <div className={"d-flex justify-content-center m-3"}><Button className={"main-button"} onClick={()=>setHotel(()=>({...defaultHotel,owner:owner}))}>{t("Add hotel")}</Button></div>
-            {hotel && <Hotel setStep={setStep} hotel={hotel} clear={()=>setHotel(null)} setHotel={setHotel} checkStars={checkStars} countries={countries}/>}
+            <div className={"d-flex justify-content-center m-3"}><Button className={"main-button"} onClick={()=>setHotel(()=>({...defaultHotel}))}>{t("Add hotel")}</Button></div>
+            {hotel && <Hotel setStep={setStep} hotel={hotel} clear={()=>setHotel(null)} setHotel={setHotel} checkStars={checkStars} countries={countries} owner={owner}/>}
             {hotels.length>0 && <CustomTable darkHeader={false}
                                     tableData={hotels}
                                     viewComponent={(id) => setHotel(()=>hotels.find((hotel)=>hotel.id===id))}

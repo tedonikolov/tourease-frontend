@@ -245,7 +245,12 @@
     "openingDate": "Opening date",
     "closingDate": "Closing date",
     "Login": "Log in",
-    "Hotels": "Hotels"
+    "Hotels": "Hotels",
+    "searchBy": "Search hotel by:",
+    "Room types": "Room types",
+    "Meal types": "Meal types",
+    "Reserve": "Reserve",
+    "MakeReserve": "Make reservation"
   },
   "table": {
     "User": "User",

@@ -116,6 +116,26 @@
     padding-top: 4rem;
 }
 
+.hotel-listing-image {
+    height: 15vh;
+    left:0;
+    right: 0;
+    top:0;
+    bottom:0;
+    object-fit:scale-down;
+    background-color: rgb(12, 75, 75);
+    width: 100%;
+}
+
+.scrollable-accordion {
+    max-height: 82vh;
+    overflow-y: auto;
+}
+
+.scrollable-accordion::-webkit-scrollbar {
+    display: none;
+}
+
 .caption{
     background-color: rgb(12, 75, 75);
     opacity: 0.8;
@@ -156,6 +176,13 @@ input[type="file"]::file-selector-button:hover {
     box-shadow: 5px 10px 10px #5e00ff;
 }
 
+.google-maps{
+    height: 88vh;
+    background-color: #fff;
+    border: #00ff48 solid 5px;
+    box-shadow: 5px 10px 10px #5e00ff;
+}
+
 .w-10{
  width: 10%;
 }
@@ -186,4 +213,13 @@ input[type="file"]::file-selector-button:hover {
 
 .w-90{
     width: 90%;
+}
+
+@media (max-height: 800px) {
+    .scrollable-accordion {
+        max-height: 77vh !important;
+    }
+    .google-maps{
+        height: 85vh !important;
+    }
 }

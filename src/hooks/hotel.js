@@ -48,7 +48,7 @@ export function changeWorkingPeriod({openingDate, closingDate, hotelId}) {
 }
 
 export function insertImage({image, hotelId}) {
-    return restInterceptor.post("hotel-service/hotel/image", {
+    return restInterceptor.post("hotel-service/image/hotel", {
         image: image,
         hotelId: hotelId
     }, {
@@ -59,11 +59,11 @@ export function insertImage({image, hotelId}) {
 }
 
 export function getImages(hotelId) {
-    return restInterceptor.get("hotel-service/hotel/image/getForHotel/" + hotelId);
+    return restInterceptor.get("hotel-service/image/getForHotel/" + hotelId);
 }
 
 export function deleteImage(imageId) {
-    return restInterceptor.delete("hotel-service/hotel/image/" + imageId);
+    return restInterceptor.delete("hotel-service/image/hotel/" + imageId);
 }
 
 export function saveFacility(facility) {
@@ -400,6 +400,14 @@ export function updateReservation(workerId, reservationInfo) {
     }, {
         headers: {
             workerId: workerId,
+        },
+    });
+}
+
+export function getHotelListing(pageNumber) {
+    return restInterceptor.get("hotel-service/hotel/listing", {
+        params: {
+            pageNumber: pageNumber,
         },
     });
 }
