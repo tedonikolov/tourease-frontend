@@ -250,7 +250,9 @@
     "Room types": "Room types",
     "Meal types": "Meal types",
     "Reserve": "Reserve",
-    "MakeReserve": "Make reservation"
+    "MakeReserve": "Make reservation",
+    "No search by": "No hotels found for your searching criteria",
+    "Loading": "Loading"
   },
   "table": {
     "User": "User",

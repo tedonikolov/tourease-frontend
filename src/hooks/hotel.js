@@ -403,11 +403,3 @@ export function updateReservation(workerId, reservationInfo) {
         },
     });
 }
-
-export function getHotelListing(pageNumber) {
-    return restInterceptor.get("hotel-service/hotel/listing", {
-        params: {
-            pageNumber: pageNumber,
-        },
-    });
-}

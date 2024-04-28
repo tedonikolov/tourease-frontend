@@ -219,7 +219,21 @@ input[type="file"]::file-selector-button:hover {
     .scrollable-accordion {
         max-height: 77vh !important;
     }
+    .load {
+        max-height: 77vh !important;
+    }
     .google-maps{
         height: 85vh !important;
     }
+}
+
+.load {
+    height: 82vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00ff48;
+    object-fit:scale-down;
+    width: 100%;
+    color: #5e00ff;
 }
