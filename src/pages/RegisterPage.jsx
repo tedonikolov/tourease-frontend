@@ -20,7 +20,7 @@ export default function RegisterPage ({activateProfile, step}){
     useEffect(() => {
         if(activateProfile){
             const url = new URL(window.location.href);
-            const email = url.pathname.slice(17);
+            const email = url.search.slice(7);
             activate(email);
         }
     }, []);
