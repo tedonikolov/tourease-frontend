@@ -57,7 +57,7 @@ export default function PassportRegularInfo({userInfo, countries, setUserInfo}) 
                 </div>
                 :
                 <div>
-                    <h1>Please first add personal info</h1>
+                    <h2>{t("MissingPersonalInfo")}</h2>
                 </div>
             }
         </div>

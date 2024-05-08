@@ -253,7 +253,8 @@
     "MakeReserve": "Make reservation",
     "No search by": "No hotels found for your searching criteria",
     "Loading": "Loading",
-    "Free": "Free"
+    "Free": "Free",
+    "MissingPersonalInfo": "Enter first personal information"
   },
   "table": {
     "User": "User",
