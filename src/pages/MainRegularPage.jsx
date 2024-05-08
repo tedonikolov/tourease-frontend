@@ -20,10 +20,13 @@ import MealsPreview from "../componets/MealsPreview";
 import {getHotelListing} from "../hooks/core";
 import NoDataComponent from "../componets/NoDataComponent";
 import {ScaleLoader} from "react-spinners";
+import FacilitiesPreview from "../componets/FacilitiesPreview";
+import {AuthContext} from "../context/AuthContext";
 
 export default function MainRegularPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {sideBarVisible} = useContext(SideBarContext);
+    const {loggedUser} = useContext(AuthContext);
     const apiKey = process.env["GOOGLE_KEY"];
     const [searchBy, setSearchBy] = useState("");
     const [text, setText] = useState("");
@@ -107,7 +110,7 @@ export default function MainRegularPage() {
     }, [activeHotelId]);
 
     useEffect(() => {
-        setHotels([]);
+        setHotels(() => []);
         setZoom(7);
     }, [searchBy]);
 
@@ -190,7 +193,7 @@ export default function MainRegularPage() {
                                                     <StepWizard
                                                         className=''
                                                         nav={<CustomStepWizardNav
-                                                            steps={[t('Room types'), t('Meal types')]}/>}
+                                                            steps={[t('Room types'), t('Meal types'),t('Facilities')]}/>}
                                                         transitions={{
                                                             enterRight: '',
                                                             enterLeft: '',
@@ -199,10 +202,11 @@ export default function MainRegularPage() {
                                                         }}
                                                     >
                                                         <TypesPreview types={hotel.types}/>
-                                                        <MealsPreview meals={hotel.meals}/>
+                                                        <MealsPreview meals={hotel.meals} people={hotel.people}/>
+                                                        <FacilitiesPreview facilities={hotel.facilities}/>
                                                     </StepWizard>
-                                                    <Button
-                                                        className={"w-100 register-button"}>{t("MakeReserve")}</Button>
+                                                    {loggedUser && <Button
+                                                        className={"w-100 register-button"}>{t("MakeReserve")}</Button>}
                                                 </Accordion.Body>
                                             </Accordion.Item>
                                         )}
