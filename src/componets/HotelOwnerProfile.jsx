@@ -30,10 +30,10 @@ export default function HotelOwnerProfile({owner, countries}) {
     function splitPhone() {
         let countryCode;
         let phoneNumber;
-        owner.phone && phonecodes.forEach(country => {
-            if (owner.phone.startsWith(country.label)) {
+        newOwner.phone && phonecodes.forEach(country => {
+            if (newOwner.phone.startsWith(country.label)) {
                 countryCode = country.label;
-                phoneNumber = owner.phone.slice(country.label.length);
+                phoneNumber = newOwner.phone.slice(country.label.length);
             }
         });
         return phoneNumber && countryCode ? {countryCode, phoneNumber} : countryCode ? {countryCode: countryCode, phoneNumber: ""} : {countryCode: "+359", phoneNumber: ""};
