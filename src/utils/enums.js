@@ -26,8 +26,8 @@ export const facilitiesNames = [
 
 export const mealTypes = [
     "BREAKFAST",
-    "HALFBORD",
-    "FULLBORD",
+    "HALFBOARD",
+    "FULLBOARD",
     "ALLINCLUSIVE"
 ]
 
