@@ -17,7 +17,7 @@ export default function PasswordChangePage() {
 
     useEffect(() => {
         const url = new URL(window.location.href);
-        const email = url.pathname.slice(16);
+        const email = url.search.slice(7);
         setUserInfo({...userInfo, email: email})
         setLoading(false)
     }, []);
