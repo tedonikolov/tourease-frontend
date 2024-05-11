@@ -277,7 +277,7 @@ export function getAllReservationsViewByHotel({hotelId,date}) {
 }
 
 
-export function getConfirmReservationsForHotel({hotelId, date, status}) {
+export function getReservationsForHotel({hotelId, date, status}) {
     return restInterceptor.get("hotel-service/reservation/worker/getAllReservationsForDate", {
         headers: {
             hotelId: hotelId,

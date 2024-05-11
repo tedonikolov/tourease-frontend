@@ -8,7 +8,7 @@ import {useMutation, useQuery} from "@tanstack/react-query";
 import {
     cancelReservation, confirmReservation,
     createReservationByWorker,
-    getConfirmReservationsForHotel,
+    getReservationsForHotel,
 } from "../hooks/hotel";
 import CustomTable from "./CustomTable";
 import NoDataComponent from "./NoDataComponent";
@@ -89,7 +89,7 @@ export default function Reservations({status, fromDate, toDate}) {
             hotelId: filter.hotelId,
             status: filter.status
         }],
-        queryFn: () => getConfirmReservationsForHotel(filter),
+        queryFn: () => getReservationsForHotel(filter),
         enabled: filter.hotelId != null && filter.date !== "Invalid Date",
     })
 
@@ -182,7 +182,7 @@ export default function Reservations({status, fromDate, toDate}) {
                                                              workerName,
                                                              status
                                                          }) =>
-                                    [reservationNumber, dayjs(createdDate).format("DD-MM-YYYY"), room.name, peopleCount, dayjs(checkIn).format("DD-MM-YYYY"), dayjs(checkOut).format("DD-MM-YYYY"),
+                                    [reservationNumber, dayjs(createdDate).format("DD-MM-YYYY"), room ? room.name : " ", peopleCount, dayjs(checkIn).format("DD-MM-YYYY"), dayjs(checkOut).format("DD-MM-YYYY"),
                                         nights, price + " " + (currency != null ? currency : ""), customers.map(customer => customer.fullName), workerName.split(" ")[0],
                                         filter.status === "CANCELLED" ? t(status) : null])
                             }}
@@ -206,7 +206,7 @@ export default function Reservations({status, fromDate, toDate}) {
                             {reservation && <ReservationInfo
                                 reservation={reservation} setShowReservation={setReservation}
                                 setFilter={setFilter} room={reservation.room} fromDate={fromDate} toDate={toDate}
-                                filter={{...filter, roomId: filter.roomId ? filter.roomId : reservation.room.id}}/>}
+                                filter={{...filter, roomId: filter.roomId ? filter.roomId : reservation.room && reservation.room.id}}/>}
                         </Modal.Body>
                     </Modal>
                     <Modal show={showNewReservation} onHide={() => {
