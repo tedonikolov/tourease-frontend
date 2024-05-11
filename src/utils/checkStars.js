@@ -39,7 +39,18 @@ export default function checkStars(stars) {
 }
 
 export function checkRating(rating) {
-    if (rating < 0.9) {
+    if(rating===null) {
+        return <div><FontAwesomeIcon color='grey' icon={faStar}/>
+            <FontAwesomeIcon color='grey' icon={faStar}/>
+            <FontAwesomeIcon color='grey' icon={faStar}/>
+            <FontAwesomeIcon color='grey' icon={faStar}/>
+            <FontAwesomeIcon color='grey' icon={faStar}/>
+            <FontAwesomeIcon color='grey' icon={faStar}/>
+            <FontAwesomeIcon color='grey' icon={faStar}/>
+            <FontAwesomeIcon color='grey' icon={faStar}/>
+            <FontAwesomeIcon color='grey' icon={faStar}/>
+            <FontAwesomeIcon color='grey' icon={faStar}/></div>;
+    } else if (rating < 0.9) {
         return <div><FontAwesomeIcon color='blue' icon={faStarHalf}/>
             <FontAwesomeIcon color='grey' icon={faStar}/>
             <FontAwesomeIcon color='grey' icon={faStar}/>
