@@ -4,13 +4,14 @@ import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 
-export default function CustomDatePicker({selectedDate, setValue, name, label, minDate, disabled=false, disabledDates}) {
+export default function CustomDatePicker({selectedDate, setValue, name, label, minDate, maxDate, disabled=false, disabledDates}) {
     return (
         <div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                     className={'mt-4'}
                     minDate={minDate}
+                    maxDate={maxDate}
                     label={label}
                     value={selectedDate && dayjs(selectedDate)}
                     onChange={(date) => {
