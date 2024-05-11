@@ -219,6 +219,7 @@
     "successPayment": "Успешно плащане",
     "successBill": "Успешно добавена сметка",
     "updateReservation": "Променена резервация",
+    "createdReservation": "Успешно създадена резервация, може да проверите статуса й в меню 'Резервации'",
     "roomStatus": "Статус на стая",
     "reservations": "Резервации",
     "Reservations": "Резервации",
@@ -360,7 +361,8 @@
     "Meal exist": "Вече са въведени данни за това изхранване!",
     "Room exist": "Не може да дублирате номера на стаята!",
     "Invalid token": "Тази страница не е достъпна!",
-    "Room is already reserved": "Стаята е вече резервирана за този период!"
+    "Room is already reserved": "Стаята е вече резервирана за този период!",
+    "Invalid user personal info": "Невалидни лични данни!"
   },
   "countries": {
     "Afghanistan": "Афганистан",

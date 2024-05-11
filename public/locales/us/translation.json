@@ -220,6 +220,7 @@
     "successPayment": "Successfully marked as paid",
     "successBill": "Successfully created bill",
     "updateReservation": "Updated reservation",
+    "createdReservation": "Reservation created, can check status in reservations tab",
     "roomStatus": "Room status",
     "reservations": "Reservations",
     "Reservations": "Reservations",
@@ -360,7 +361,8 @@
     "Meal exist": "Meal already exist!",
     "Can't change meal": "Can't change meal!",
     "Room exist": "Room number exist!",
-    "Invalid token": "This page does not exist!"
+    "Invalid token": "This page does not exist!",
+    "Invalid user personal info": "Invalid personal info"
   },
   "countries": {
     "Afghanistan": "Afghanistan",

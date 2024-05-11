@@ -6,7 +6,7 @@ import React, {createRef, useCallback, useContext, useEffect, useRef, useState} 
 import {SideBarContext} from "../context/SideBarContext";
 import GoogleMapReact from "google-map-react";
 import {useQuery} from "@tanstack/react-query";
-import {Accordion, Button, Image} from "react-bootstrap";
+import {Accordion, Button, Image, Modal} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHandPointDown} from "@fortawesome/free-solid-svg-icons";
 import checkStars, {checkRating} from "../utils/checkStars";
@@ -22,6 +22,7 @@ import NoDataComponent from "../componets/NoDataComponent";
 import {ScaleLoader} from "react-spinners";
 import FacilitiesPreview from "../componets/FacilitiesPreview";
 import {AuthContext} from "../context/AuthContext";
+import MakeReservationForClient from "../componets/MakeReservationForClient";
 
 export default function MainRegularPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
@@ -35,6 +36,7 @@ export default function MainRegularPage() {
     const [pageNumber, setPageNumber] = useState(1);
     const [hotels, setHotels] = useState([]);
     const [activeHotelId, setActiveHotelId] = useState();
+    const [hotel, setHotel] = useState();
 
     const accordionItemRefs = useRef({});
     hotels.forEach(hotel => {
@@ -163,10 +165,10 @@ export default function MainRegularPage() {
                                                                 <h5 className={"d-flex"}>{hotel.name}</h5>
                                                             </div>
                                                             <div className={""}>
-                                                                <div className={"d-flex justify-content-between"}>
+                                                                {hotel.rating && <div className={"d-flex justify-content-between"}>
                                                                     <div>{t("rating") + ": " + hotel.rating}</div>
                                                                     <div>({hotel.numberOfRates})</div>
-                                                                </div>
+                                                                </div>}
                                                                 <div
                                                                     className={"align-self-end"}>{checkRating(hotel.rating)}</div>
                                                             </div>
@@ -193,7 +195,7 @@ export default function MainRegularPage() {
                                                     <StepWizard
                                                         className=''
                                                         nav={<CustomStepWizardNav
-                                                            steps={[t('Room types'), t('Meal types'),t('Facilities')]}/>}
+                                                            steps={[t('Room types'), t('Meal types'), hotel.facilities.length > 0 && t('Facilities')]}/>}
                                                         transitions={{
                                                             enterRight: '',
                                                             enterLeft: '',
@@ -203,9 +205,10 @@ export default function MainRegularPage() {
                                                     >
                                                         <TypesPreview types={hotel.types}/>
                                                         <MealsPreview meals={hotel.meals} people={hotel.people}/>
-                                                        <FacilitiesPreview facilities={hotel.facilities}/>
+                                                        {hotel.facilities.length > 0 && <FacilitiesPreview facilities={hotel.facilities}/>}
                                                     </StepWizard>
-                                                    {loggedUser && <Button
+                                                    {loggedUser &&
+                                                        <Button onClick={() => setHotel(hotel)}
                                                         className={"w-100 register-button"}>{t("MakeReserve")}</Button>}
                                                 </Accordion.Body>
                                             </Accordion.Item>
@@ -243,6 +246,17 @@ export default function MainRegularPage() {
                     </div>
                 </div>
             </div>
+            <Modal show={hotel} onHide={() => {
+                setHotel(null)
+            }} size={"lg"}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{t("Reservation")}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <MakeReservationForClient
+                        hotel={hotel} setHotel={setHotel}/>
+                </Modal.Body>
+            </Modal>
         </div>
     )
 }
