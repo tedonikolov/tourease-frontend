@@ -173,6 +173,8 @@ export default function MakeReservationForClient({
         newValue ? setMealId(newValue.value) : setMealId(null);
     }
 
+    const disabled = disabledDates && disabledDates.filter((date) => dayjs(date).isAfter(dayjs(reservationInfo.checkIn)) && dayjs(date).isBefore(dayjs(reservationInfo.checkOut))).length > 0;
+
     return (
         reservationInfo && <div className={'d-flex'}>
             <Form id={'reservationCreate'} onSubmit={saveReservation}>
@@ -223,7 +225,8 @@ export default function MakeReservationForClient({
                         label={t("Currency")} name={"currency"}
                         setObjectValue={setReservationInfo}
                         defaultValue={reservationInfo.currency}/></div>
-                        <Button type={'submit'} className={'register-button'}>
+                    {disabled && <p className={'text-danger'}>{t("Not available")}</p>}
+                        <Button type={'submit'} className={'register-button'} disabled={disabled}>
                             {t("Reserve")}</Button>
                 </div>
             </Form>

@@ -255,7 +255,8 @@
     "No search by": "No hotels found for your searching criteria",
     "Loading": "Loading",
     "Free": "Free",
-    "MissingPersonalInfo": "Enter first personal information"
+    "MissingPersonalInfo": "Enter first personal information",
+    "Not available": "Not available for this dates"
   },
   "table": {
     "User": "User",

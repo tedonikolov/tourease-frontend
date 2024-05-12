@@ -388,7 +388,7 @@ export default function ReservationInfo({
                         options={typesOptions} defaultValue={typeId} handleSelect={handleSelectType}
                         label={t("Type")} required={false}
                         disabled={reservation.id != 0 && reservationInfo.status !== "PENDING" && permission !== Manager}/>}
-                    {rooms && typeId && <CustomSelect
+                    {rooms && typeId && <CustomSelect required={false}
                         options={(room ? [...rooms, room] : rooms).sort((a, b) => a.name.localeCompare(b.name)).map((room) => {
                             return {value: room.id, label: room.name}
                         })}
