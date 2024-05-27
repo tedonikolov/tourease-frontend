@@ -60,3 +60,35 @@ export function createReservationByWorker(userId, reservationInfo) {
             },
         });
 }
+
+export function getReservations(userId, pageNumber, size) {
+    return restInterceptor.get("core-service/reservation/getReservations", {
+        headers: {
+            userId: userId,
+        },
+        params: {
+            page: pageNumber,
+            size: size,
+        },
+    });
+}
+
+export function cancelReservation(reservationId) {
+    return restInterceptor.put("core-service/reservation/cancelReservation", {},{
+        headers: {
+            reservationId: reservationId,
+        },
+    });
+}
+
+export function giveRating(rating) {
+    return restInterceptor.post("core-service/rating/rateHotel", {
+        hotelId: rating.hotelId,
+        rating: rating.rate,
+        comment: rating.comment,
+    },{
+        headers: {
+            reservationId: rating.reservationId,
+        },
+    });
+}

@@ -8,7 +8,7 @@ import {
     faCogs, faGripHorizontal,
     faHistory,
     faHotel, faHouseUser,
-    faKey, faSearch,
+    faKey, faSearch, faTasks,
     faUser, faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import NavLink from "./NavLink";
@@ -36,6 +36,7 @@ export default function Navigation () {
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Regular]}>
                     <NavLink path='/' label={t('Hotels')} icon={faSearch} />
+                    <NavLink path='/regular/reservations' label={t('reservations')} icon={faTasks} />
                     <NavLink path='/regular/profile' label={t('profile')} icon={faUser} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Owner]}>

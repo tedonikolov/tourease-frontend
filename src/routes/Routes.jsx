@@ -23,6 +23,7 @@ import MealsPage from "../pages/MealsPage";
 import HotelPage from "../pages/HotelPage";
 import {Admin, Manager, Owner, Receptionist, Regular} from "../utils/Role";
 import MainRegularPage from "../pages/MainRegularPage";
+import UserReservationsPage from "../pages/UserReservationsPage";
 
 export const Router = () => {
     return (
@@ -45,6 +46,7 @@ export const Router = () => {
                 >
                     <Route path={'/'} element={<MainRegularPage/>}/>
                     <Route path={'/regular/profile'} element={<RegularProfilePage/>}/>
+                    <Route path={'/regular/reservations'} element={<UserReservationsPage/>}/>
                 </Route>
                 <Route
                     path={'/'}

@@ -8,7 +8,7 @@ import GoogleMapReact from "google-map-react";
 import {useQuery} from "@tanstack/react-query";
 import {Accordion, Button, Image, Modal} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHandPointDown} from "@fortawesome/free-solid-svg-icons";
+import {faLocationDot} from "@fortawesome/free-solid-svg-icons";
 import checkStars, {checkRating} from "../utils/checkStars";
 import Flags from "country-flag-icons/react/3x2";
 import {countries} from "../utils/options";
@@ -82,14 +82,14 @@ export default function MainRegularPage() {
         }
     }, [data]);
 
-    const Marker = () => (
+    const Marker = ({id}) => (
         <div style={{
             zIndex: 100,
-            color: 'red',
+            color: id === activeHotelId ? 'green' : 'red', // change color to green if id is 2, otherwise keep it red
             transform: 'translate(-50%, -50%)',
             fontSize: '25px'
         }}>
-            <FontAwesomeIcon icon={faHandPointDown}/>
+            <FontAwesomeIcon icon={faLocationDot}/>
         </div>
     );
 
@@ -237,7 +237,9 @@ export default function MainRegularPage() {
                                         onChange={({zoom}) => setZoom(() => zoom)}
                         >
                             {hotels && hotels.map((hotel) =>
-                                <Marker key={hotel.hotelId}
+                                <Marker
+                                        id={hotel.hotelId}
+                                        key={hotel.hotelId}
                                         lat={hotel.location.latitude}
                                         lng={hotel.location.longitude}
                                 />

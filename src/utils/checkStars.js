@@ -39,7 +39,7 @@ export default function checkStars(stars) {
 }
 
 export function checkRating(rating) {
-    if(rating===null) {
+    if(rating===undefined) {
         return <div><FontAwesomeIcon color='grey' icon={faStar}/>
             <FontAwesomeIcon color='grey' icon={faStar}/>
             <FontAwesomeIcon color='grey' icon={faStar}/>
@@ -62,7 +62,7 @@ export function checkRating(rating) {
             <FontAwesomeIcon color='grey' icon={faStar}/>
             <FontAwesomeIcon color='grey' icon={faStar}/></div>;
     } else if (rating < 1.4) {
-        return <div>FontAwesomeIcon color='blue' icon={faStar}/>
+        return <div><FontAwesomeIcon color='blue' icon={faStar}/>
             <FontAwesomeIcon color='grey' icon={faStar}/>
             <FontAwesomeIcon color='grey' icon={faStar}/>
             <FontAwesomeIcon color='grey' icon={faStar}/>
@@ -98,9 +98,6 @@ export function checkRating(rating) {
         return <div><FontAwesomeIcon color='blue' icon={faStar}/>
             <FontAwesomeIcon color='blue' icon={faStar}/>
             <FontAwesomeIcon color='blue' icon={faStarHalf}/>
-            <FontAwesomeIcon color='grey' icon={faStar}/>
-            <FontAwesomeIcon color='grey' icon={faStar}/>
-            <FontAwesomeIcon color='grey' icon={faStar}/>
             <FontAwesomeIcon color='grey' icon={faStar}/>
             <FontAwesomeIcon color='grey' icon={faStar}/>
             <FontAwesomeIcon color='grey' icon={faStar}/>

@@ -171,6 +171,8 @@
     "END": "Ending/Ended",
     "ENDING": "Ending",
     "FINISHED": "Finished",
+    "APPROVED": "Approved",
+    "PENDING": "Pending",
     "NO_SHOW": "No show",
     "CANCELLED": "Cancelled",
     "Press": "Press",
@@ -220,7 +222,7 @@
     "successPayment": "Successfully marked as paid",
     "successBill": "Successfully created bill",
     "updateReservation": "Updated reservation",
-    "createdReservation": "Reservation created, can check status in reservations tab",
+    "createdReservation": "Reservation created. Can check it status in reservations tab",
     "roomStatus": "Room status",
     "reservations": "Reservations",
     "Reservations": "Reservations",
@@ -256,7 +258,9 @@
     "Loading": "Loading",
     "Free": "Free",
     "MissingPersonalInfo": "Enter first personal information",
-    "Not available": "Not available for this dates"
+    "Not available": "Not available for this dates",
+    "comment": "Comment",
+    "successRated": "Successfully rated"
   },
   "table": {
     "User": "User",
