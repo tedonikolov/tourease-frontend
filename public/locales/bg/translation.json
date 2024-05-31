@@ -175,6 +175,7 @@
     "PENDING": "Чакаща",
     "NO_SHOW": "Непрестигнала",
     "CANCELLED": "Отказана",
+    "SETTLED": "Настанен",
     "Press": "Натиснете",
     "for change status of room":"за промяна на статуса на стаята",
     "Today": "Днес",
@@ -221,7 +222,8 @@
     "successPayment": "Успешно плащане",
     "successBill": "Успешно добавена сметка",
     "updateReservation": "Променена резервация",
-    "createdReservation": "Успешно създадена резервация. Може да проверите статуса й в меню 'Резервации'",
+    "createdReservation": "Успешно създадена резервация.",
+    "checkReservation": "Може да проверите статуса й в меню 'Резервации'",
     "roomStatus": "Статус на стая",
     "reservations": "Резервации",
     "Reservations": "Резервации",
@@ -367,7 +369,9 @@
     "Room exist": "Не може да дублирате номера на стаята!",
     "Invalid token": "Тази страница не е достъпна!",
     "Room is already reserved": "Стаята е вече резервирана за този период!",
-    "Invalid user personal info": "Невалидни лични данни!"
+    "Invalid user personal info": "Невалидни лични данни!",
+    "Expired passport": "Изтекъл паспорт!",
+    "No available rooms": "Няма свободни стаи за този период!"
   },
   "countries": {
     "Afghanistan": "Афганистан",

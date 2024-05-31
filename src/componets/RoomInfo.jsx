@@ -80,7 +80,7 @@ export default function RoomInfo({data, newCustomer, setNewCustomer, filter, pai
                                                                   }) =>
                                     [reservation.reservationNumber, fullName, dayjs(reservation.checkIn).format("DD-MM-YYYY"),
                                         dayjs(reservation.checkOut).format("DD-MM-YYYY"),
-                                        t(reservation.meal.type), t(reservation.status), worker.fullName.split(" ")[0]])
+                                        t(reservation.meal.type), t(reservation.status), worker !=undefined ? worker.fullName.split(" ")[0] : "TourEase"])
                             }}
                         />
                         :
@@ -157,7 +157,7 @@ export default function RoomInfo({data, newCustomer, setNewCustomer, filter, pai
                         </Modal.Header>
                         <Modal.Body>
                             <PaymentInfo payment={payment} customers={data && data.reservation && data.reservation.customers}
-                                         setPaymentId={setPaymentId}/>
+                                         setPaymentId={setPaymentId} reservationNumber={data && data.reservation && data.reservation.reservationNumber}/>
                         </Modal.Body>
                     </Modal>
                 </div>

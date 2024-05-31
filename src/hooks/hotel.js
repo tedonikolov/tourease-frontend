@@ -5,7 +5,7 @@ export function getOwnerByEmail(email) {
     return restInterceptor.get("hotel-service/owner/getOwnerByEmail/" + email);
 }
 
-export function getWorkerByEmail(email){
+export function getWorkerByEmail(email) {
     return restInterceptor.get("hotel-service/hotel/worker/getWorker/" + email);
 }
 
@@ -116,7 +116,7 @@ export function saveType(type) {
         name: type.name,
         price: type.price,
         currency: type.currency,
-        beds: type.beds.map(bed=>bed),
+        beds: type.beds.map(bed => bed),
         hotelId: type.hotelId
     });
 }
@@ -151,11 +151,11 @@ export function reassignWorkerById(id) {
 }
 
 export function changeRoomStatus(roomId) {
-    return restInterceptor.put("hotel-service/hotel/room/changeStatus/"+roomId);
+    return restInterceptor.put("hotel-service/hotel/room/changeStatus/" + roomId);
 }
 
 export function getTakenDaysForRoom(roomId) {
-    return restInterceptor.get("hotel-service/hotel/room/getTakenDaysForRoom",{
+    return restInterceptor.get("hotel-service/hotel/room/getTakenDaysForRoom", {
         headers: {
             id: roomId,
         },
@@ -206,7 +206,7 @@ export function getFreeRoomsForDate({hotelId, date, typeId}) {
 }
 
 export function getTypesForRoom(roomId) {
-    return restInterceptor.get("hotel-service/hotel/type/getTypesByRoomId",{
+    return restInterceptor.get("hotel-service/hotel/type/getTypesByRoomId", {
         headers: {
             roomId: roomId,
         },
@@ -214,7 +214,7 @@ export function getTypesForRoom(roomId) {
 }
 
 export function getTypesForRoomByPeopleCount(hotelId, peopleCount) {
-    return restInterceptor.get("hotel-service/hotel/type/getTypesForPeopleCount",{
+    return restInterceptor.get("hotel-service/hotel/type/getTypesForPeopleCount", {
         params: {
             peopleCount: peopleCount
         },
@@ -225,10 +225,10 @@ export function getTypesForRoomByPeopleCount(hotelId, peopleCount) {
 }
 
 export function getCustomerByPassportId(passportId) {
-    return restInterceptor.get("hotel-service/hotel/customer/getCustomerByPassportId/"+passportId);
+    return restInterceptor.get("hotel-service/hotel/customer/getCustomerByPassportId/" + passportId);
 }
 
-export function getAllPaymentsByCustomersForHotel(customers, hotelId, isPaid) {
+export function getAllPaymentsByCustomersForHotel(customers, hotelId, isPaid, reservationNumber) {
     return restInterceptor.get("hotel-service/hotel/payment/worker/getAllPaymentsByCustomersForHotel",
         {
             params: {
@@ -237,35 +237,40 @@ export function getAllPaymentsByCustomersForHotel(customers, hotelId, isPaid) {
             headers: {
                 customers: customers,
                 hotelId: hotelId,
+                reservationNumber: reservationNumber,
             },
         });
 }
 
-export function createPayment(payment, workerId) {
-    return restInterceptor.post("hotel-service/hotel/payment/worker/createPayment",payment,{
-        headers: {
-            workerId: workerId,
+export function createPayment(payment, workerId, reservationNumber) {
+    return restInterceptor.post("hotel-service/hotel/payment/worker/createPayment", {
+            ...payment,
+            reservationNumber: reservationNumber
         },
-    });
+        {
+            headers: {
+                workerId: workerId,
+            },
+        });
 }
 
 export function markPaymentAsPaid(payment, workerId) {
-    return restInterceptor.put("hotel-service/hotel/payment/worker/markPaymentAsPaid",payment,{
+    return restInterceptor.put("hotel-service/hotel/payment/worker/markPaymentAsPaid", payment, {
         headers: {
             workerId: workerId,
         },
     });
 }
 
-export function deletePaymentById(paymentId,workerId) {
-    return restInterceptor.delete("hotel-service/hotel/payment/worker/deletePaymentById/"+paymentId,{
+export function deletePaymentById(paymentId, workerId) {
+    return restInterceptor.delete("hotel-service/hotel/payment/worker/deletePaymentById/" + paymentId, {
         headers: {
             workerId: workerId,
         },
     });
 }
 
-export function getAllReservationsViewByHotel({hotelId,date}) {
+export function getAllReservationsViewByHotel({hotelId, date}) {
     return restInterceptor.get("hotel-service/reservation/worker/getAllReservationsViewByHotel", {
         headers: {
             hotelId: hotelId,
@@ -291,7 +296,7 @@ export function getReservationsForHotel({hotelId, date, status}) {
 
 
 export function addCustomerToReservation(reservationId, customer) {
-    return restInterceptor.post("hotel-service/reservation/worker/addCustomer", customer,{
+    return restInterceptor.post("hotel-service/reservation/worker/addCustomer", customer, {
         headers: {
             reservationId: reservationId,
         },
@@ -299,7 +304,7 @@ export function addCustomerToReservation(reservationId, customer) {
 }
 
 export function markCheckOut(reservationId) {
-    return restInterceptor.put("hotel-service/reservation/worker/checkOutReservation",null,{
+    return restInterceptor.put("hotel-service/reservation/worker/checkOutReservation", null, {
         headers: {
             reservationId: reservationId,
         },
@@ -307,7 +312,7 @@ export function markCheckOut(reservationId) {
 }
 
 export function cancelReservation(reservationId) {
-    return restInterceptor.put("hotel-service/reservation/worker/cancelReservation",null,{
+    return restInterceptor.put("hotel-service/reservation/worker/cancelReservation", null, {
         headers: {
             reservationId: reservationId,
         },
@@ -315,7 +320,7 @@ export function cancelReservation(reservationId) {
 }
 
 export function confirmReservation(reservationId) {
-    return restInterceptor.put("hotel-service/reservation/worker/confirmReservation",null,{
+    return restInterceptor.put("hotel-service/reservation/worker/confirmReservation", null, {
         headers: {
             reservationId: reservationId,
         },
@@ -327,7 +332,7 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     let offset = moment.tz(new Date(), timeZone).utcOffset();
 
-    let checkOut = moment.tz(reservationInfo.checkOut, timeZone).add(offset,"minutes")
+    let checkOut = moment.tz(reservationInfo.checkOut, timeZone).add(offset, "minutes")
     checkOut.set({
         hour: "12",
         minute: "00",
@@ -335,7 +340,7 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
     });
     checkOut = checkOut.format("YYYY-MM-DDTHH:mm:ssZ");
 
-    let checkIn = moment.tz(reservationInfo.checkIn, timeZone).add(offset,"minutes");
+    let checkIn = moment.tz(reservationInfo.checkIn, timeZone).add(offset, "minutes");
     checkIn.set({
         hour: currentTime.get('hour'),
         minute: currentTime.get('minute'),
@@ -345,7 +350,7 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
 
     return restInterceptor.post("hotel-service/reservation/worker/createReservation",
         {
-            customer:{
+            customer: {
                 fullName: reservationInfo.fullName,
                 phoneNumber: reservationInfo.phoneNumber,
                 passportId: reservationInfo.passportId,
@@ -365,7 +370,7 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
             price: reservationInfo.price,
             currency: reservationInfo.currency,
         }
-        ,{
+        , {
             headers: {
                 userId: workerId,
             },

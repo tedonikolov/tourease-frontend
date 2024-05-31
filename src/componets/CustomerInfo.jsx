@@ -88,7 +88,7 @@ export default function CustomerInfo({reservationId, customer, filter, setCustom
                     <CustomDatePicker label={t('expirationDate')} selectedDate={customerInfo.expirationDate}
                                       name={'expirationDate'} minDate={dayjs()}
                                       setValue={setCustomerInfo}/></div>
-                <CustomPhoneInput type={'text'} value={splitPhone()}
+                <CustomPhoneInput type={'text'} value={splitPhone()} required={false}
                                   label={t('phone')} name={'phoneNumber'} setObjectValue={setCustomerInfo}/>
                 <div className={"d-flex justify-content-between mx-5"}><CustomDatePicker label={t('Date of birth')}
                                                                                          selectedDate={customerInfo.birthDate}

@@ -175,6 +175,7 @@
     "PENDING": "Pending",
     "NO_SHOW": "No show",
     "CANCELLED": "Cancelled",
+    "SETTLED": "Accommodated",
     "Press": "Press",
     "for change status of room": "to change status of room",
     "Today": "Today",
@@ -222,7 +223,8 @@
     "successPayment": "Successfully marked as paid",
     "successBill": "Successfully created bill",
     "updateReservation": "Updated reservation",
-    "createdReservation": "Reservation created. Can check it status in reservations tab",
+    "createdReservation": "Reservation created.",
+    "checkReservation": "Can check its status in reservations tab",
     "roomStatus": "Room status",
     "reservations": "Reservations",
     "Reservations": "Reservations",
@@ -367,7 +369,9 @@
     "Can't change meal": "Can't change meal!",
     "Room exist": "Room number exist!",
     "Invalid token": "This page does not exist!",
-    "Invalid user personal info": "Invalid personal info"
+    "Invalid user personal info": "Invalid personal info!",
+    "Expired passport": "Passport has expired!",
+    "No available rooms": "No available rooms!"
   },
   "countries": {
     "Afghanistan": "Afghanistan",

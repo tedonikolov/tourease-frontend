@@ -20,7 +20,12 @@ export default function MakeReservationForClient({
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {loggedUser} = useContext(AuthContext);
     const {currency, handleRate, currencies} = useContext(CurrencyContext);
-    const [oldCurrency, setOldCurrency] = useState(null);
+    const [oldCurrency, setOldCurrency] = useState({
+        pricePerNight: 0,
+        priceForMeal: 0,
+        price: 0,
+        currency: currency
+    });
     const [reservationInfo, setReservationInfo] = useState({
         peopleCount: hotel && hotel.people ? hotel.people : 1,
         checkIn: dayjs(new Date()).format('YYYY-MM-DD'),
@@ -47,7 +52,7 @@ export default function MakeReservationForClient({
     const {mutate} = useMutation({
         mutationFn: () => createReservationByWorker(loggedUser.id, {...reservationInfo, hotelId: hotel.hotelId}),
         onSuccess: () => {
-            toast.success(<CustomToastContent content={[t("createdReservation")]}/>);
+            toast.success(<CustomToastContent content={[t("createdReservation"), t("checkReservation")]}/>);
             setHotel(null);
         }
     })
@@ -72,7 +77,7 @@ export default function MakeReservationForClient({
     useEffect(() => {
         if (notAvailableDates) {
             let days = notAvailableDates.filter((day) => {
-                return dayjs(day).isAfter(dayjs(reservationInfo.checkIn).add(1, 'day').endOf('day'))
+                return dayjs(day).isAfter(dayjs(reservationInfo.checkIn).add(-1, 'day').endOf('day'))
             })
             setDisabledDates(() => days);
         }
@@ -173,7 +178,9 @@ export default function MakeReservationForClient({
         newValue ? setMealId(newValue.value) : setMealId(null);
     }
 
-    const disabled = disabledDates && disabledDates.filter((date) => dayjs(date).isAfter(dayjs(reservationInfo.checkIn)) && dayjs(date).isBefore(dayjs(reservationInfo.checkOut))).length > 0;
+    const disabled = ( disabledDates && disabledDates.filter((date) => dayjs(date).add(1, 'day').endOf('day').isAfter(dayjs(reservationInfo.checkIn))
+        && dayjs(date).add(-1, 'day').endOf('day').isBefore(dayjs(reservationInfo.checkOut))).length > 0 ) ||
+     reservationInfo.checkIn === reservationInfo.checkOut;
 
     return (
         reservationInfo && <div className={'d-flex'}>

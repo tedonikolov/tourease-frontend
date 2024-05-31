@@ -14,6 +14,7 @@ export default function CustomPhoneInput({
                                              setValue,
                                              error,
                                              errorText,
+                                             required=true,
                                          }) {
     const [t] = useTranslation("translation", {keyPrefix: "common"})
     const [countryNumber, setCountryNumber] = useState(value && value.countryCode);
@@ -66,7 +67,7 @@ export default function CustomPhoneInput({
                         value={number}
                         disabled={disabled}
                         onChange={handleInputChange}
-                        required
+                        required = {required}
                     />
                 </div>
             </div>

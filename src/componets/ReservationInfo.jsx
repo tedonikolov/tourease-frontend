@@ -30,7 +30,8 @@ export default function ReservationInfo({
                                             setShowReservation,
                                             room,
                                             fromDate,
-                                            toDate
+                                            toDate,
+                                            newPrice,
                                         }) {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {loggedUser,permission} = useContext(AuthContext);
@@ -41,12 +42,12 @@ export default function ReservationInfo({
         ...reservation,
         peopleCount: reservation.peopleCount ?? 1,
         pricePerNight: 0,
-        priceForMeal: 1,
-        price: 0,
+        priceForMeal: 0,
+        price: reservation.price,
         discount: 0,
         sub: 0,
         priceWithDiscount: 0,
-        currency: currency
+        currency: reservation.currency ? reservation.currency : currency,
     });
     const [typesOptions, setTypesOptions] = useState([]);
     const [typeId, setTypeId] = useState();
@@ -58,18 +59,28 @@ export default function ReservationInfo({
             ...reservation,
             peopleCount: reservation.peopleCount ?? 1,
             pricePerNight: 0,
-            priceForMeal: 1,
-            price: 0,
+            priceForMeal: 0,
+            price: reservation.price,
             discount: 0,
             sub: 0,
             priceWithDiscount: 0,
-            currency: currency
+            currency: reservation.currency ? reservation.currency : currency,
+            typeId: reservation.type && reservation.type.id,
+            mealId: reservation.meal && reservation.meal.id,
+        });
+        setOldCurrency((prev) => {
+            return {
+                ...prev,
+                pricePerNight: 0,
+                priceForMeal: 0,
+                currency: reservation.currency ? reservation.currency : currency,
+            }
         });
         if (reservation.type) {
-            setTypeId(reservation.type.id)
+            setTypeId(reservation.type.id);
         }
         if (reservation.meal) {
-            setMealId(reservation.meal.id)
+            setMealId(reservation.meal.id);
         }
     }, [reservation]);
 
@@ -147,7 +158,7 @@ export default function ReservationInfo({
                 return dayjs(day).isAfter(dayjs(reservationInfo.checkIn).add(1, 'day').endOf('day'))
             })
             reservationInfo.id ? setDisabledDates(() => days.filter((day) => {
-                return !(dayjs(day).isAfter(dayjs(reservationInfo.checkIn).startOf('day')) && dayjs(day).isBefore(dayjs(reservationInfo.checkOut).startOf('day')))
+                return !(dayjs(day).isAfter(dayjs(reservationInfo.checkIn).startOf('day')) && dayjs(day).isBefore(dayjs(reservationInfo.checkOut).add(1, 'day').startOf('day')))
             })) : setDisabledDates(() => days);
         }
     }, [takenDaysForRoom]);
@@ -161,72 +172,102 @@ export default function ReservationInfo({
     }, [types]);
 
     useEffect(() => {
-        if (typeId) {
-            if (types) {
-                let type = types.find((type) => type.id === typeId);
+        if(reservation.type==null || (reservation.type.id !== typeId && typeId) || newPrice ||
+            reservation.peopleCount!=reservationInfo.peopleCount || reservation.nights!=reservationInfo.nights) {
+            if (typeId) {
+                if (types) {
+                    let type = types.find((type) => type.id === typeId);
+                    if(type) {
+                        setReservationInfo((prev) => ({
+                            ...prev,
+                            typeId: type.id,
+                        }))
+                        if(reservation.peopleCount!==reservationInfo.peopleCount || reservation.nights!==reservationInfo.nights) {
+                            setOldCurrency((prev) => {
+                                return {
+                                    ...prev,
+                                    currency: type.currency,
+                                    pricePerNight: type.price,
+                                }
+                            });
+                            setReservationInfo((prev) => ({
+                                ...prev,
+                                pricePerNight: type.price,
+                                currency: type.currency
+                            }))
+                        }
+                    }
+                }
+            } else {
                 setReservationInfo((prev) => ({
                     ...prev,
-                    typeId: type.id,
-                    pricePerNight: type.price,
-                    currency: type.currency
+                    typeId: null,
+                    pricePerNight: 0,
+                    currency: currency
                 }))
                 setOldCurrency((prev) => {
                     return {
                         ...prev,
-                        currency: type.currency,
-                        pricePerNight: type.price,
+                        currency: currency,
+                        pricePerNight: 0,
                     }
                 });
             }
-        } else {
+        } else if (reservation.peopleCount==reservationInfo.peopleCount && reservation.nights==reservationInfo.nights){
             setReservationInfo((prev) => ({
                 ...prev,
-                typeId: null,
+                price: reservation.price,
                 pricePerNight: 0,
-                currency: currency
-            }))
+                priceForMeal: 0,
+                currency: reservation.currency
+            }));
             setOldCurrency((prev) => {
                 return {
                     ...prev,
-                    currency: currency,
+                    price: reservation.price,
                     pricePerNight: 0,
+                    priceForMeal: 0,
+                    currency: reservation.currency
                 }
             });
         }
-    }, [typeId,types]);
+    }, [typeId, types, reservationInfo.nights]);
 
     useEffect(() => {
-        if (mealId) {
-            let meal = workerHotel.meals.find((meal) => meal.id === mealId);
-            setReservationInfo((prev) => ({
-                ...prev,
-                mealId: meal.id,
-                priceForMeal: meal.price,
-                currency: meal.currency
-            }))
-            setOldCurrency((prev) => {
-                return {
+        if(reservation.meal==null || (reservation.meal.id !== mealId && mealId ) || newPrice ||
+            reservation.peopleCount!=reservationInfo.peopleCount || reservation.nights!=reservationInfo.nights) {
+            if (mealId) {
+                let meal = workerHotel.meals.find((meal) => meal.id === mealId);
+                setReservationInfo((prev) => ({
                     ...prev,
-                    currency: meal.currency,
+                    mealId: meal.id,
                     priceForMeal: meal.price,
-                }
-            });
-        } else {
-            setReservationInfo((prev) => ({
-                ...prev,
-                meal: null,
-                priceForMeal: 0,
-                currency: currency
-            }))
-            setOldCurrency((prev) => {
-                return {
+                    currency: meal.currency
+                }))
+                setOldCurrency((prev) => {
+                    return {
+                        ...prev,
+                        currency: meal.currency,
+                        priceForMeal: meal.price,
+                    }
+                });
+            } else {
+                setReservationInfo((prev) => ({
                     ...prev,
-                    currency: currency,
-                    priceForMeal: 0
-                }
-            });
+                    meal: null,
+                    priceForMeal: 0,
+                    currency: currency
+                }))
+                setOldCurrency((prev) => {
+                    return {
+                        ...prev,
+                        currency: currency,
+                        priceForMeal: 0
+                    }
+                });
+            }
         }
-    }, [mealId]);
+    }, [mealId, reservationInfo.nights, reservationInfo.peopleCount]);
 
     useEffect(() => {
         if(oldCurrency && reservationInfo.currency === oldCurrency.currency) {
@@ -241,6 +282,18 @@ export default function ReservationInfo({
                 }
             });
         }
+        if (reservationInfo.pricePerNight ===0 || reservationInfo.peopleCount === 0 || reservationInfo.priceForMeal === 0 || reservationInfo.nights === 0) {
+            setReservationInfo((prev) => ({
+                ...prev,
+                price: reservation.price
+            }))
+            setOldCurrency((prev) => {
+                return {
+                    ...prev,
+                    price: reservation.price
+                }
+            });
+        }
     }, [reservationInfo.pricePerNight, reservationInfo.peopleCount, reservationInfo.priceForMeal, reservationInfo.nights]);
 
     useEffect(() => {
@@ -248,6 +301,12 @@ export default function ReservationInfo({
             setReservationInfo((prev) => ({
                 ...prev,
                 checkIn: filter.date
+            }))
+        }
+        if (!reservationInfo.checkOut) {
+            setReservationInfo((prev) => ({
+                ...prev,
+                checkOut: dayjs(filter.date).add(1, 'day').format("YYYY-MM-DD")
             }))
         }
         if (reservationInfo.checkIn && reservationInfo.checkOut) {
@@ -361,12 +420,12 @@ export default function ReservationInfo({
                     />}
                     <div className={"d-flex"}>
                         <CustomDatePicker label={t('checkIn')}
-                                          minDate={reservation.id == null ? dayjs(new Date()) : dayjs(reservation.checkIn)}
+                                          minDate={reservation.id === 0 ? dayjs(new Date()) : dayjs(reservation.checkIn)}
                                           selectedDate={reservationInfo.checkIn}
                                           name={'checkIn'}
                                           setValue={setReservationInfo}
                                           disabledDates={disabledDates}
-                                          disabled={reservation.id != null && (reservationInfo.status !== "PENDING" ||
+                                          disabled={reservation.id !== 0 && (reservationInfo.status !== "PENDING" ||
                                               reservationInfo.status !== "CONFIRMED")}
                         />
                         <CustomDatePicker label={t('checkOut')}
@@ -386,7 +445,7 @@ export default function ReservationInfo({
                                                         type={"number"} value={reservationInfo.peopleCount}/>
                     {typesOptions && <CustomSelect
                         options={typesOptions} defaultValue={typeId} handleSelect={handleSelectType}
-                        label={t("Type")} required={false}
+                        label={t("Type")} required={true}
                         disabled={reservation.id != 0 && reservationInfo.status !== "PENDING" && permission !== Manager}/>}
                     {rooms && typeId && <CustomSelect required={false}
                         options={(room ? [...rooms, room] : rooms).sort((a, b) => a.name.localeCompare(b.name)).map((room) => {
