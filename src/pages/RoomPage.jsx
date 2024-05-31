@@ -71,16 +71,16 @@ export default function RoomPage() {
     )
 
     const {data: unPaidPayments} = useQuery({
-        queryKey: ["get unpaid payments", data && data.reservation && data.reservation.customers],
-        queryFn: () => getAllPaymentsByCustomersForHotel(data.reservation.customers.map((customer) => customer.id), workerHotel.id, false),
+        queryKey: ["get unpaid payments", data && data.reservation && data.reservation.customers, data && data.reservation && data.reservation.reservationNumber],
+        queryFn: () => getAllPaymentsByCustomersForHotel(data.reservation.customers.map((customer) => customer.id), workerHotel.id, false, data.reservation.reservationNumber),
         enabled: data!=null && data.reservation!=null && data.reservation.customers.length > 0,
         retry: false,
         staleTime: 5000
     })
 
     const {data: paidPayments} = useQuery({
-        queryKey: ["get paid payments", data && data.reservation && data.reservation.customers],
-        queryFn: () => getAllPaymentsByCustomersForHotel(data.reservation.customers.map((customer) => customer.id), workerHotel.id, true),
+        queryKey: ["get paid payments", data && data.reservation && data.reservation.customers, data && data.reservation && data.reservation.reservationNumber],
+        queryFn: () => getAllPaymentsByCustomersForHotel(data.reservation.customers.map((customer) => customer.id), workerHotel.id, true, data.reservation.reservationNumber),
         enabled: data!=null && data.reservation!=null && data.reservation.customers.length > 0,
         retry: false,
         staleTime: 5000
@@ -171,7 +171,7 @@ export default function RoomPage() {
                             <Modal.Body>
                                 <ReservationInfo
                                     reservation={data && data.reservation ? data.reservation : defaultReservation}
-                                    filter={filter} setShowReservation={setShowReservation}/>
+                                    filter={filter} setShowReservation={setShowReservation} newPrice={true}/>
                             </Modal.Body>
                         </Modal>
                         <Modal show={showNewReservation} onHide={() => {
@@ -210,7 +210,7 @@ export default function RoomPage() {
                             </Modal.Header>
                             <Modal.Body>
                                 <PaymentInfo payment={{...defaultPayment,currency:currency}} customers={data && data.reservation && data.reservation.customers}
-                                                setShowPayment={setShowPayment}/>
+                                                setShowPayment={setShowPayment} reservationNumber={data && data.reservation && data.reservation.reservationNumber}/>
                             </Modal.Body>
                         </Modal>
                     </div>

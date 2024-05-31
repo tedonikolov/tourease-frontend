@@ -15,7 +15,7 @@ import {AuthContext} from "../context/AuthContext";
 import {HotelContext} from "../context/HotelContext";
 import {CurrencyContext} from "../context/CurrencyContext";
 
-export default function PaymentInfo({payment, customers, setPaymentId, setShowPayment}) {
+export default function PaymentInfo({payment, customers, setPaymentId, setShowPayment, reservationNumber}) {
     const [t] = useTranslation("translation", {keyPrefix: "common"});
     const {loggedUser} = useContext(AuthContext);
     const {workerHotel} = useContext(HotelContext);
@@ -76,7 +76,7 @@ export default function PaymentInfo({payment, customers, setPaymentId, setShowPa
     })
 
     const {mutate: newPayment} = useMutation({
-        mutationFn: () => createPayment(paymentInfo, loggedUser.id),
+        mutationFn: () => createPayment(paymentInfo, loggedUser.id, reservationNumber),
         onSuccess: () => {
             queryClient.resetQueries({queryKey: ["get unpaid payments", customers]});
             queryClient.resetQueries({queryKey: ["get paid payments", customers]});
