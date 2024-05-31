@@ -12,7 +12,6 @@ import NoDataComponent from "../componets/NoDataComponent";
 import {Button, Card, CardBody, Modal, Spinner} from "react-bootstrap";
 import CustomPageSizeSelector from "../componets/CustomPageSizeSelector";
 import checkStars, {checkRating} from "../utils/checkStars";
-import {countries} from "../utils/options";
 import {Flag} from "@mui/icons-material";
 import dayjs from "dayjs";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -34,8 +33,8 @@ export default function UserReservationsPage() {
     });
 
     const {data: reservations, isLoading, isPending} = useQuery({
-        queryKey: ["get reservations for user", loggedUser.id],
-        queryFn: () => getReservations(loggedUser.id, 1, 100),
+        queryKey: ["get reservations for user", loggedUser.id, pagination.page, pagination.pageSize],
+        queryFn: () => getReservations(loggedUser.id, pagination.page, pagination.pageSize),
         retry: false,
         staleTime: 5000
     });
@@ -83,9 +82,9 @@ export default function UserReservationsPage() {
                 {!isLoading && !isPending ? reservations.items.length > 0 ?
                             reservations.items.map((reservation) =>
                                 <Card
-                                    key={reservation.id} className='w-100 py-0' eventKey={reservation.id}>
+                                    key={reservation.id} className='w-100 py-0'>
                                     <CardBody aria-disabled={true} className={` 
-                                        ${reservation.status === 'PENDING' ? 'warning' : reservation.status === 'FINISHED' ? 'info' : reservation.status === 'CANCELLED' ? 'danger' : 'success'}`}
+                                        ${reservation.status === 'PENDING' ? 'warning' : reservation.status === 'FINISHED' ? 'info' : reservation.status === 'CANCELLED' || reservation.status === 'NO_SHOW' ? 'danger' : 'success'}`}
                                     >
                                         <div className={"d-flex w-100 justify-content-between align-items-center"}>
                                             <div className={"d-flex flex-column w-70"}>
@@ -105,26 +104,25 @@ export default function UserReservationsPage() {
                                                 </div>
                                             </div>
                                             <div className={"w-60 align-content-center"}>
-                                                {countries.find((country) => country.value === reservation.hotel.country) &&
-                                                    <Flag
-                                                        countryCode={reservation.hotel && countries.find((country) => country.value === reservation.hotel.country).code}/>}
+                                                <Flag/>
                                                 {" " + reservation.hotel.country + ", " + reservation.hotel.city + ", " + reservation.hotel.address}
                                             </div>
                                             <div className={"align-self-center w-60 mx-2"}>
                                                 <div>
-                                                    <h6>{t("status") + ": "}{t(reservation.status === "CONFIRMED" ? "APPROVED" : reservation.status)}</h6>
+                                                    <h6>{t("status") + ": "}{t(reservation.status === "CONFIRMED" ? "APPROVED" : reservation.status  === "ACCOMMODATED" ? "SETTLED" : reservation.status)}</h6>
                                                 </div>
                                                 <div>
                                                     <h6>{t("price") + ": " + reservation.price + " " + reservation.currency}</h6>
                                                 </div>
                                             </div>
                                             <div className={"align-self-center mx-3"}>
-                                                {reservation.status !== "FINISHED" ?
-                                                    <Button className={"delete-button"} disabled={reservation.status === "CANCELLED" || reservation.status === "FINISHED"} onClick={()=>cancel(reservation.id)}>
+                                                {reservation.status !== "FINISHED" && reservation.status !== "ACCOMMODATED" ?
+                                                    <Button className={"delete-button"} disabled={reservation.status === "CANCELLED" || reservation.status === "NO_SHOW"} onClick={()=>cancel(reservation.id)}>
                                                         <FontAwesomeIcon icon={faXmark}/>
                                                     </Button>
                                                     :
-                                                    <Button className={"icon-button"} onClick={()=>{setRating( () => ({...reservation.rating, reservationId: reservation.id, hotelId: reservation.hotel.id})); setShowRating(true);}}>
+                                                    <Button className={"icon-button"} disabled={reservation.status === "ACCOMMODATED"}
+                                                            onClick={()=>{setRating( () => ({...reservation.rating, reservationId: reservation.id, hotelId: reservation.hotel.id})); setShowRating(true);}}>
                                                         <FontAwesomeIcon icon={faStar}/>
                                                     </Button>
                                                 }
