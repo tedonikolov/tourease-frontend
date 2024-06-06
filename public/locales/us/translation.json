@@ -262,7 +262,9 @@
     "MissingPersonalInfo": "Enter first personal information",
     "Not available": "Not available for this dates",
     "comment": "Comment",
-    "successRated": "Successfully rated"
+    "successRated": "Successfully rated",
+    "filter": "Filter",
+    "noReservationsToShow": "No reservations for show!"
   },
   "table": {
     "User": "User",

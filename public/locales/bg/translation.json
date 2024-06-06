@@ -261,7 +261,9 @@
     "MissingPersonalInfo": "Въведете първо своите лични данни",
     "Not available": "Не може да резервирате за тези дати",
     "comment": "Коментар",
-    "successRated": "Успешно дадена оценка"
+    "successRated": "Успешно дадена оценка",
+    "filter": "Филтрирай",
+    "noReservationsToShow": "Няма резервации за показване!"
   },
   "table": {
     "User": "Потребител",

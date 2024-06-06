@@ -67,3 +67,13 @@ export const RoomStatus = [
     "ENDING",
     "ACCOMMODATED",
 ]
+
+export const ReservationStatus = [
+    "PENDING",
+    "CONFIRMED",
+    "FINISHED",
+    "ACCOMMODATED",
+    "CANCELLED",
+    "NO_SHOW",
+    "ENDING",
+]

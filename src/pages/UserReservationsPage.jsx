@@ -1,7 +1,7 @@
 import SideBar from "../componets/SideBar";
 import Navigation from "../componets/Navigation";
 import Header from "../componets/Header";
-import React, {useContext, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {AuthContext} from "../context/AuthContext";
 import {SideBarContext} from "../context/SideBarContext";
@@ -19,6 +19,8 @@ import {faStar, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {queryClient} from "../hooks/RestInterceptor";
 import {toast} from "react-toastify";
 import CustomToastContent from "../componets/CustomToastContent";
+import {defaultReservationsFilter} from "../utils/defaultValues";
+import ReservationsFilter from "../componets/ReservationsFilter";
 
 export default function UserReservationsPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
@@ -26,6 +28,9 @@ export default function UserReservationsPage() {
     const {sideBarVisible} = useContext(SideBarContext);
     const [showRating, setShowRating] = useState(false);
     const [rating, setRating] = useState();
+    const [reservationsFilter, setReservationsFilter] = useState(defaultReservationsFilter);
+    const [showFilter, setShowFilter] = useState(false);
+    const [hotels, setHotels] = useState([]);
 
     const [pagination, setPagination] = useState({
         page: 1,
@@ -33,10 +38,11 @@ export default function UserReservationsPage() {
     });
 
     const {data: reservations, isLoading, isPending} = useQuery({
-        queryKey: ["get reservations for user", loggedUser.id, pagination.page, pagination.pageSize],
-        queryFn: () => getReservations(loggedUser.id, pagination.page, pagination.pageSize),
+        queryKey: ["get reservations for user", loggedUser.id, reservationsFilter, pagination.page, pagination.pageSize],
+        queryFn: () => getReservations(loggedUser.id, reservationsFilter, pagination.page, pagination.pageSize),
         retry: false,
-        staleTime: 5000
+        staleTime: 5000,
+        enabled: reservationsFilter.checkIn !== "Invalid Date" && reservationsFilter.creationDate !== "Invalid Date"
     });
 
     const {mutate:cancel} = useMutation({
@@ -65,6 +71,16 @@ export default function UserReservationsPage() {
         }
     };
 
+    useEffect(() => {
+        if (hotels.length === 0 && reservations) {
+            const hotelSet = new Set(hotels);
+            reservations.items.forEach((reservation) => {
+                hotelSet.add(reservation.hotel.name);
+            });
+            setHotels(Array.from(hotelSet));
+        }
+    }, [reservations]);
+
     return (
         <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
             <SideBar>
@@ -78,6 +94,7 @@ export default function UserReservationsPage() {
                                           pagination={pagination}/>
                         : <Spinner animation={"grow"}/>}
                     <CustomPageSizeSelector value={pagination.pageSize} setValue={setPagination}/>
+                    <Button className={"login-button"} onClick={() => setShowFilter(true)}>{t("filter")}</Button>
                 </div>
                 {!isLoading && !isPending ? reservations.items.length > 0 ?
                             reservations.items.map((reservation) =>
@@ -132,7 +149,7 @@ export default function UserReservationsPage() {
                                 </Card>
                             )
                         :
-                        <NoDataComponent noDataText={t("noLogsToShow")}/>
+                        <NoDataComponent sentence={"noReservationsToShow"}/>
                     :
                     <Spinner animation={"grow"}/>
                 }
@@ -175,6 +192,27 @@ export default function UserReservationsPage() {
                                 onClick={() => {
                                     setShowRating(false)
                                     setRating(null)
+                                }}>{t("close")}</Button>
+                    </Modal.Footer>
+                </Modal>}
+                {showFilter && <Modal show={showFilter} onHide={() => {
+                    setShowFilter(false)
+                }} size={"lg"}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{t("filter")}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <ReservationsFilter reservationsFilter={reservationsFilter} setReservationsFilter={setReservationsFilter}
+                            hotels={hotels}/>
+                    </Modal.Body>
+                    <Modal.Footer className={"d-flex justify-content-end"}>
+                        <Button className={"close-button"}
+                                onClick={() => {
+                                    setReservationsFilter(defaultReservationsFilter)
+                                }}>{t("clear")}</Button>
+                        <Button className={"button"}
+                                onClick={() => {
+                                    setShowFilter(false)
                                 }}>{t("close")}</Button>
                     </Modal.Footer>
                 </Modal>}

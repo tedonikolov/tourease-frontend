@@ -111,3 +111,11 @@ export const defaultPayment = {
     paymentDate: null,
     paid: false,
 }
+
+export const defaultReservationsFilter = {
+    hotel: null,
+    reservationNumber: "",
+    status: null,
+    creationDate: null,
+    checkIn: null,
+}

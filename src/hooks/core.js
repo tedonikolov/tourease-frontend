@@ -61,12 +61,13 @@ export function createReservationByWorker(userId, reservationInfo) {
         });
 }
 
-export function getReservations(userId, pageNumber, size) {
+export function getReservations(userId, reservationsFilter, pageNumber, size) {
     return restInterceptor.get("core-service/reservation/getReservations", {
         headers: {
             userId: userId,
         },
         params: {
+            ...reservationsFilter,
             page: pageNumber,
             size: size,
         },
