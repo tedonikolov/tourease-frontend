@@ -16,6 +16,7 @@ const Swagger = () => {
     const options = [{label: "user-service", value: "user-service"},
         {label: "logger-service", value: "logger-service"},
         {label: "hotel-service", value: "hotel-service"},
+        {label: "core-service", value: "core-service"},
         {label: "config-service", value: "configuration-service"}
     ]
 
