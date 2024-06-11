@@ -78,7 +78,7 @@ export default function HotelPage() {
                         exitLeft: '',
                     }}
                 >
-                    <div className={"m-2"}><HotelInfo hotel={hotel} setHotel={setHotel} checkStars={checkStars} countries={countries}/></div>
+                    <div className={"m-2"}><HotelInfo hotel={hotel} setHotel={setHotel} checkStars={checkStars} countries={countries} disabled={true}/></div>
                     <HotelWorkingPeriod hotel={hotel}/>
                     <HotelImages hotel={hotel}/>
                 </StepWizard>

@@ -18,15 +18,17 @@ import CustomTable from "../componets/CustomTable";
 import NoDataComponent from "../componets/NoDataComponent";
 import {currencyOptions} from "../utils/options";
 import {HotelContext} from "../context/HotelContext";
+import {CurrencyContext} from "../context/CurrencyContext";
 
 export default function BedsPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {sideBarVisible} = useContext(SideBarContext);
     const {owner, workerHotel} = useContext(HotelContext);
     const {loggedUser} = useContext(AuthContext);
+    const {currency} = useContext(CurrencyContext);
     const [hotelId, setHotelId] = useState();
     const [hotel, setHotel] = useState();
-    const [bed, setBed] = useState(defaultBed);
+    const [bed, setBed] = useState({...defaultBed, currency: currency});
     const [bedId, setBedId] = useState();
 
     useEffect(() => {
@@ -106,7 +108,7 @@ export default function BedsPage() {
                                                      type={"number"} value={bed.price}/>
                                     <div className={"w-45"}><CustomSelect
                                         options={currencyOptions.map((currency) => ({label: t(currency.label), value: currency.value, image:currency.image}))}
-                                        label={t("Currency")} name={"currency"} setObjectValue={setBed}
+                                        label={t("Currency")} name={"currency"} setObjectValue={setBed} disabled={true} hideIndicator={true}
                                         defaultValue={bed.currency} isClearable={true}/></div>
                                     <div className={"d-flex justify-content-between"}>
                                         <Button className={"main-button mt-4"} type={"submit"}>{t("save")}</Button>

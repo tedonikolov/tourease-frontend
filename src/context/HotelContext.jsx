@@ -11,6 +11,7 @@ export const HotelProvider = ({children}) => {
     const [workerHotel, setWorkerHotel] = useState(null);
     const [roomId, setRoomId] = useState(null);
     const [date, setDate] = useState(null);
+    const [currency, setCurrency] = useState(null);
 
     const {loggedUser} = useContext(AuthContext)
 
@@ -35,11 +36,13 @@ export const HotelProvider = ({children}) => {
     useEffect(() => {
         if (ownerData) {
             setOwner(()=>ownerData);
-            setWorkerHotel(()=>null)
+            setWorkerHotel(()=>null);
+            setCurrency(()=>null);
         }
         if (workerData){
             setWorkerHotel(()=>workerData.hotel);
-            setOwner(()=>null)
+            setOwner(()=>null);
+            setCurrency(()=>workerData.hotel.currency);
         }
     }, [ownerData, workerData]);
 
@@ -51,7 +54,8 @@ export const HotelProvider = ({children}) => {
                 setRoomId,
                 roomId,
                 date,
-                setDate
+                setDate,
+                currency
             }}
         >
             {children}

@@ -18,15 +18,17 @@ import NoDataComponent from "../componets/NoDataComponent";
 import {currencyOptions} from "../utils/options";
 import {deleteTypeById, saveType} from "../hooks/hotel";
 import {HotelContext} from "../context/HotelContext";
+import {CurrencyContext} from "../context/CurrencyContext";
 
 export default function TypesPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {sideBarVisible} = useContext(SideBarContext);
     const {owner, workerHotel} = useContext(HotelContext);
     const {loggedUser} = useContext(AuthContext);
+    const {currency} = useContext(CurrencyContext);
     const [hotelId, setHotelId] = useState();
     const [hotel, setHotel] = useState();
-    const [type, setType] = useState(defaultType);
+    const [type, setType] = useState({...defaultType, currency: currency});
     const [typeId, setTypeId] = useState();
     const [bedsOptions, setBedsOptions] = useState();
 
@@ -160,6 +162,7 @@ export default function TypesPage() {
                                             value: currency.value,
                                             image: currency.image
                                         }))}
+                                        disabled={true} hideIndicator={true}
                                         label={t("Currency")} name={"currency"} setObjectValue={setType}
                                         defaultValue={type.currency} isClearable={true}/></div>
                                     <div className={"d-flex justify-content-between"}>

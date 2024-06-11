@@ -43,7 +43,7 @@ export const AuthProvider = ({children}) => {
     const clearUserData = () => {
         setToken(() => '');
         setUsername(() => '');
-        setPermission(['']);
+        setPermission(()=> '');
         setLoggedUser(null);
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('username');

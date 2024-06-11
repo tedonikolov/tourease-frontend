@@ -166,7 +166,7 @@ export default function PaymentInfo({payment, customers, setPaymentId, setShowPa
                         image: currency.image
                     }))}
                     label={t("Currency")} name={"currency"}
-                    setObjectValue={setPaymentInfo}
+                    setObjectValue={setPaymentInfo} disabled={true} hideIndicator={true}
                     defaultValue={paymentInfo.currency}/></div>
                 <Button disabled={paymentInfo.paid} className={"register-button"} type={"submit"}>
                     {paymentInfo.id === 0 && !paymentInfo.paymentType ? t("New bill") : t("mark pay")}

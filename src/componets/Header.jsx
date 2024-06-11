@@ -7,6 +7,7 @@ import {Button} from "react-bootstrap";
 import ChangeLanguageComponent from "./ChangeLanguageComponent";
 import {useTranslation} from "react-i18next";
 import {SideBarContext} from "../context/SideBarContext";
+import ChangeCurrencyComponent from "./ChangeCurrencyComponent";
 
 export default function Header({title}) {
     const {logout, loggedUser} = useContext(AuthContext);
@@ -36,7 +37,8 @@ export default function Header({title}) {
 
                 <h2 className='ps-2 mb-0'>{title}</h2>
             </div>
-            <div className='d-flex w-40 align-items-center'>
+            <div className='d-flex w-55 align-items-center'>
+                <ChangeCurrencyComponent/>
                 <ChangeLanguageComponent/>
 
                 {loggedUser && <h5 className='mb-0 px-2 w-50 text-end'>

@@ -4,7 +4,6 @@ import {Button, Form} from "react-bootstrap";
 import CommonInputText from "./CommonInputText";
 import CustomDatePicker from "./CustomDatePicker";
 import CustomSelect from "./CustomSelect";
-import {currencyOptions} from "../utils/options";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import dayjs from "dayjs";
 import {toast} from "react-toastify";
@@ -12,6 +11,7 @@ import CustomToastContent from "./CustomToastContent";
 import {AuthContext} from "../context/AuthContext";
 import {CurrencyContext} from "../context/CurrencyContext";
 import {createReservationByWorker, getNotAvailableDates} from "../hooks/core";
+import {currencyOptions} from "../utils/options";
 
 export default function MakeReservationForClient({
                                             hotel,
@@ -19,13 +19,8 @@ export default function MakeReservationForClient({
                                         }) {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {loggedUser} = useContext(AuthContext);
-    const {currency, handleRate, currencies} = useContext(CurrencyContext);
-    const [oldCurrency, setOldCurrency] = useState({
-        pricePerNight: 0,
-        priceForMeal: 0,
-        price: 0,
-        currency: currency
-    });
+    const {currency, changePrice} = useContext(CurrencyContext);
+
     const [reservationInfo, setReservationInfo] = useState({
         peopleCount: hotel && hotel.people ? hotel.people : 1,
         checkIn: dayjs(new Date()).format('YYYY-MM-DD'),
@@ -56,23 +51,6 @@ export default function MakeReservationForClient({
             setHotel(null);
         }
     })
-
-    function changePrice(rate) {
-        setReservationInfo((prev) => {
-            return {
-                ...prev,
-                price: parseFloat((oldCurrency.price / rate).toFixed(2)),
-                priceForMeal: parseFloat((oldCurrency.priceForMeal / rate).toFixed(2)),
-                pricePerNight: parseFloat((oldCurrency.pricePerNight / rate).toFixed(2)),
-            }
-        })
-    }
-
-    useEffect(() => {
-        if (currencies && reservationInfo && oldCurrency) {
-            changePrice(handleRate(oldCurrency, reservationInfo.currency));
-        }
-    }, [currencies, oldCurrency, reservationInfo && reservationInfo.currency]);
 
     useEffect(() => {
         if (notAvailableDates) {
@@ -106,17 +84,9 @@ export default function MakeReservationForClient({
                 setReservationInfo((prev) => ({
                     ...prev,
                     typeId: type.id,
-                    pricePerNight: type.price,
+                    pricePerNight: changePrice({currency: type.currency, price: type.price}, currency),
                     peopleCount: calcPeople(type.beds),
-                    currency: type.currency
                 }))
-                setOldCurrency((prev) => {
-                    return {
-                        ...prev,
-                        currency: type.currency,
-                        pricePerNight: type.price,
-                    }
-                });
             }
         }
     }, [typeId]);
@@ -127,32 +97,16 @@ export default function MakeReservationForClient({
             setReservationInfo((prev) => ({
                 ...prev,
                 mealId: meal.id,
-                priceForMeal: meal.price,
-                currency: meal.currency
+                priceForMeal: changePrice({currency: meal.currency, price: meal.price}, currency),
             }))
-            setOldCurrency((prev) => {
-                return {
-                    ...prev,
-                    currency: meal.currency,
-                    priceForMeal: meal.price,
-                }
-            });
         }
     }, [mealId]);
 
-    useEffect(() => {
-        if(oldCurrency && reservationInfo.currency === oldCurrency.currency) {
-            setReservationInfo((prev) => ({
-                ...prev,
-                price: ((reservationInfo.priceForMeal * reservationInfo.peopleCount) + reservationInfo.pricePerNight) * reservationInfo.nights
-            }))
-            setOldCurrency((prev) => {
-                return {
-                    ...prev,
-                    price: ((reservationInfo.priceForMeal * reservationInfo.peopleCount) + reservationInfo.pricePerNight) * reservationInfo.nights
-                }
-            });
-        }
+     useEffect(() => {
+             setReservationInfo((prev) => ({
+                 ...prev,
+                 price: (((reservationInfo.priceForMeal * reservationInfo.peopleCount) + reservationInfo.pricePerNight) * reservationInfo.nights).toFixed(2)
+             }))
     }, [reservationInfo.pricePerNight, reservationInfo.peopleCount, reservationInfo.priceForMeal, reservationInfo.nights]);
 
     useEffect(() => {
@@ -229,8 +183,7 @@ export default function MakeReservationForClient({
                             value: currency.value,
                             image: currency.image
                         }))}
-                        label={t("Currency")} name={"currency"}
-                        setObjectValue={setReservationInfo}
+                        label={t("Currency")} disabled={true}
                         defaultValue={reservationInfo.currency}/></div>
                     {disabled && <p className={'text-danger'}>{t("Not available")}</p>}
                         <Button type={'submit'} className={'register-button'} disabled={disabled}>

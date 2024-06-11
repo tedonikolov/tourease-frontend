@@ -14,10 +14,12 @@ import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
 import {AuthContext} from "../context/AuthContext";
 import {Manager} from "../utils/Role";
+import {CurrencyContext} from "../context/CurrencyContext";
 
 export default function RoomInfo({data, newCustomer, setNewCustomer, filter, paidPayments, unPaidPayments}) {
     const [t] = useTranslation("translation", {keyPrefix: 'common'});
     const {loggedUser, permission} = useContext(AuthContext);
+    const {currency:userCurrency, changePrice} = useContext(CurrencyContext);
     const reservation = data ? data.reservation : null;
     const worker = data ? data.worker : null;
     const [customer, setCustomer] = useState(null);
@@ -98,11 +100,11 @@ export default function RoomInfo({data, newCustomer, setNewCustomer, filter, pai
                                         viewComponent={setPaymentId}
                                         tableData={unPaidPayments}
                                         columns={{
-                                            headings: ["Name", "PaidFor", "Price", "Currency", permission===Manager && "Delete"],
+                                            headings: ["Name", "PaidFor", "OriginalPrice", "HotelPrice", permission===Manager && "Delete"],
                                             items: unPaidPayments.map(({
                                                                            customer, price, currency, paidFor
                                                                        }) =>
-                                                [customer.fullName, t(paidFor), price, currency])
+                                                [customer.fullName, t(paidFor), price + " " + currency,  changePrice({currency: currency, price: price}, userCurrency) + " " + userCurrency])
                                         }}
                                         onDelete={permission===Manager && deletePayment}
                                     />
@@ -128,7 +130,7 @@ export default function RoomInfo({data, newCustomer, setNewCustomer, filter, pai
                                             items: paidPayments.map(({
                                                                          paymentDate, customer, price, currency, paidFor, worker, paymentType
                                                                      }) =>
-                                                [customer.fullName, t(paidFor), t(paymentType), price+ " " + currency, dayjs(paymentDate).format("YYYY-MM-DD"), worker.fullName.split(" ")[0]])
+                                                [customer.fullName, t(paidFor), t(paymentType), changePrice({currency: currency, price: price}, userCurrency) + " " + userCurrency, dayjs(paymentDate).format("YYYY-MM-DD"), worker.fullName.split(" ")[0]])
                                         }}
                                     />
                                     :

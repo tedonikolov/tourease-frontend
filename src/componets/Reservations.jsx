@@ -22,11 +22,13 @@ import {AuthContext} from "../context/AuthContext";
 import {
     faCheckSquare,
 } from "@fortawesome/free-solid-svg-icons";
+import {CurrencyContext} from "../context/CurrencyContext";
 
 export default function Reservations({status, fromDate, toDate}) {
     const [t] = useTranslation("translation", {keyPrefix: 'common'});
     const {workerHotel} = useContext(HotelContext);
     const {loggedUser} = useContext(AuthContext);
+    const {currency:userCurrency, changePrice} = useContext(CurrencyContext);
     const [filter, setFilter] = useState({
         date: dayjs(new Date()).format('YYYY-MM-DD'),
         hotelId: null,
@@ -183,7 +185,7 @@ export default function Reservations({status, fromDate, toDate}) {
                                                              status
                                                          }) =>
                                     [reservationNumber, dayjs(createdDate).format("DD-MM-YYYY"), room ? room.name : " ", peopleCount, dayjs(checkIn).format("DD-MM-YYYY"), dayjs(checkOut).format("DD-MM-YYYY"),
-                                        nights, price + " " + (currency != null ? currency : ""), customers.map(customer => customer.fullName), workerName.split(" ")[0],
+                                        nights, price === 0 ? t("paid") : changePrice({currency: currency, price: price}, userCurrency) + " " + userCurrency, customers.map(customer => customer.fullName), workerName.split(" ")[0],
                                         filter.status === "CANCELLED" ? t(status) : null])
                             }}
                             onDelete={filter.status === "PENDING" && cancelReservationById}

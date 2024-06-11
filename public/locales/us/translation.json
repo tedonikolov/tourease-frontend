@@ -276,6 +276,8 @@
     "Rating": "Rating",
     "Paid": "Paid",
     "Price": "Price",
+    "OriginalPrice": "Original price",
+    "HotelPrice": "Hotel price",
     "Delete": "Delete",
     "People": "People",
     "Beds": "Beds",

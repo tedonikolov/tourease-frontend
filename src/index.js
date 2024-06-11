@@ -18,16 +18,16 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <QueryClientProvider client={queryClient}>
         <AuthProvider>
-            <CurrencyProvider>
-                <HotelProvider>
+            <HotelProvider>
+                <CurrencyProvider>
                     <SideBarProvider>
                         <BrowserRouter>
                             <Router/>
                             <ToastContainer theme={"colored"}/>
                         </BrowserRouter>
                     </SideBarProvider>
-                </HotelProvider>
-            </CurrencyProvider>
+                </CurrencyProvider>
+            </HotelProvider>
         </AuthProvider>
     </QueryClientProvider>
 );

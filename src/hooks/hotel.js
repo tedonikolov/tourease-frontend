@@ -26,6 +26,7 @@ export function saveHotelInfo(hotel) {
     return restInterceptor.post("hotel-service/hotel/saveHotel", {
         id: hotel.id,
         name: hotel.name,
+        currency: hotel.currency,
         stars: hotel.stars,
         location: {
             id: hotel.location.id,

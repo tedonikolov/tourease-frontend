@@ -1,13 +1,15 @@
-import {createContext, useContext, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import i18n from "../i18n";
 import {useQuery} from "@tanstack/react-query";
 import {getCurrencyRates} from "../hooks/configurations";
 import {AuthContext} from "./AuthContext";
+import {HotelContext} from "./HotelContext";
 
 export const CurrencyContext = createContext();
 
 export default function CurrencyProvider({children}) {
-    const {loggedUser} = useContext(AuthContext)
+    const {loggedUser} = useContext(AuthContext);
+    const {currency:defaultCurrency} = useContext(HotelContext);
     const [currency, setCurrency] = useState(i18n.language === "us" ? "EUR" : "BGN");
 
     const {data: currencies} = useQuery({
@@ -17,6 +19,12 @@ export default function CurrencyProvider({children}) {
         retry: false,
         staleTime: 5000
     })
+
+    useEffect(() => {
+        if (defaultCurrency) {
+            setCurrency(() => defaultCurrency);
+        }
+    }, [defaultCurrency]);
 
     function handleRate(oldCurrency, newCurrency){
         return currencies.filter((rate) => rate.currency === newCurrency).map((currency) => {
@@ -39,7 +47,11 @@ export default function CurrencyProvider({children}) {
         })[0];
     }
 
+    function changePrice(oldCurrency, newCurrency) {
+        return parseFloat((oldCurrency.price / handleRate(oldCurrency, newCurrency)).toFixed(2));
+    }
+
     return (
-        <CurrencyContext.Provider value={{currency, setCurrency, handleRate, currencies}}>{children}</CurrencyContext.Provider>
+        <CurrencyContext.Provider value={{currency, setCurrency, handleRate, changePrice, currencies}}>{children}</CurrencyContext.Provider>
     );
 };

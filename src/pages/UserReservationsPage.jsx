@@ -133,12 +133,12 @@ export default function UserReservationsPage() {
                                                 </div>
                                             </div>
                                             <div className={"align-self-center mx-3"}>
-                                                {reservation.status !== "FINISHED" && reservation.status !== "ACCOMMODATED" ?
+                                                {reservation.status !== "FINISHED" && reservation.status !== "ACCOMMODATED" && reservation.status !== "ENDING" ?
                                                     <Button className={"delete-button"} disabled={reservation.status === "CANCELLED" || reservation.status === "NO_SHOW"} onClick={()=>cancel(reservation.id)}>
                                                         <FontAwesomeIcon icon={faXmark}/>
                                                     </Button>
                                                     :
-                                                    <Button className={"icon-button"} disabled={reservation.status === "ACCOMMODATED"}
+                                                    <Button className={"icon-button"} disabled={reservation.status === "ACCOMMODATED" || reservation.status === "ENDING"}
                                                             onClick={()=>{setRating( () => ({...reservation.rating, reservationId: reservation.id, hotelId: reservation.hotel.id})); setShowRating(true);}}>
                                                         <FontAwesomeIcon icon={faStar}/>
                                                     </Button>

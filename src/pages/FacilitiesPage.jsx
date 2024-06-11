@@ -20,15 +20,17 @@ import NoDataComponent from "../componets/NoDataComponent";
 import {currencyOptions} from "../utils/options";
 import {HotelContext} from "../context/HotelContext";
 import {AuthContext} from "../context/AuthContext";
+import {CurrencyContext} from "../context/CurrencyContext";
 
 export default function FacilitiesPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {sideBarVisible} = useContext(SideBarContext);
     const {owner, workerHotel} = useContext(HotelContext);
     const {loggedUser} = useContext(AuthContext);
+    const {currency} = useContext(CurrencyContext);
     const [hotelId, setHotelId] = useState();
     const [hotel, setHotel] = useState();
-    const [facility, setFacility] = useState(defaultFacility);
+    const [facility, setFacility] = useState({...defaultFacility, currency: currency});
     const [facilityId, setFacilityId] = useState();
     const [facilityOptions, setFacilityOptions] = useState(facilitiesNames.map((name) => ({label: t(name), value: name})));
 
@@ -127,7 +129,7 @@ export default function FacilitiesPage() {
                                                      type={"number"} value={facility.price}/>
                                     <div className={"w-45"}><CustomSelect
                                         options={currencyOptions.map((currency) => ({label: t(currency.label), value: currency.value, image:currency.image}))}
-                                        label={t("Currency")} name={"currency"} setObjectValue={setFacility}
+                                        label={t("Currency")} name={"currency"} setObjectValue={setFacility} disabled={true} hideIndicator={true}
                                         defaultValue={facility.currency} isClearable={true}/></div>
                                     <div className={"d-flex justify-content-end"}><Button className={"main-button mt-4"}
                                                                                           type={"submit"}>{t("save")}</Button>

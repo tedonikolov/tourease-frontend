@@ -19,15 +19,17 @@ import NoDataComponent from "../componets/NoDataComponent";
 import {currencyOptions} from "../utils/options";
 import {HotelContext} from "../context/HotelContext";
 import {AuthContext} from "../context/AuthContext";
+import {CurrencyContext} from "../context/CurrencyContext";
 
 export default function MealsPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {sideBarVisible} = useContext(SideBarContext);
     const {owner, workerHotel} = useContext(HotelContext);
     const {loggedUser} = useContext(AuthContext);
+    const {currency} = useContext(CurrencyContext);
     const [hotelId, setHotelId] = useState();
     const [hotel, setHotel] = useState();
-    const [meal, setMeal] = useState(defaultMeal);
+    const [meal, setMeal] = useState({...defaultMeal, currency: currency});
     const [mealId, setMealId] = useState();
     const [mealOptions, setMealOptions] = useState(mealTypes.map((type) => ({label: t(type), value: type})));
 
@@ -124,7 +126,7 @@ export default function MealsPage() {
                                                      type={"number"} value={meal.price}/>
                                     <div className={"w-45"}><CustomSelect
                                         options={currencyOptions.map((currency) => ({label: t(currency.label), value: currency.value, image:currency.image}))}
-                                        label={t("Currency")} name={"currency"} setObjectValue={setMeal}
+                                        label={t("Currency")} name={"currency"} setObjectValue={setMeal} disabled={true} hideIndicator={true}
                                         defaultValue={meal.currency} isClearable={true}/></div>
                                     <div className={"d-flex justify-content-end"}><Button className={"main-button mt-4"}
                                                                                           type={"submit"}>{t("save")}</Button>

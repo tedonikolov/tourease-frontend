@@ -6,9 +6,10 @@ import NoDataComponent from "./NoDataComponent";
 import GoogleMapReact from 'google-map-react';
 import {geocode, RequestType, setKey} from "react-geocode";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHandPointDown} from "@fortawesome/free-solid-svg-icons";
+import {faLocationDot} from "@fortawesome/free-solid-svg-icons";
+import {currencyOptions} from "../utils/options";
 
-export default function HotelInfo({hotel, setHotel, checkStars, countries}) {
+export default function HotelInfo({hotel, setHotel, checkStars, countries, disabled}) {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const [location, setLocation] = useState(hotel.location);
     const [zoom, setZoom] = useState(5);
@@ -68,7 +69,7 @@ export default function HotelInfo({hotel, setHotel, checkStars, countries}) {
             transform: 'translate(-50%, -50%)',
             fontSize: '25px'
         }}>
-            <FontAwesomeIcon icon={faHandPointDown}/>
+            <FontAwesomeIcon icon={faLocationDot}/>
         </div>
     );
 
@@ -77,16 +78,20 @@ export default function HotelInfo({hotel, setHotel, checkStars, countries}) {
             <form id={"hotel"}>
                 <div className={"d-flex"}>
                     <div className={"w-50"}>
-                        <CommonInputText type={'text'} value={hotel.name}
+                        <CommonInputText type={'text'} value={hotel.name} disabled={disabled}
                                          label={t('name')} name={'name'} setObjectValue={setHotel}/>
                         <div className={"w-50"}>
-                            <CustomSelect setObjectValue={setHotel} name={"stars"} options={stars}
+                            <CustomSelect setObjectValue={setHotel} name={"stars"} options={stars} disabled={disabled} hideIndicator={disabled}
                                           label={t("stars")} defaultValue={hotel.stars} isSearchable={false}/>
                         </div>
                         <div className={"w-50"}>
-                            <CustomSelect setObjectValue={setLocation} name={"country"} options={countries}
-                                          label={t("country")} defaultValue={location.country}/>
+                            <CustomSelect setObjectValue={setLocation} name={"country"} options={countries} hideIndicator={disabled}
+                                          label={t("country")} defaultValue={location.country} disabled={disabled}/>
                         </div>
+                        <div className={"w-40"}><CustomSelect disabled={disabled} hideIndicator={disabled}
+                            options={currencyOptions.map((currency) => ({label: t(currency.label), value: currency.value, image:currency.image}))}
+                            label={t("Currency")} name={"currency"} setObjectValue={setHotel}
+                            defaultValue={hotel.currency}/></div>
                     </div>
                     {hotel.rating ? <div className={"w-50"}>
                         <CommonInputText type={'text'} value={hotel.rating.rating} disabled={true}
@@ -99,11 +104,11 @@ export default function HotelInfo({hotel, setHotel, checkStars, countries}) {
                 </div>
                 <div className={"d-flex"}>
                     <div className={"w-50"}>
-                        <CommonInputText type={'text'} value={location.city}
+                        <CommonInputText type={'text'} value={location.city} disabled={disabled}
                                          label={t('city')} name={'city'} setObjectValue={setLocation}/>
                     </div>
                     <div className={"w-50"}>
-                        <CommonInputText type={'text'} value={location.address}
+                        <CommonInputText type={'text'} value={location.address} disabled={disabled}
                                          label={t('address')} name={'address'} setObjectValue={setLocation}/>
                     </div>
                 </div>

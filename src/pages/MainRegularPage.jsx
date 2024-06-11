@@ -23,6 +23,7 @@ import {ScaleLoader} from "react-spinners";
 import FacilitiesPreview from "../componets/FacilitiesPreview";
 import {AuthContext} from "../context/AuthContext";
 import MakeReservationForClient from "../componets/MakeReservationForClient";
+import i18n from "../i18n";
 
 export default function MainRegularPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
@@ -59,7 +60,7 @@ export default function MainRegularPage() {
 
     const {data, isLoading} = useQuery({
         queryKey: ["hotels", text, pageNumber],
-        queryFn: () => getHotelListing(text, pageNumber),
+        queryFn: () => getHotelListing(text, pageNumber, i18n.language),
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,

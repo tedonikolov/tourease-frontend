@@ -39,7 +39,7 @@ export default function Hotel({setStep, hotel, clear, setHotel, checkStars, coun
     const [step, goToStep] = useState(1)
 
     const disabled = !hotel.name || !hotel.location.country || !hotel.location.city || !hotel.location.latitude
-        || !hotel.location.longitude || !hotel.stars || !hotel.owner;
+        || !hotel.location.longitude || !hotel.stars || !hotel.owner || !hotel.currency;
 
     return (
         <div>

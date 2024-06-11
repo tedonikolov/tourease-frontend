@@ -2,24 +2,27 @@ import i18n from '../i18n';
 import React, {useContext} from "react";
 import CustomSelect from "./CustomSelect";
 import {CurrencyContext} from "../context/CurrencyContext";
+import {HotelContext} from "../context/HotelContext";
 
 
 export default function ChangeLanguageComponent() {
     const {setCurrency} = useContext(CurrencyContext);
+    const {currency} = useContext(HotelContext);
     const languages = [{value: 'us', label: "English", image: "US"}, {value: 'bg', label: "Български", image: "BG"}];
 
     const handleSelect = (e) => {
         i18n.changeLanguage(e.value);
-        switch (e.value) {
-            case 'us':
-                setCurrency("EUR");
-                break;
-            case 'bg':
-                setCurrency("BGN");
-                break;
-            default:
-                setCurrency("EUR");
-        }
+        if(currency==null)
+            switch (e.value) {
+                case 'us':
+                    setCurrency("EUR");
+                    break;
+                case 'bg':
+                    setCurrency("BGN");
+                    break;
+                default:
+                    setCurrency("EUR");
+            }
     };
 
     return (
