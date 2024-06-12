@@ -194,14 +194,15 @@ export function getFreeRoomCountByDatesForHotel({hotelId, fromDate, toDate}) {
     });
 }
 
-export function getFreeRoomsForDate({hotelId, date, typeId}) {
+export function getFreeRoomsForDate({hotelId, fromDate, toDate, typeId}) {
     return restInterceptor.get("hotel-service/hotel/room/getFreeRoomsForDateByTypeId", {
         headers: {
             hotelId: hotelId,
             typeId: typeId
         },
         params: {
-            date: date
+            fromDate: fromDate.split("T")[0],
+            toDate: toDate.split("T")[0]
         },
     });
 }

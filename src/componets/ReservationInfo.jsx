@@ -103,12 +103,13 @@ export default function ReservationInfo({
 
     const {data: rooms} = useQuery({
         queryKey: ["get all free rooms for hotel", filter.hotelId && {
-            date: filter.date,
+            fromDate: reservationInfo.checkIn,
+            toDate: reservationInfo.checkOut,
             hotelId: filter.hotelId,
             typeId: typeId
         }],
-        queryFn: () => getFreeRoomsForDate({...filter, typeId: typeId}),
-        enabled: filter.hotelId != null && filter.date !== "Invalid Date" && typeId != null,
+        queryFn: () => getFreeRoomsForDate({hotelId: filter.hotelId, fromDate:reservationInfo.checkIn, toDate:reservationInfo.checkOut, typeId: typeId}),
+        enabled: filter.hotelId != null && reservationInfo.checkIn !== "Invalid Date" && reservationInfo.checkOut !== "Invalid Date" && reservationInfo.checkIn !== null && reservationInfo.checkOut !== null && typeId != null,
     })
 
     const {mutate} = useMutation({
@@ -447,7 +448,7 @@ export default function ReservationInfo({
                         options={typesOptions} defaultValue={typeId} handleSelect={handleSelectType}
                         label={t("Type")} required={true}
                         disabled={reservation.id != 0 && reservationInfo.status !== "PENDING" && permission !== Manager}/>}
-                    {rooms && typeId && <CustomSelect required={false}
+                    {rooms && typeId && <CustomSelect required={true}
                         options={(room ? [...rooms, room] : rooms).sort((a, b) => a.name.localeCompare(b.name)).map((room) => {
                             return {value: room.id, label: room.name}
                         })}
