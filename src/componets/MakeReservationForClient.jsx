@@ -10,7 +10,7 @@ import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
 import {AuthContext} from "../context/AuthContext";
 import {CurrencyContext} from "../context/CurrencyContext";
-import {createReservationByWorker, getNotAvailableDates} from "../hooks/core";
+import {createReservationByWorker, getFreeRoomsForDate, getNotAvailableDates} from "../hooks/core";
 import {currencyOptions} from "../utils/options";
 
 export default function MakeReservationForClient({
@@ -42,6 +42,17 @@ export default function MakeReservationForClient({
         enabled: typeId != null && reservationInfo.checkIn != null && reservationInfo.checkOut != null,
         retry: false,
         staleTime: 5000
+    })
+
+    const {data: rooms} = useQuery({
+        queryKey: ["get all free rooms for hotel", hotel && {
+            fromDate: reservationInfo.checkIn,
+            toDate: reservationInfo.checkOut,
+            hotelId: hotel.hotelId,
+            typeId: typeId
+        }],
+        queryFn: () => getFreeRoomsForDate({hotelId: hotel.hotelId, fromDate:reservationInfo.checkIn, toDate:reservationInfo.checkOut, typeId: typeId}),
+        enabled: reservationInfo.checkIn !== "Invalid Date" && reservationInfo.checkOut !== "Invalid Date" && reservationInfo.checkIn !== null && reservationInfo.checkOut !== null && typeId != null,
     })
 
     const {mutate} = useMutation({
@@ -165,6 +176,13 @@ export default function MakeReservationForClient({
                     {typesOptions && <CustomSelect
                         options={typesOptions} defaultValue={typeId} handleSelect={handleSelectType}
                         label={t("Type")} required={true}/>}
+                    {rooms && typeId && <CustomSelect required={true}
+                                                      options={rooms.sort((a, b) => a.name.localeCompare(b.name)).map((room) => {
+                                                          return {value: room.id, label: room.name}
+                                                      })}
+                                                      defaultValue={reservationInfo.roomId} label={t("roomName")}
+                                                      setObjectValue={setReservationInfo} name={"roomId"}
+                    />}
                     {hotel && hotel.meals && <CustomSelect
                         options={hotel.meals.sort((a, b) => a.id - b.id).map((meal) => ({label: t(meal.type), value: meal.id}))}
                         defaultValue={mealId} handleSelect={handleSelectMeal}

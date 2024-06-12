@@ -24,6 +24,19 @@ export function getNotAvailableDates(hotelId, typeId, fromDate, toDate) {
     });
 }
 
+export function getFreeRoomsForDate({hotelId, fromDate, toDate, typeId}) {
+    return restInterceptor.get("core-service/search/getFreeRoomsForDateByTypeId", {
+        headers: {
+            hotelId: hotelId,
+            typeId: typeId
+        },
+        params: {
+            fromDate: fromDate,
+            toDate: toDate
+        },
+    });
+}
+
 export function createReservationByWorker(userId, reservationInfo) {
     let currentTime = moment();
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;

@@ -2,20 +2,17 @@ import {createContext, useContext, useEffect, useState} from "react";
 import i18n from "../i18n";
 import {useQuery} from "@tanstack/react-query";
 import {getCurrencyRates} from "../hooks/configurations";
-import {AuthContext} from "./AuthContext";
 import {HotelContext} from "./HotelContext";
 
 export const CurrencyContext = createContext();
 
 export default function CurrencyProvider({children}) {
-    const {loggedUser} = useContext(AuthContext);
     const {currency:defaultCurrency} = useContext(HotelContext);
     const [currency, setCurrency] = useState(i18n.language === "us" ? "EUR" : "BGN");
 
     const {data: currencies} = useQuery({
         queryKey: ["get currency rates"],
         queryFn: () => getCurrencyRates(),
-        enabled: loggedUser!=null,
         retry: false,
         staleTime: 5000
     })
