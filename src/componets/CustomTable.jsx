@@ -1,7 +1,7 @@
 import {Button, Table} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faPrint, faTrash, faXmarkSquare} from "@fortawesome/free-solid-svg-icons";
 
 export default function CustomTable({
                                         tableData,
@@ -11,6 +11,7 @@ export default function CustomTable({
                                         checkStars,
                                         onDelete,
                                         onAction,
+                                        onPrint,
                                         actionIcon,
                                         disabled,
                                         tableColor
@@ -67,14 +68,19 @@ export default function CustomTable({
                                         </td>
                                 ))}
                                 {
-                                    (onDelete || onAction) && <td className={"d-flex justify-content-between"}>
-                                        {onAction && <Button size={'sm'} className={"icon-button"}>
-                                            <FontAwesomeIcon className={"icon-button"} icon={actionIcon(tableData[itemIndex])}
+                                    (onDelete || onAction || onPrint) && <td className={"d-flex justify-content-between"}>
+                                        {onAction && <Button size={'sm'} className={actionIcon(tableData[itemIndex])===faTrash ? "delete-button" : "icon-button"}>
+                                            <FontAwesomeIcon className={actionIcon(tableData[itemIndex])===faTrash ? "" : "icon-button"}
+                                                             icon={actionIcon(tableData[itemIndex])}
                                                              onClick={() => onAction(tableData[itemIndex])}/>
                                         </Button>}
                                         {onDelete && <Button size={'sm'} className={"delete-button"}
                                                              onClick={() => onDelete(tableData[itemIndex].id)}>
-                                            <FontAwesomeIcon icon={faTrash} size={'sm'}/>
+                                            <FontAwesomeIcon icon={faXmarkSquare} size={'sm'}/>
+                                        </Button>}
+                                        {onPrint && <Button size={'sm'} className={"print-button"}
+                                                             onClick={() => onPrint(tableData[itemIndex])}>
+                                            <FontAwesomeIcon icon={faPrint} size={'sm'}/>
                                         </Button>}
                                     </td>
                                 }

@@ -301,7 +301,9 @@
     "RoomName": "Room",
     "Customer": "Customer",
     "Nights": "Nights",
-    "MealType": "Meal type"
+    "MealType": "Meal type",
+    "sendingMail": "Sending mail",
+    "printError": "Error occurred while printing!"
   },
   "logs": {
     "Chronology": "Chronology",

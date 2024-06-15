@@ -263,7 +263,9 @@
     "comment": "Коментар",
     "successRated": "Успешно дадена оценка",
     "filter": "Филтрирай",
-    "noReservationsToShow": "Няма резервации за показване!"
+    "noReservationsToShow": "Няма резервации за показване!",
+    "sendingMail": "Изпращане на емейл",
+    "printError": "Грешка при печат!"
   },
   "table": {
     "User": "Потребител",

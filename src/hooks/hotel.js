@@ -420,3 +420,15 @@ export function updateReservation(workerId, reservationInfo) {
         },
     });
 }
+
+export function getReservationPDF (reservationId, userId, language) {
+    return restInterceptor.post('/hotel-service/docs/reservation?reservationId=' + reservationId + '&userId=' + userId + '&language=' + language,
+        { },
+        {
+            responseType: 'blob',
+            transformResponse: (data) => {
+                return new Blob([data], { type: 'application/pdf' });
+            },
+        }
+    );
+}

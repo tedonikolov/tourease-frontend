@@ -7,7 +7,7 @@ import {HotelContext} from "../context/HotelContext";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {
     cancelReservation, confirmReservation,
-    createReservationByWorker,
+    createReservationByWorker, getReservationPDF,
     getReservationsForHotel,
 } from "../hooks/hotel";
 import CustomTable from "./CustomTable";
@@ -23,11 +23,13 @@ import {
     faCheckSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import {CurrencyContext} from "../context/CurrencyContext";
+import {Manager} from "../utils/Role";
+import i18n from "../i18n";
 
 export default function Reservations({status, fromDate, toDate}) {
     const [t] = useTranslation("translation", {keyPrefix: 'common'});
     const {workerHotel} = useContext(HotelContext);
-    const {loggedUser} = useContext(AuthContext);
+    const {loggedUser, permission} = useContext(AuthContext);
     const {currency:userCurrency, changePrice} = useContext(CurrencyContext);
     const [filter, setFilter] = useState({
         date: dayjs(new Date()).format('YYYY-MM-DD'),
@@ -38,6 +40,7 @@ export default function Reservations({status, fromDate, toDate}) {
     const [showNewReservation, setShowNewReservation] = useState(false);
     const [newReservation, setNewReservation] = useState(false);
     const [reservation, setReservation] = useState(false);
+    const [reservationNumber, setReservationNumber] = useState(false);
 
     useEffect(() => {
         if (workerHotel) {
@@ -125,7 +128,7 @@ export default function Reservations({status, fromDate, toDate}) {
     })
 
     const {mutate: confirmReservationById} = useMutation({
-        mutationFn: (reservation) => confirmReservation(reservation.id),
+        mutationFn: (reservation) => confirmReservation(reservation.id, loggedUser.id),
         onSuccess: () => {
             clearCache();
             queryClient.resetQueries({
@@ -143,19 +146,36 @@ export default function Reservations({status, fromDate, toDate}) {
         return faCheckSquare
     }
 
+    const {mutate: getPDF, isLoading:sendingMail} = useMutation({
+        mutationFn: (reservation) => (getReservationPDF(reservation.id, loggedUser.id, i18n.language)),
+        onSuccess: (data) => {
+            console.log(data)
+            const pdf = URL.createObjectURL(data);
+            window.open(pdf, '_blank');
+        },
+        onLoading: () => {},
+        onError: (error) => {
+            console.log(error)
+            toast.error(<CustomToastContent content={[`${t('printError')}`]}/>);
+        }
+    })
+
+
+
     return (
         <div className={"w-100"}>
             <div className={"d-flex align-self-center justify-items-center m-2"}>
-                <CustomDatePicker label={t('date')}
+                {(status === "CONFIRMED" || status === "CANCELLED") && <CustomDatePicker label={t('date')}
                                   selectedDate={filter.date}
                                   name={'date'}
-                                  setValue={setFilter}/>
-                <div className={"d-flex align-self-end h-50"}>
+                                  setValue={setFilter}/>}
+                {(status === "CONFIRMED" || status === "CANCELLED") && <div className={"d-flex align-self-end h-50"}>
                     <Button className={"register-button"}
                             onClick={() => setFilter((prevValue) => ({
                                 ...prevValue,
                                 date: dayjs(new Date()).format('YYYY-MM-DD')
-                            }))}>{t("Today")}</Button></div>
+                            }))}>{t("Today")}</Button>
+                </div>}
                 {(status === "PENDING" || status === "CONFIRMED") && <div className={"d-flex align-self-end mx-4"}>
                     <Button className={"register-button"}
                             onClick={() => setShowNewReservation(true)}>
@@ -169,7 +189,7 @@ export default function Reservations({status, fromDate, toDate}) {
                             tableData={reservations}
                             viewComponent={(reservationId) => setReservation(reservations.find(({id}) => id === reservationId))}
                             columns={{
-                                headings: ["ReservationNumber", "CreationDate", "RoomName", "People", "CheckIn", "CheckOut", "Nights", "Price", "Customer", "Worker", (status === "CANCELLED" && "Status"), (status === "PENDING" && "Action")],
+                                headings: ["ReservationNumber", "CreationDate", "RoomName", "People", "CheckIn", "CheckOut", "Nights", "Price", "Customer", "Worker", (status === "CANCELLED" && "Status"), ((status === "PENDING" || status === "CONFIRMED") && "Action")],
                                 items: reservations.map(({
                                                              reservationNumber,
                                                              createdDate,
@@ -188,9 +208,10 @@ export default function Reservations({status, fromDate, toDate}) {
                                         nights, price === 0 ? t("paid") : changePrice({currency: currency, price: price}, userCurrency) + " " + userCurrency, customers.map(customer => customer.fullName), workerName.split(" ")[0],
                                         filter.status === "CANCELLED" ? t(status) : null])
                             }}
-                            onDelete={filter.status === "PENDING" && cancelReservationById}
+                            onDelete={permission===Manager && (filter.status === "PENDING" || filter.status === "CONFIRMED") && cancelReservationById}
                             onAction={filter.status === "PENDING" && confirmReservationById}
                             actionIcon={filter.status === "PENDING" && buttonIcon}
+                            onPrint={getPDF}
                         />
                         :
                         <div><NoDataComponent sentence={"No reservations"}/></div>}
@@ -251,6 +272,7 @@ export default function Reservations({status, fromDate, toDate}) {
                         </Modal.Footer>
                     </Modal>
                 </div>}
+            {sendingMail && toast.info(<CustomToastContent content={[t("sendingMail"),t("ReservationNumber")+reservationNumber]}/>)}
         </div>
     )
 }

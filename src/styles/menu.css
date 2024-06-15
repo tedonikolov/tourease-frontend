@@ -100,6 +100,18 @@
     box-shadow: 1px 10px 10px #282c34;
 }
 
+.print-button{
+    color: #000000 !important;
+    background-color: #dc9806 !important;
+}
+
+.print-button:hover{
+    cursor: pointer;
+    color: #000000 !important;
+    background-color: #dc9806 !important;
+    box-shadow: 1px 10px 10px #282c34;
+}
+
 .hotel-info-image {
     height: 70vh;
     left:0;
