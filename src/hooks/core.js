@@ -63,6 +63,7 @@ export function createReservationByWorker(userId, reservationInfo) {
             hotelId: reservationInfo.hotelId,
             typeId: reservationInfo.typeId,
             mealId: reservationInfo.mealId,
+            roomId: reservationInfo.roomId,
             peopleCount: reservationInfo.peopleCount,
             checkIn: checkIn,
             checkOut: checkOut,
