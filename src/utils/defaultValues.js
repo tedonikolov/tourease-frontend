@@ -88,6 +88,7 @@ export const defaultCustomer = {
     birthDate: null,
     gender: "",
     phoneNumber: "",
+    email: "",
 }
 
 export const defaultReservation = {

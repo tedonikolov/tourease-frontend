@@ -41,13 +41,13 @@ export default function ReservationInfo({
     const [reservationInfo, setReservationInfo] = useState({
         ...reservation,
         peopleCount: reservation.peopleCount ?? 1,
-        pricePerNight: 0,
-        priceForMeal: 0,
-        price: reservation.price,
-        discount: 0,
-        sub: 0,
+        pricePerNight: reservation.pricePerNight ? reservation.pricePerNight : 0,
+        priceForMeal: reservation.priceForMeal ? reservation.priceForMeal : 0,
+        price: reservation.price ? reservation.pricePerNight * reservation.nights + reservation.priceForMeal * reservation.peopleCount * reservation.nights : 0,
+        discount: reservation.discount ? reservation.discount : 0,
+        sub: reservation.sub ? reservation.sub : 0,
         priceWithDiscount: 0,
-        currency: reservation.currency ? reservation.currency : currency,
+        currency: currency,
     });
     const [typesOptions, setTypesOptions] = useState([]);
     const [typeId, setTypeId] = useState();
@@ -58,22 +58,22 @@ export default function ReservationInfo({
         setReservationInfo({
             ...reservation,
             peopleCount: reservation.peopleCount ?? 1,
-            pricePerNight: 0,
-            priceForMeal: 0,
-            price: reservation.price,
-            discount: 0,
-            sub: 0,
+            pricePerNight: reservation.pricePerNight ? reservation.pricePerNight : 0,
+            priceForMeal: reservation.priceForMeal ? reservation.priceForMeal : 0,
+            price: reservation.price ? reservation.pricePerNight * reservation.nights + reservation.priceForMeal * reservation.peopleCount * reservation.nights : 0,
+            discount: reservation.discount ? reservation.discount : 0,
+            sub: reservation.sub ? reservation.sub : 0,
             priceWithDiscount: 0,
-            currency: reservation.currency ? reservation.currency : currency,
+            currency: currency,
             typeId: reservation.type && reservation.type.id,
             mealId: reservation.meal && reservation.meal.id,
         });
         setOldCurrency((prev) => {
             return {
                 ...prev,
-                pricePerNight: 0,
-                priceForMeal: 0,
-                currency: reservation.currency ? reservation.currency : currency,
+                pricePerNight: reservation.pricePerNight ? reservation.pricePerNight : 0,
+                priceForMeal: reservation.priceForMeal ? reservation.priceForMeal : 0,
+                currency: currency,
             }
         });
         if (reservation.type) {
@@ -187,14 +187,12 @@ export default function ReservationInfo({
                             setOldCurrency((prev) => {
                                 return {
                                     ...prev,
-                                    currency: type.currency,
                                     pricePerNight: type.price,
                                 }
                             });
                             setReservationInfo((prev) => ({
                                 ...prev,
                                 pricePerNight: type.price,
-                                currency: type.currency
                             }))
                         }
                     }
@@ -217,18 +215,18 @@ export default function ReservationInfo({
         } else if (reservation.peopleCount==reservationInfo.peopleCount && reservation.nights==reservationInfo.nights){
             setReservationInfo((prev) => ({
                 ...prev,
-                price: reservation.price,
-                pricePerNight: 0,
-                priceForMeal: 0,
-                currency: reservation.currency
+                price: reservation.price ? reservation.pricePerNight * reservation.nights + reservation.priceForMeal * reservation.peopleCount * reservation.nights : 0,
+                pricePerNight: reservation.pricePerNight ? reservation.pricePerNight : 0,
+                priceForMeal: reservation.priceForMeal ? reservation.priceForMeal : 0,
+                currency: currency
             }));
             setOldCurrency((prev) => {
                 return {
                     ...prev,
-                    price: reservation.price,
-                    pricePerNight: 0,
-                    priceForMeal: 0,
-                    currency: reservation.currency
+                    price: reservation.price ? reservation.pricePerNight * reservation.nights + reservation.priceForMeal * reservation.peopleCount * reservation.nights : 0,
+                    pricePerNight: reservation.pricePerNight ? reservation.pricePerNight : 0,
+                    priceForMeal: reservation.priceForMeal ? reservation.priceForMeal : 0,
+                    currency: currency
                 }
             });
         }
@@ -243,12 +241,10 @@ export default function ReservationInfo({
                     ...prev,
                     mealId: meal.id,
                     priceForMeal: meal.price,
-                    currency: meal.currency
                 }))
                 setOldCurrency((prev) => {
                     return {
                         ...prev,
-                        currency: meal.currency,
                         priceForMeal: meal.price,
                     }
                 });
@@ -481,6 +477,7 @@ export default function ReservationInfo({
                             value: currency.value,
                             image: currency.image
                         }))}
+                        disabled={true} hideIndicator={true}
                         label={t("Currency")} name={"currency"}
                         setObjectValue={setReservationInfo}
                         defaultValue={reservationInfo.currency}/></div>

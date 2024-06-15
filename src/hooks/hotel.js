@@ -321,10 +321,11 @@ export function cancelReservation(reservationId) {
     });
 }
 
-export function confirmReservation(reservationId) {
+export function confirmReservation(reservationId, workerId) {
     return restInterceptor.put("hotel-service/reservation/worker/confirmReservation", null, {
         headers: {
             reservationId: reservationId,
+            userId: workerId,
         },
     });
 }
@@ -355,6 +356,7 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
             customer: {
                 fullName: reservationInfo.fullName,
                 phoneNumber: reservationInfo.phoneNumber,
+                email:reservationInfo.email,
                 passportId: reservationInfo.passportId,
                 country: reservationInfo.country,
                 birthDate: reservationInfo.birthDate,
@@ -369,7 +371,11 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
             checkIn: checkIn,
             checkOut: checkOut,
             nights: reservationInfo.nights,
-            price: reservationInfo.price,
+            price: reservationInfo.priceWithDiscount,
+            mealPrice: reservationInfo.priceForMeal,
+            nightPrice: reservationInfo.pricePerNight,
+            discount: reservationInfo.discount,
+            advancedPayment: reservationInfo.sub,
             currency: reservationInfo.currency,
         }
         , {
@@ -402,7 +408,11 @@ export function updateReservation(workerId, reservationInfo) {
         checkIn: checkIn,
         checkOut: checkOut,
         nights: reservationInfo.nights,
-        price: reservationInfo.price,
+        price: reservationInfo.priceWithDiscount,
+        mealPrice: reservationInfo.priceForMeal,
+        nightPrice: reservationInfo.pricePerNight,
+        discount: reservationInfo.discount,
+        advancedPayment: reservationInfo.sub,
         currency: reservationInfo.currency,
     }, {
         headers: {
