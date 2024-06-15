@@ -352,7 +352,15 @@
     "CONFIG_UPDATED": "Configs updated",
     "Configurations updated!": "Configs updated!",
     "PASSWORD_CHANGED": "Password changed",
-    "Password Changed!": "Password changed!"
+    "Password Changed!": "Password changed!",
+    "RESERVATION_CONFIRMATION": "Reservation confirmation",
+    "Reservation confirmation email send!": "Reservation confirmation email sent!",
+    "RESERVATION_CHANGED": "Reservation changed",
+    "Reservation payment change!": "Reservation payment change!",
+    "NEW_RESERVATION": "New reservation",
+    "New reservation created for hotel with name": "New reservation created for hotel with name",
+    "CUSTOMER_DETAILS": "Customer details",
+    "Customer details retrieved!": "Customer details retrieved!"
   },
   "errors": {
     "serviceNotFound": "There was a problem with the server. The service is not available.",

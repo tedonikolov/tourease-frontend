@@ -351,7 +351,15 @@
     "CONFIG_UPDATED": "Обновени конфигурации",
     "Configurations updated!": "Обновени конфикурации!",
     "PASSWORD_CHANGED": "Променена парола",
-    "Password Changed!": "Променена парола!"
+    "Password Changed!": "Променена парола!",
+    "RESERVATION_CONFIRMATION": "Потвърждение на резервация",
+    "Reservation confirmation email send!": "Изпратен емейл за потвърждение на резервация!",
+    "RESERVATION_CHANGED": "Променена резервация",
+    "Reservation payment change!": "Променена резервация!",
+    "NEW_RESERVATION": "Нова резервация",
+    "New reservation created for hotel with name": "Създадена нова резервация за хотел с име",
+    "CUSTOMER_DETAILS": "Данни за клиент",
+    "Customer details retrieved!": "Извлечени данни за клиент!"
   },
   "errors": {
     "serviceNotFound": "Възникна проблем със сървъра. Услугата не е достъпна.",
