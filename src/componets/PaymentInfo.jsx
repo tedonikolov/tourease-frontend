@@ -23,6 +23,10 @@ export default function PaymentInfo({payment, customers, setPaymentId, setShowPa
     const [paymentInfo, setPaymentInfo] = useState(null);
     const [facility, setFacility] = useState(null);
     const [oldCurrency, setOldCurrency] = useState(null);
+    const [optionsPaidFor,setOptionsPaidFor]=useState(
+        paidFor.map((paidFor) => {
+            return {value: paidFor, label: t(paidFor)}}),
+        );
 
     useEffect(() => {
         if (payment && payment.id === 0) {
@@ -37,6 +41,9 @@ export default function PaymentInfo({payment, customers, setPaymentId, setShowPa
         }
         if(payment) {
             setPaymentInfo(() => {return{...payment, currency: currency, hotelId: workerHotel.id}});
+        }
+        if(payment && payment.paidFor!=="RESERVATION") {
+            setOptionsPaidFor(() => optionsPaidFor.filter((paidFor) => paidFor.value!=="RESERVATION"));
         }
     }, [payment]);
 
@@ -146,9 +153,8 @@ export default function PaymentInfo({payment, customers, setPaymentId, setShowPa
                                                           required={paymentInfo.id !== 0}
                                                           disabled={paymentInfo.paid} label={t('paymentType')}
                                                           name={'paymentType'}/></div>
-                    <div className={"w-45 px-2"}><CustomSelect options={paidFor.map((paidFor) => {
-                        return {value: paidFor, label: t(paidFor)}
-                    })} defaultValue={paymentInfo.paidFor} setObjectValue={setPaymentInfo}
+                    <div className={"w-45 px-2"}><CustomSelect options={optionsPaidFor}
+                                                               defaultValue={paymentInfo.paidFor} setObjectValue={setPaymentInfo}
                                                                disabled={paymentInfo.id !== 0} label={t('paidFor')}
                                                                name={'paidFor'}/></div>
                 </div>

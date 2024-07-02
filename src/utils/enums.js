@@ -55,6 +55,7 @@ export const paymentTypes = [
 
 export const paidFor = [
     "RESERVATION",
+    "ADDITIONAL",
     "BROKEN_ITEM",
     "FACILITY",
     "BAR",
