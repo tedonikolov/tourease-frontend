@@ -160,8 +160,6 @@ export default function Reservations({status, fromDate, toDate}) {
         }
     })
 
-
-
     return (
         <div className={"w-100"}>
             <div className={"d-flex align-self-center justify-items-center m-2"}>
@@ -199,13 +197,12 @@ export default function Reservations({status, fromDate, toDate}) {
                                                              checkOut,
                                                              nights,
                                                              price,
-                                                             currency,
                                                              customers,
                                                              workerName,
                                                              status
                                                          }) =>
                                     [reservationNumber, dayjs(createdDate).format("DD-MM-YYYY"), room ? room.name : " ", peopleCount, dayjs(checkIn).format("DD-MM-YYYY"), dayjs(checkOut).format("DD-MM-YYYY"),
-                                        nights, price === 0 ? t("paid") : changePrice({currency: currency, price: price}, userCurrency) + " " + userCurrency, customers.map(customer => customer.fullName), workerName.split(" ")[0],
+                                        nights, price === null ? t("paid") : price + " " + userCurrency, customers[0].fullName, workerName.split(" ")[0],
                                         filter.status === "CANCELLED" ? t(status) : null])
                             }}
                             onDelete={permission===Manager && (filter.status === "PENDING" || filter.status === "CONFIRMED") && cancelReservationById}

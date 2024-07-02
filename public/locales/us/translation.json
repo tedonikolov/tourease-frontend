@@ -210,6 +210,8 @@
     "FACILITY": "Facility",
     "BAR": "Bar",
     "RESTAURANT": "Restaurant",
+    "ADDITIONAL": "Additional",
+    "Not available rooms": "No available rooms",
     "paymentType": "Payment type",
     "paidFor": "Paid for",
     "paymentDate": "Payment date",
