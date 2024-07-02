@@ -33,13 +33,12 @@ export default function MakeReservationForClient({
     });
     const [typesOptions, setTypesOptions] = useState([]);
     const [typeId, setTypeId] = useState();
-    const [disabledDates, setDisabledDates] = useState();
     const [mealId, setMealId] = useState();
 
-    const {data: notAvailableDates} = useQuery({
-        queryKey: ["get not available dates", typeId, reservationInfo.checkIn, reservationInfo.checkOut],
-        queryFn: () => getNotAvailableDates(hotel.hotelId, typeId, reservationInfo.checkIn, reservationInfo.checkOut),
-        enabled: typeId != null && reservationInfo.checkIn != null && reservationInfo.checkOut != null,
+    const {data: dates} = useQuery({
+        queryKey: ["get not available dates", typeId],
+        queryFn: () => getNotAvailableDates(typeId),
+        enabled: typeId != null,
         retry: false,
         staleTime: 5000
     })
@@ -62,15 +61,6 @@ export default function MakeReservationForClient({
             setHotel(null);
         }
     })
-
-    useEffect(() => {
-        if (notAvailableDates) {
-            let days = notAvailableDates.filter((day) => {
-                return dayjs(day).isAfter(dayjs(reservationInfo.checkIn).add(-1, 'day').endOf('day'))
-            })
-            setDisabledDates(() => days);
-        }
-    }, [notAvailableDates]);
 
     useEffect(() => {
         if (hotel && hotel.types) {
@@ -143,9 +133,9 @@ export default function MakeReservationForClient({
         newValue ? setMealId(newValue.value) : setMealId(null);
     }
 
-    const disabled = ( disabledDates && disabledDates.filter((date) => dayjs(date).add(1, 'day').endOf('day').isAfter(dayjs(reservationInfo.checkIn))
-        && dayjs(date).add(-1, 'day').endOf('day').isBefore(dayjs(reservationInfo.checkOut))).length > 0 ) ||
-     reservationInfo.checkIn === reservationInfo.checkOut;
+    const disabled = ( rooms && rooms.length === 0) ||
+        reservationInfo.checkIn > reservationInfo.checkOut ||
+        reservationInfo.checkIn === reservationInfo.checkOut;
 
     return (
         reservationInfo && <div className={'d-flex'}>
@@ -157,7 +147,7 @@ export default function MakeReservationForClient({
                                           selectedDate={reservationInfo.checkIn}
                                           name={'checkIn'}
                                           setValue={setReservationInfo}
-                                          disabledDates={disabledDates}
+                                          disabledDates={dates && dates.checkInDates}
                         />
                         <CustomDatePicker label={t('checkOut')}
                                           minDate={dayjs(reservationInfo.checkIn).add(1, 'day')}
@@ -165,7 +155,7 @@ export default function MakeReservationForClient({
                                           selectedDate={reservationInfo.checkOut}
                                           name={'checkOut'}
                                           setValue={setReservationInfo}
-                                          disabledDates={disabledDates}
+                                          disabledDates={dates && dates.checkOutDates}
                         />
                     </div>
                     <CommonInputText type={'text'} value={reservationInfo.nights}
@@ -176,6 +166,7 @@ export default function MakeReservationForClient({
                     {typesOptions && <CustomSelect
                         options={typesOptions} defaultValue={typeId} handleSelect={handleSelectType}
                         label={t("Type")} required={true}/>}
+                    {rooms && rooms.length === 0 && <p className={'text-danger'}>{t("Not available")}</p>}
                     {rooms && typeId && <CustomSelect required={true}
                                                       options={rooms.sort((a, b) => a.name.localeCompare(b.name)).map((room) => {
                                                           return {value: room.id, label: room.name}
