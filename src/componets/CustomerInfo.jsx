@@ -90,7 +90,7 @@ export default function CustomerInfo({reservationId, customer, filter, setCustom
                                       setValue={setCustomerInfo}/></div>
                 <CustomPhoneInput type={'text'} value={splitPhone()} required={false}
                                   label={t('phone')} name={'phoneNumber'} setObjectValue={setCustomerInfo}/>
-                <CommonInputText type={'text'} value={customerInfo.email}
+                <CommonInputText type={'text'} value={customerInfo.email} required={false}
                                  label={t('email')} name={'email'} setObjectValue={setCustomerInfo}/>
                 <div className={"d-flex justify-content-between mx-5"}><CustomDatePicker label={t('Date of birth')}
                                                                                          selectedDate={customerInfo.birthDate}

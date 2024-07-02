@@ -9,7 +9,8 @@ export default function CommonInputText({
                                             setValue,
                                             error,
                                             errorText,
-                                            handleInput
+                                            handleInput,
+                                            required=true,
                                         }) {
     function handleInputChange(event) {
         event.preventDefault();
@@ -33,7 +34,7 @@ export default function CommonInputText({
                         value={value}
                         disabled={disabled}
                         onChange={handleInput ?(event)=> handleInput(event) : handleInputChange}
-                        required
+                        required={required}
                     />
                 </div>
             </div>
