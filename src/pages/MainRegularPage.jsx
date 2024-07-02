@@ -23,13 +23,15 @@ import {ScaleLoader} from "react-spinners";
 import FacilitiesPreview from "../componets/FacilitiesPreview";
 import {AuthContext} from "../context/AuthContext";
 import MakeReservationForClient from "../componets/MakeReservationForClient";
-import i18n from "../i18n";
+import {CurrencyContext} from "../context/CurrencyContext";
+import {queryClient} from "../hooks/RestInterceptor";
 
 export default function MainRegularPage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
     const {sideBarVisible} = useContext(SideBarContext);
     const {loggedUser} = useContext(AuthContext);
-    const apiKey = process.env["GOOGLE_KEY"];
+    const {currency} = useContext(CurrencyContext)
+    const apiKey = "AIzaSyC45AiMgNEOmwSu57L1s52Kc3-iCX4C30w"
     const [searchBy, setSearchBy] = useState("");
     const [text, setText] = useState("");
     const [location, setLocation] = useState();
@@ -59,8 +61,8 @@ export default function MainRegularPage() {
     }, [hasMore]);
 
     const {data, isLoading} = useQuery({
-        queryKey: ["hotels", text, pageNumber],
-        queryFn: () => getHotelListing(text, pageNumber, i18n.language),
+        queryKey: ["hotels"],
+        queryFn: () => getHotelListing(text, pageNumber, currency),
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
@@ -112,10 +114,7 @@ export default function MainRegularPage() {
         }
     }, [activeHotelId]);
 
-    useEffect(() => {
-        setHotels(() => []);
-        setZoom(7);
-    }, [searchBy]);
+
 
     return (
         <div className={`d-flex page ${sideBarVisible && 'sidebar-active'} w-100`}>
@@ -135,6 +134,9 @@ export default function MainRegularPage() {
                             onKeyDown={(event) => {
                                 if (event.keyCode === 13) {
                                     setText(event.target.value);
+                                    setHotels([]);
+                                    setZoom(7);
+                                    queryClient.removeQueries({queryKey: ["hotels"]});
                                 }
                             }}
                         />
@@ -153,12 +155,13 @@ export default function MainRegularPage() {
                                         {hotels.map((hotel, index) =>
                                             <Accordion.Item
                                                 ref={index === hotels.length - 5 ? lastHotelElementRef : null}
-                                                key={hotel.hotelId} className='w-100 py-0' eventKey={hotel.hotelId}
-                                                onClick={() => {
-                                                    setLocation(hotel.location);
-                                                    setActiveHotelId(() => hotel.hotelId)
-                                                }}>
-                                                <Accordion.Header ref={accordionItemRefs.current[hotel.hotelId]}>
+                                                key={hotel.hotelId} className='w-100 py-0' eventKey={hotel.hotelId}>
+                                                <Accordion.Header ref={accordionItemRefs.current[hotel.hotelId]}
+                                                                  onClick={() => {
+                                                                      setLocation(hotel.location);
+                                                                      activeHotelId === hotel.hotelId ? setActiveHotelId(() => null) :
+                                                                          setActiveHotelId(() => hotel.hotelId);
+                                                                  }}>
                                                     <div className={"w-100"}>
                                                         <div className='d-flex w-100 justify-content-between'>
                                                             <div className={"w-60"}>

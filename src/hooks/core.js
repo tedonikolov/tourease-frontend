@@ -1,25 +1,22 @@
 import restInterceptor from "./RestInterceptor";
 import moment from "moment-timezone";
 
-export function getHotelListing(searchText, pageNumber, language) {
+export function getHotelListing(searchText, pageNumber, currency) {
     return restInterceptor.get("core-service/search/listing", {
         params: {
             searchText: searchText,
             page: pageNumber,
         },
         headers: {
-            language: language,
+            currency: currency,
         },
     });
 }
 
-export function getNotAvailableDates(hotelId, typeId, fromDate, toDate) {
+export function getNotAvailableDates(typeId) {
     return restInterceptor.get("core-service/search/getNotAvailableDates", {
         params: {
-            hotelId: hotelId,
             typeId: typeId,
-            fromDate: fromDate,
-            toDate: toDate,
         },
     });
 }
