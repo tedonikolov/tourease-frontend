@@ -41,6 +41,7 @@ export default function Navigation () {
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Owner]}>
                     <NavLink path='/hotel/profile' label={t('profile')} icon={faUser} />
+                    <NavLink path='/hotel/workers' label={t('workers')} icon={faUsers} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Manager]}>
                     <NavLink path='/hotel' label={t('HotelInfo')} icon={faUser} />
@@ -55,7 +56,6 @@ export default function Navigation () {
                     <NavLink path='/hotel/beds' label={t('Beds')} icon={faBed} />
                     <NavLink path='/hotel/types' label={t('Types')} icon={faKey} />
                     <NavLink path='/hotel/rooms' label={t('Rooms')} icon={faHouseUser} />
-                    <NavLink path='/hotel/workers' label={t('workers')} icon={faUsers} />
                 </RequiredPermissions>
                 <RequiredPermissions requiredPermissions={[Admin]}>
                     <NavLink path='/logs' label={t('logs')} icon={faHistory} />
