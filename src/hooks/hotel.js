@@ -163,6 +163,14 @@ export function getTakenDaysForRoom(roomId) {
     });
 }
 
+export function getNotAvailableDatesForType(typeId) {
+    return restInterceptor.get("hotel-service/hotel/room/getNotAvailableDatesForType", {
+        params: {
+            typeId: typeId,
+        },
+    });
+}
+
 export function getRoomById(roomId) {
     return restInterceptor.get("hotel-service/hotel/room/getRoomById", {
         headers: {
