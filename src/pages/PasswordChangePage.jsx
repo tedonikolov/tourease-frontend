@@ -10,15 +10,15 @@ import {useMutation} from "@tanstack/react-query";
 export default function PasswordChangePage() {
     const {t} = useTranslation("translation", {keyPrefix: "common"})
 
-    const [userInfo, setUserInfo] = useState({email: '', password: '', secondPassword: ''});
+    const [userInfo, setUserInfo] = useState({token: '', password: '', secondPassword: ''});
     const [loading, setLoading] = useState(true);
     const [show, setShow] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const url = new URL(window.location.href);
-        const email = url.search.slice(7);
-        setUserInfo({...userInfo, email: email})
+        const token = url.search.slice(7);
+        setUserInfo({...userInfo, token: token})
         setLoading(false)
     }, []);
 
@@ -29,7 +29,7 @@ export default function PasswordChangePage() {
     const disabled = userInfo.password !== userInfo.secondPassword || userInfo.password === '' || userInfo.secondPassword === '';
 
     return (
-        !loading && (userInfo.email !== "" ?
+        !loading && (userInfo.token !== "" ?
             <div>
                 {!show ? <div className={"mt-lg-5 w-100 register d-flex row justify-content-center text-center"}>
                         <h2>{t("changePassword")}</h2>
