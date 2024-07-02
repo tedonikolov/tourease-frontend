@@ -4,10 +4,10 @@ import {useTranslation} from "react-i18next";
 import CustomSelect from "./CustomSelect";
 import NoDataComponent from "./NoDataComponent";
 import GoogleMapReact from 'google-map-react';
-import {geocode, RequestType, setKey} from "react-geocode";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLocationDot} from "@fortawesome/free-solid-svg-icons";
 import {currencyOptions} from "../utils/options";
+import {geocode, RequestType, setKey} from "react-geocode";
 
 export default function HotelInfo({hotel, setHotel, checkStars, countries, disabled}) {
     const {t} = useTranslation("translation", {keyPrefix: "common"});
@@ -45,21 +45,21 @@ export default function HotelInfo({hotel, setHotel, checkStars, countries, disab
     useEffect(() => {
         if (location.country) {
             setZoom(() => 5);
-            //TODO stopped because of google billing findLocation();
+            findLocation();
         }
     }, [location.country]);
 
     useEffect(() => {
         if (location.city) {
             setZoom(() => 12);
-            //TODO stopped because of google billing findLocation();
+            findLocation();
         }
     }, [location.city]);
 
     useEffect(() => {
         if (location.address) {
             setZoom(() => 15);
-            //TODO stopped because of google billing findLocation();
+            findLocation();
         }
     }, [location.address]);
 
@@ -88,7 +88,7 @@ export default function HotelInfo({hotel, setHotel, checkStars, countries, disab
                             <CustomSelect setObjectValue={setLocation} name={"country"} options={countries} hideIndicator={disabled}
                                           label={t("country")} defaultValue={location.country} disabled={disabled}/>
                         </div>
-                        <div className={"w-40"}><CustomSelect disabled={disabled} hideIndicator={disabled}
+                        <div className={"w-40"}><CustomSelect disabled={hotel.id!==0} hideIndicator={disabled}
                             options={currencyOptions.map((currency) => ({label: t(currency.label), value: currency.value, image:currency.image}))}
                             label={t("Currency")} name={"currency"} setObjectValue={setHotel}
                             defaultValue={hotel.currency}/></div>
