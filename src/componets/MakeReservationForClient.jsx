@@ -10,7 +10,7 @@ import {toast} from "react-toastify";
 import CustomToastContent from "./CustomToastContent";
 import {AuthContext} from "../context/AuthContext";
 import {CurrencyContext} from "../context/CurrencyContext";
-import {createReservationByWorker, getFreeRoomsForDate, getNotAvailableDates} from "../hooks/core";
+import {createReservation, getFreeRoomsForDate, getNotAvailableDates} from "../hooks/core";
 import {currencyOptions} from "../utils/options";
 
 export default function MakeReservationForClient({
@@ -23,8 +23,8 @@ export default function MakeReservationForClient({
 
     const [reservationInfo, setReservationInfo] = useState({
         peopleCount: hotel && hotel.people ? hotel.people : 1,
-        checkIn: dayjs(new Date()).format('YYYY-MM-DD'),
-        checkOut: dayjs(new Date()).add(1, 'day').format('YYYY-MM-DD'),
+        checkIn: hotel && hotel.fromDate ? hotel.fromDate : dayjs(new Date()).format('YYYY-MM-DD'),
+        checkOut: hotel && hotel.toDate ? hotel.toDate : dayjs(new Date()).add(1, 'day').format('YYYY-MM-DD'),
         nights: 1,
         pricePerNight: 0,
         priceForMeal: 0,
@@ -55,7 +55,7 @@ export default function MakeReservationForClient({
     })
 
     const {mutate} = useMutation({
-        mutationFn: () => createReservationByWorker(loggedUser.id, {...reservationInfo, hotelId: hotel.hotelId}),
+        mutationFn: () => createReservation(loggedUser.id, {...reservationInfo, hotelId: hotel.hotelId}),
         onSuccess: () => {
             toast.success(<CustomToastContent content={[t("createdReservation"), t("checkReservation")]}/>);
             setHotel(null);
@@ -166,7 +166,7 @@ export default function MakeReservationForClient({
                     {typesOptions && <CustomSelect
                         options={typesOptions} defaultValue={typeId} handleSelect={handleSelectType}
                         label={t("Type")} required={true}/>}
-                    {rooms && rooms.length === 0 && <p className={'text-danger'}>{t("Not available")}</p>}
+                    {rooms && rooms.length === 0 && <p className={'text-danger'}>{t("Not available rooms")}</p>}
                     {rooms && typeId && <CustomSelect required={true}
                                                       options={rooms.sort((a, b) => a.name.localeCompare(b.name)).map((room) => {
                                                           return {value: room.id, label: room.name}

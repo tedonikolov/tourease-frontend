@@ -1,5 +1,4 @@
 import restInterceptor from "./RestInterceptor";
-import moment from "moment-timezone";
 
 export function getOwnerByEmail(email) {
     return restInterceptor.get("hotel-service/owner/getOwnerByEmail/" + email);
@@ -339,26 +338,6 @@ export function confirmReservation(reservationId, workerId) {
 }
 
 export function createReservationByWorker(workerId, reservationInfo, roomId) {
-    let currentTime = moment();
-    let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    let offset = moment.tz(new Date(), timeZone).utcOffset();
-
-    let checkOut = moment.tz(reservationInfo.checkOut, timeZone).add(offset, "minutes")
-    checkOut.set({
-        hour: "12",
-        minute: "00",
-        second: "00"
-    });
-    checkOut = checkOut.format("YYYY-MM-DDTHH:mm:ssZ");
-
-    let checkIn = moment.tz(reservationInfo.checkIn, timeZone).add(offset, "minutes");
-    checkIn.set({
-        hour: currentTime.get('hour'),
-        minute: currentTime.get('minute'),
-        second: currentTime.get('second')
-    });
-    checkIn = checkIn.format("YYYY-MM-DDTHH:mm:ssZ");
-
     return restInterceptor.post("hotel-service/reservation/worker/createReservation",
         {
             customer: {
@@ -376,8 +355,8 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
             typeId: reservationInfo.typeId,
             mealId: reservationInfo.mealId,
             peopleCount: reservationInfo.peopleCount,
-            checkIn: checkIn,
-            checkOut: checkOut,
+            checkIn: reservationInfo.checkIn,
+            checkOut: reservationInfo.checkOut,
             nights: reservationInfo.nights,
             price: reservationInfo.priceWithDiscount,
             mealPrice: reservationInfo.priceForMeal,
@@ -394,18 +373,6 @@ export function createReservationByWorker(workerId, reservationInfo, roomId) {
 }
 
 export function updateReservation(workerId, reservationInfo) {
-    let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-    let checkOut = moment.tz(reservationInfo.checkOut, timeZone);
-    checkOut.set({
-        hour: "12",
-        minute: "00",
-        second: "00"
-    });
-    checkOut = checkOut.format("YYYY-MM-DDTHH:mm:ssZ");
-
-    let checkIn = moment.tz(reservationInfo.checkIn, timeZone).format("YYYY-MM-DDTHH:mm:ssZ");
-
     return restInterceptor.put("hotel-service/reservation/worker/updateReservation", {
         id: reservationInfo.id,
         roomId: reservationInfo.room ? reservationInfo.room.id : null,
@@ -413,8 +380,8 @@ export function updateReservation(workerId, reservationInfo) {
         mealId: reservationInfo.mealId,
         peopleCount: reservationInfo.peopleCount,
         customers: reservationInfo.customers.map((customer) => customer.id),
-        checkIn: checkIn,
-        checkOut: checkOut,
+        checkIn: reservationInfo.checkIn,
+        checkOut: reservationInfo.checkOut,
         nights: reservationInfo.nights,
         price: reservationInfo.priceWithDiscount,
         mealPrice: reservationInfo.priceForMeal,

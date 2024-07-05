@@ -160,7 +160,7 @@ export default function ReservationInfo({
     useEffect(() => {
         if (reservationInfo && dates) {
             reservationInfo.id ? setDisabledCheckInDates(() => dates.checkInDates.filter((day) => {
-                return !(dayjs(day).isAfter(dayjs(reservationInfo.checkIn).startOf('day')) && dayjs(day).isBefore(dayjs(reservationInfo.checkOut).add(1, 'day').startOf('day')))
+                return !(dayjs(day).add(1, 'day').isAfter(dayjs(reservationInfo.checkIn).startOf('day')) && dayjs(day).isBefore(dayjs(reservationInfo.checkOut).add(1, 'day').startOf('day')))
             })) : setDisabledCheckInDates(() => dates.checkInDates);
             reservationInfo.id ? setDisabledCheckOutDates(() => dates.checkOutDates.filter((day) => {
                 return !(dayjs(day).isAfter(dayjs(reservationInfo.checkIn).startOf('day')) && dayjs(day).isBefore(dayjs(reservationInfo.checkOut).add(1, 'day').startOf('day')))
@@ -414,16 +414,19 @@ export default function ReservationInfo({
                     />}
                     <div className={"d-flex"}>
                         <CustomDatePicker label={t('checkIn')}
-                                          minDate={reservation.id === 0 ? dayjs(new Date()) : dayjs(reservation.checkIn)}
+                                          minDate={(reservationInfo.id && filter.roomId && disabledCheckInDates && disabledCheckInDates.length>0) ? dayjs(disabledCheckInDates.sort((a, b) => dayjs(b).diff(dayjs(a)))[0]) < reservationInfo.checkIn ? dayjs(disabledCheckInDates.sort((a, b) => dayjs(b).diff(dayjs(a)))[0])
+                                              : reservation.id !==0 ? dayjs(reservation.checkIn) : dayjs(new Date())
+                                              : dayjs(new Date())}
                                           selectedDate={reservationInfo.checkIn}
                                           name={'checkIn'}
                                           setValue={setReservationInfo}
                                           disabledDates={disabledCheckOutDates!==undefined && disabledCheckInDates}
-                                          disabled={reservation.id !== 0 && (reservationInfo.status !== "PENDING" ||
+                                          disabled={reservation.id !== 0 && (reservationInfo.status !== "PENDING" &&
                                               reservationInfo.status !== "CONFIRMED")}
                         />
                         <CustomDatePicker label={t('checkOut')}
-                                          minDate={dayjs(reservationInfo.checkIn).add(1, 'day')}
+                                          minDate={ dayjs(new Date()) > dayjs(reservationInfo.checkIn) ? dayjs(new Date()) :
+                                                dayjs(reservationInfo.checkIn).add(1, 'day')}
                                           selectedDate={reservationInfo.checkOut}
                                           name={'checkOut'}
                                           setValue={setReservationInfo}

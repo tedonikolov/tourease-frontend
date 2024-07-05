@@ -1,5 +1,4 @@
 import restInterceptor from "./RestInterceptor";
-import moment from "moment-timezone";
 
 export function getHotelListing(searchText, pageNumber, currency) {
     return restInterceptor.get("core-service/search/listing", {
@@ -34,27 +33,7 @@ export function getFreeRoomsForDate({hotelId, fromDate, toDate, typeId}) {
     });
 }
 
-export function createReservationByWorker(userId, reservationInfo) {
-    let currentTime = moment();
-    let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    let offset = moment.tz(new Date(), timeZone).utcOffset();
-
-    let checkOut = moment.tz(reservationInfo.checkOut, timeZone).add(offset,"minutes")
-    checkOut.set({
-        hour: "12",
-        minute: "00",
-        second: "00"
-    });
-    checkOut = checkOut.format("YYYY-MM-DDTHH:mm:ssZ");
-
-    let checkIn = moment.tz(reservationInfo.checkIn, timeZone).add(offset,"minutes");
-    checkIn.set({
-        hour: currentTime.get('hour'),
-        minute: currentTime.get('minute'),
-        second: currentTime.get('second')
-    });
-    checkIn = checkIn.format("YYYY-MM-DDTHH:mm:ssZ");
-
+export function createReservation(userId, reservationInfo) {
     return restInterceptor.post("core-service/reservation/createReservation",
         {
             hotelId: reservationInfo.hotelId,
@@ -62,10 +41,12 @@ export function createReservationByWorker(userId, reservationInfo) {
             mealId: reservationInfo.mealId,
             roomId: reservationInfo.roomId,
             peopleCount: reservationInfo.peopleCount,
-            checkIn: checkIn,
-            checkOut: checkOut,
+            checkIn: reservationInfo.checkIn,
+            checkOut: reservationInfo.checkOut,
             nights: reservationInfo.nights,
             price: reservationInfo.price,
+            mealPrice: reservationInfo.priceForMeal,
+            nightPrice: reservationInfo.pricePerNight,
             currency: reservationInfo.currency,
         }
         ,{
