@@ -80,7 +80,7 @@ export default function WorkersPage() {
     const {mutate: deleteWork} = useMutation({
         mutationFn: deleteWorkerById,
         onSuccess: () => {
-            toast.success(<CustomToastContent content={[t("successDelete")]}/>);
+            toast.success(<CustomToastContent content={[t("successFired")]}/>);
             queryClient.resetQueries({queryKey: ["get owner", loggedUser.email]});
             queryClient.resetQueries({queryKey: ["get worker", loggedUser.email]});
         }

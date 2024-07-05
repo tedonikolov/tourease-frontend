@@ -224,6 +224,7 @@
     "New bill": "New bill",
     "successPayment": "Successfully marked as paid",
     "successBill": "Successfully created bill",
+    "successFired": "Successfully fired worker",
     "updateReservation": "Updated reservation",
     "createdReservation": "Reservation created.",
     "checkReservation": "Can check its status in reservations tab",

@@ -47,6 +47,7 @@
     "expirationDate": "Валидност",
     "successUpdate": "Успешно запазени данни!",
     "successEmailSend": "Успешно изпратен емейл!",
+    "successFired": "Успешно уволнен служител!",
     "Select birthday date!": "Изберете дата на раждане!",
     "Select valid passport date!" : "Изберете валидна дата на паспорта!",
     "male": "Мъж",
